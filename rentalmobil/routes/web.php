@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LoginController;
+
+// Route untuk LoginController
+Route::get('/login', [LoginController::class, 'index']);
 
 // Route untuk ItemsController
 Route::get('/items', [ItemController::class, 'index']);
