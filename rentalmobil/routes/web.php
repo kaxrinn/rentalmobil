@@ -31,3 +31,18 @@ Route::get('/hubungi_kami', function () {
 Route::get('/landingpage', function () {
     return view('landingpage');
 })->name('landingpage');
+
+// Route untuk halaman registrasi
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+// Route untuk halaman registrasi
+Route::get('/mobil', function () {
+    return view('mobil');
+})->name('mobil');
+
+// Route untuk halaman registrasi
+Route::get('/lupasandi', function () {
+    return view('lupasandi');
+})->name('lupasandi');
