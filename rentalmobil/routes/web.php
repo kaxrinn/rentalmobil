@@ -46,3 +46,9 @@ Route::get('/mobil', function () {
 Route::get('/lupasandi', function () {
     return view('lupasandi');
 })->name('lupasandi');
+
+// Route untuk landingpage_before
+Route::get('/landingpage_before', function () {
+    return view('landingpage_before');
+})->name('landingpage_before');
+
