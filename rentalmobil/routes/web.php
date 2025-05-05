@@ -38,9 +38,14 @@ Route::get('/register', function () {
 })->name('register');
 
 // Route untuk halaman registrasi
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+// Route untuk halaman registrasi
 Route::get('/mobil', function () {
     return view('mobil');
-})->name('mobil');
+});
 
 // Route untuk halaman registrasi
 Route::get('/lupasandi', function () {

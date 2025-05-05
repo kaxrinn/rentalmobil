@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-[#cfd1da] m-0">
 
@@ -27,16 +28,37 @@
     </div>
   </nav>
 
-  <!-- Sidebar -->
-  <div class="hidden lg:block fixed top-0 left-0 h-screen w-[12.5rem] bg-[#112769] text-white pt-20">
-    <ul class="flex flex-col ms-3 mb-5">
-      <li><a class="block text-white px-4 py-2 hover:bg-[#1160AF]" href="landingadmin.php"><i class="fas fa-home me-2"></i>Beranda</a></li>
-      <li><a class="block text-white px-4 py-2 hover:bg-[#1160AF]" href="pemesanan.php"><i class="fas fa-tachometer-alt me-2"></i>Pemesanan</a></li>
-      <li><a class="block text-white px-4 py-2 hover:bg-[#1160AF]" href="mobil.php"><i class="fas fa-car-alt me-2"></i>Mobil</a></li>
-      <li><a class="block text-white px-4 py-2 hover:bg-[#1160AF]" href="ulasan.php"><i class="bi bi-star-half me-2"></i>Ulasan</a></li>
-      <li><a class="block text-white px-4 py-2 hover:bg-[#1160AF]" href="pesan.php"><i class="fas fa-envelope me-2"></i>Pesan</a></li>
-    </ul>
-  </div>
+ <!-- Sidebar Tailwind -->
+<div class="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-52 bg-[#112769] text-white p-4">
+  <ul class="space-y-3">
+    <li>
+      <a href="landingadmin.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-home mr-3"></i> Beranda
+      </a>
+    </li>
+    <li>
+      <a href="pemesanan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-tachometer-alt mr-3"></i> Pemesanan
+      </a>
+    </li>
+    <li>
+      <a href="mobil.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-car mr-3"></i> Mobil
+      </a>
+    </li>
+    <li>
+      <a href="ulasan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-star-half-alt mr-3"></i> Ulasan
+      </a>
+    </li>
+    <li>
+      <a href="pesan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-envelope mr-3"></i> Pesan
+      </a>
+    </li>
+  </ul>
+</div>
+
 
   <!-- Dropdown Menu (mobile) -->
   <div id="dropdown-menu" class="hidden absolute top-[70px] right-2 bg-white shadow-lg rounded-lg p-2 z-[1000] w-[200px] lg:hidden">
