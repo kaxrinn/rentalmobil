@@ -14,7 +14,7 @@
       <h2 class="text-xl font-semibold text-gray-800 mb-6">Lupa Kata Sandi</h2>
 
       <form action="#" class="flex flex-col gap-6 w-full">
-        <input type="email" placeholder="Email anda" required
+        <input type="email" placeholder="Email" required
           class="w-full px-4 py-2 border-2 border-blue-900 rounded-md text-sm outline-none">
 
         <input type="password" placeholder="Kata Sandi Baru" required
