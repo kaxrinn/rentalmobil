@@ -1,570 +1,296 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Car Rental</title>
-    <link rel="stylesheet" href="{{ asset('style1.css') }}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Mobil</title>
+  <link rel="stylesheet" href="styleA-C/style.css">
 </head>
+
 <body>
-    <!-- Header dan Navbar -->
-    <header>
-        <div class="hero-text" id="Beranda">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
-                <!-- Konten Navbar -->
-                <div class="container-fluid">
-                    <!-- Logo -->
-                    <a class="navbar-brand logo">
-                        <img src="{{ asset('uploads/logo.png') }}" alt="Gambar Mobil">
-                        <span>CAR RENTAL</span>
-                    </a>
-                    <!-- Menu -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#Beranda">Beranda</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#brands-section">Produk</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('riwayat') }}">Riwayat</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#Ulasan">Ulasan</a>
-                            </li>
-                            <li class="nav-item d-flex align-items-center">
-                                <form class="d-flex" method="GET" action="{{ route('search') }}">
-                                    <input class="form-control me-2" type="text" name="query" placeholder="Cari Mobil.." aria-label="Search" required>
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                            </li>
-                            <ul>
-                                <!-- Ikon dengan latar belakang gradien -->
-                                <button class="icon-btn" onclick="togglePopup()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                                    </svg>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+  <!-- Navbar aplikasi -->
+<nav>
+  <div class="logo">
+  <img src="gambarberanda/Logo 6.png" alt="Logo">
+  </div>
+ <!-- Link di navbar -->
+  <div class="nav-center">
+    <div class="nav-links">
+      <a href="#Beranda">Beranda</a>
+      <a href="#Produk">Produk</a>
+      <a a href="login.php" class="login-btn">Riwayat</a> <!-- ini belum tersambung -->
+      <a href="#Ulasan">Ulasan</a>
+      <a href="#Kontak">Kontak</a>
+    </div>
+  </div>
 
-    <!-- Overlay untuk background gelap -->
-    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+   <!-- Burger Menu -->
+   <div class="burger-menu" onclick="toggleMenu()">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
 
-    <!-- Popup Profil -->
-    <div class="popup" id="popup" style="display: none; position: absolute; z-index: 9999;">
-        <label><strong>Selamat datang,</strong></label>
-        <p><strong>Nama:</strong> John Doe</p>
-        <p><strong>Email:</strong> johndoe@example.com</p>
-        <p><strong>Nomor HP:</strong> 081234567890</p>
-        <div class="button-group" style="margin-top: 10px;">
-            <a class="close-btn" onclick="showEditProfileModal()">Ubah Profil</a>
-            <a href="#" class="logout-btn" onclick="confirmLogout()">Keluar</a>
-        </div>
+<!-- Kontak pencarian -->
+ <!-- Ini belum tersambung -->
+  <div class="search-login">
+    <div class="search-box">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" viewBox="0 0 16 16">
+  <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+</svg>
+      <input type="text" placeholder="Pencarian">
     </div>
 
-    <!-- Modal Ubah Profil -->
-    <div class="modal-profile" id="edit-profile-modal" style="display: none;">
-        <h3 style="text-align: center;">Ubah Profil</h3>
-        <form action="{{ route('update_profile') }}" method="POST" onsubmit="handleSubmit(event);">
-            <label for="nama_pengguna">Nama:</label>
-            <input type="text" id="nama_pengguna" name="nama_pengguna" value="John Doe" required>
+<!-- Tombol Login-->
+ <!-- Ini belum tersambung -->
+    <a href="login.php" class="login-btn">Login</a>
+  </div>
+  </nav>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="johndoe@example.com" required>
+<!--Javascript untuk burger menu-->
+<script>
+  function toggleMenu() { 
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');// mengaktifkan burger menu saat layar lebih kecil
+  }
+</script>
 
-            <label for="no_hp">Nomor HP:</label>
-            <input type="text" id="no_hp" name="no_hp" value="081234567890" required>
+<!--section Slide Beranda-->
+<section class="Beranda" id="Beranda">
+<div class="slider">
+  <div class="slides" id="slides">
+    <!-- 3 gambar untuk slider -->
+    <img src="gambarberanda/gambar 1.jpg" alt="Gambar 1">
+    <img src="gambarberanda/gambar 2.jpg" alt="Gambar 2">
+    <img src="gambarberanda/gambar 3.jpg" alt="Gambar 3">
+  </div>
 
-            <label for="password">Password Baru:</label>
-            <input type="password" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah password">
+  <div class="dots" id="dots">
+    <!-- Dot navigasi slider -->
+    <div class="dot active" onclick="moveToSlide(0)"></div>
+    <div class="dot" onclick="moveToSlide(1)"></div>
+    <div class="dot" onclick="moveToSlide(2)"></div>
+  </div>
+</div>
 
-            <button type="submit">Simpan</button>
-            <button type="button" class="cancel-btn" onclick="hideEditProfileModal()">Batal</button>
-        </form>
+<!-- Javascript Untuk Slide Beranda-->
+<script>
+// Ambil elemen slides dan dots
+const slides = document.getElementById('slides');
+const dots = document.querySelectorAll('.dot');
+let currentIndex = 0; // posisi slide sekarang
+const totalSlides = dots.length; // total slide yang ada
+
+// Fungsi pindah ke slide tertentu
+function moveToSlide(index) {
+  slides.style.transform = `translateX(-${index * 100}vw)`; // geser slider
+  dots.forEach(dot => dot.classList.remove('active')); // hapus semua aktif
+  dots[index].classList.add('active'); // aktifkan dot yg dipilih
+  currentIndex = index; // update index
+}
+
+// Auto-slide tiap 5 detik
+setInterval(() => {
+  let nextIndex = (currentIndex + 1) % totalSlides; // ke slide berikutnya
+  moveToSlide(nextIndex); // panggil fungsi pindah slide
+}, 5000); // 5000 ms = 5 detik
+</script>
+
+<!--Tentang Aplikasi-->
+<section class="aplikasi">
+  <div class="container">
+    <div class="image">
+      <img src="gambarberanda/gambar 4.jpeg" alt="Mobil">
+    </div>
+    <div class="content">
+      <h2><span>|</span> TENTANG APLIKASI</h2>
+      <p>VROOM adalah solusi terbaik untuk Anda yang membutuhkan kemudahan dalam memesan mobil. Dengan beragam pilihan mobil favorit, proses pemesanan yang cepat, serta sistem yang aman dan terpercaya, kami berkomitmen untuk memberikan layanan terbaik bagi setiap perjalanan Anda</p>
+      <p>Temukan mobil yang Anda butuhkan dengan mudah, dan rasakan pengalaman reservasi yang nyaman bersama VROOM.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section Bagian Produk mobil-->
+<section class="produk" id="Produk">
+  <h2>PRODUK</h2>
+  <div class="produk-grid">
+    <!-- Produk mobil -->
+    <!--ini belum tersambung masih front-end atau tampilan -->
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize">
+      <h3>Toyota Raize</h3>
+      <p>Rp. 250.000.000</p>
+      <a href="#">Detail</a>
     </div>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-text" id="Beranda">
-                <h1>
-                    Hanya Satu Klik,<br>
-                    Untuk Perjalan <br>
-                    Anda yang Tak<br>
-                    Terlupakan!
-                </h1>
-                <a class="btn" href="#brands-section">Pesan Sekarang</a> <!-- Tombol untuk menuju halaman produk -->
-            </div>
-            <div class="hero-image">
-                <img src="{{ asset('uploads/MOBILBG.png') }}" alt="Gambar Mobil"> <!-- Gambar hero -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Section dengan Gambar dan Teks -->
-    <section id="home">
-        <div class="container">
-            <!-- Bagian Gambar -->
-            <div class="image-section">
-                <img src="{{ asset('uploads/TENTANG.png') }}" alt="Setir Mobil">
-                <div class="badge">
-                    <p>Dari berbagai brand-brand ternama</p> <!-- Badge untuk informasi gambar -->
-                </div>
-            </div>
-
-            <!-- Bagian Teks -->
-            <div class="text-section">
-                <center>
-                    <h1>Percayakan perjalanan anda kepada kami</h1>
-                </center>
-                <h4>Temukan cara mudah dan cepat untuk menyewa mobil kapan saja dan di mana saja dengan aplikasi Car Rental kami!</h4>
-                <br>
-                <p>"Hanya dengan satu klik, dalam hitungan menit, Anda bisa memilih mobil sesuai kebutuhan dan langsung melakukan pemesanan. Nikmati kemudahan, kenyamanan, dan layanan terbaik yang siap menemani perjalanan Anda. Yuk, pesan sekarang dan rasakan pengalaman sewa mobil yang lebih praktis dan terpercaya!"</p>
-                <center>
-                    <a class="btn" href="#hubungi">Hubungi kami</a> <!-- Tombol untuk menuju halaman ulasan -->
-                </center>
-            </div>
-        </div>
-    </section>
-
-    <!-- Brands Section -->
-    <div class="container-fluid" id="brands-section">
-        <!-- Judul untuk Brands -->
-        <center><h1 class="text-section">BRANDS</h1></center>
-
-        <!-- Baris untuk menampilkan logo-brand -->
-        <div class="row justify-content-center align-items-center text-center mt-5">
-            <!-- Logo Ferrari -->
-            <div class="col-2">
-                <img src="{{ asset('uploads/Ferari.png') }}" alt="Ferrari" class="brand-logo">
-            </div>
-
-            <!-- Logo Hyundai -->
-            <div class="col-2">
-                <img src="{{ asset('uploads/Hyundai.png') }}" alt="Hyundai" class="brand-logo">
-            </div>
-
-            <!-- Logo Toyota -->
-            <div class="col-2">
-                <img src="{{ asset('uploads/Toyota.png') }}" alt="Toyota" class="brand-logo">
-            </div>
-
-            <!-- Logo BMW -->
-            <div class="col-2">
-                <img src="{{ asset('uploads/BMW.png') }}" alt="BMW" class="brand-logo">
-            </div>
-
-            <!-- Logo Mercedes -->
-            <div class="col-2">
-                <img src="{{ asset('uploads/Mercedes.png') }}" alt="Mercedes" class="brand-logo">
-            </div>
-        </div>
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 2.png" alt="Toyota Rush">
+      <h3>Toyota Rush</h3>
+      <p>Rp. 280.000.000</p>
+      <a href="#">Detail</a>
     </div>
 
-    <!-- Section untuk menampilkan produk -->
-    <div class="container">
-        <div class="row">
-            <!-- Products Section -->
-            <div class="container-fluid" id="products-section">
-                <div class="text-center mt-3">
-                    <h2 id="brand-title">Products</h2> <!-- Judul untuk produk -->
-                </div>
-                
-                <!-- Baris untuk menampilkan produk -->
-                <div class="row justify-content-center align-items-center text-center mt-5" id="product-cards">
-                    <!-- Produk akan dimasukkan di sini secara dinamis -->
-                </div>
-            </div>
-        </div>
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize">
+      <h3>Toyota Raize</h3>
+      <p>Rp. 250.000.000</p>
+      <a href="#">Detail</a>
     </div>
 
-    <!-- Modal tambah data -->
-    <div class="clearfix">
-        <!-- Modal Form Pemesanan -->
-        <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahDataLabel">Form Pemesanan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-                        <form action="{{ route('tambah_pemesanan_landing') }}" method="POST" enctype="multipart/form-data">
-                            <!-- Dropdown untuk memilih mobil -->
-                            <div class="mb-3">
-                                <label for="kode_mobil" class="form-label">Mobil</label>
-                                <select class="form-select" id="kode_mobil" name="kode_mobil" required>
-                                    <option value="1">Toyota Avanza</option>
-                                    <option value="2">Honda Civic</option>
-                                    <option value="3">BMW X5</option>
-                                </select>
-                            </div>
-
-                            <!-- Input Tanggal Pengambilan -->
-                            <div class="mb-3">
-                                <label for="tanggal_pengambilan" class="form-label">Tanggal Pengambilan</label>
-                                <input type="date" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" required>
-                            </div>
-
-                            <!-- Input Tanggal Pengembalian -->
-                            <div class="mb-3">
-                                <label for="tanggal_pengembalian" class="form-label">Tanggal Pengembalian</label>
-                                <input type="date" class="form-control" id="tanggal_pengembalian" name="tanggal_pengembalian" required>
-                            </div>
-
-                            <!-- Input Nama Lengkap -->
-                            <div class="mb-3">
-                                <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda" required>
-                            </div>
-
-                            <!-- Input Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email_1" name="email" placeholder="Sesuaikan Email Dengan Akun Yang Terdaftar" required>
-                            </div>
-
-                            <!-- Input Alamat -->
-                            <div class="mb-3">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Anda" required>
-                            </div>
-
-                            <!-- Input No HP -->
-                            <div class="mb-3">
-                                <label for="no_hp" class="form-label">NO HP</label>
-                                <input type="tel" class="form-control" id="no_hp_1" name="no_hp" placeholder="Sesuaikan No HP Dengan Akun Yang Terdaftar" required>
-                            </div>
-
-                            <!-- Input Foto KTP -->
-                            <div class="mb-3">
-                                <label for="foto" class="form-label">Foto KTP</label>
-                                <input type="file" class="form-control" id="foto" name="foto" required>
-                            </div>
-
-                            <!-- Input Tempat Pengambilan (Readonly) -->
-                            <div class="mb-3">
-                                <label for="tempat_pengambilan" class="form-label">Tempat Pengambilan</label>
-                                <input type="text" class="form-control" id="tempat_pengambilan" name="tempat_pengambilan" value="Jln.Tiban Indah Permai Rt 03 Rw 04(alamat lengkap kami untuk pengambilan mobil tersedia di bagian bawah halaman aplikasi ini)" readonly>
-                            </div>
-
-                            <!-- Input Jenis Pembayaran (Readonly) -->
-                            <div class="mb-3">
-                                <label for="jenis_pembayaran" class="form-label">Jenis Pembayaran</label>
-                                <input type="text" class="form-control" id="jenis_pembayaran" name="jenis_pembayaran" value="Tunai/COD (saat pengambilan kendaraan mobil)" readonly>
-                            </div>
-
-                            <!-- Tombol Simpan -->
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 5.png" alt="Toyota Raize">
+      <h3>Toyota Raize</h3>
+      <p>Rp. 250.000.000</p>
+      <a href="#">Detail</a>  
     </div>
+<!-- Mobil lainnya... -->
+  </div>
+</section>
 
-    <!-- Bagian ulasan -->
-    <div class="review-section" id="Ulasan">
-        <!-- Judul Ulasan -->
-        <h1><b>ULASAN</b></h1>
-        
-        <!-- Grid untuk menampilkan ulasan -->
-        <div class="review-grid">
-            <!-- Contoh Ulasan 1 -->
-            <div class="review-item">
-                <div class="review-header">
-                    <div class="review-date">
-                        <span class="review-day">10</span>
-                        <span class="review-month">Desember 2024</span>
-                    </div>
-                    <div class="star-rating">
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9734;</span>
-                    </div>
-                </div>
-                <div class="custom-divider"></div>
-                <p class="review-text">Pelayanan sangat memuaskan, mobil bersih dan nyaman.</p>
-                <div class="custom-divider"></div>
-                <img src="{{ asset('uploads/ulasan1.jpg') }}" style="width: 300px; height: auto;">
-                <p class="review-text"><b>Toyota Avanza</b></p>
-            </div>
-
-            <!-- Contoh Ulasan 2 -->
-            <div class="review-item">
-                <div class="review-header">
-                    <div class="review-date">
-                        <span class="review-day">15</span>
-                        <span class="review-month">Desember 2024</span>
-                    </div>
-                    <div class="star-rating">
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                    </div>
-                </div>
-                <div class="custom-divider"></div>
-                <p class="review-text">Mobilnya sangat nyaman, pelayanan cepat dan ramah.</p>
-                <div class="custom-divider"></div>
-                <img src="{{ asset('uploads/ulasan2.jpg') }}" style="width: 300px; height: auto;">
-                <p class="review-text"><b>Honda Civic</b></p>
-            </div>
+<!--Bagian Ulasan Aplikasi-->
+<section class="ulasan" id="Ulasan">
+  <h2>ULASAN APLIKASI</h2>
+  <div class="ulasan-grid">
+    <!-- Setiap item ulasan -->
+     <!--ini belum tersambung masih front-end atau tampilan -->
+    <div class="ulasan-item">
+      <div class="tanggal">
+        <span class="tgl">15</span>
+        <div class="bulan-tahun">
+          <span>Juni</span>
+          <span>2025</span>
         </div>
+      </div>
+      <div class="bintang">★★★★★</div>
+      <p>Mobil bagus dan nyaman.</p>
+      <span class="nama">-Kim Mingyu-</span>
     </div>
-
-    <!-- Bagian Hubungi kami -->
-    <div class="container" id="hubungi">
-        <!-- Menampilkan pesan sukses atau error jika ada -->
-        <div id="formNotif"></div>
-        
-        <center>
-            <!-- Judul dan penjelasan singkat -->
-            <h1><b>Hubungi Kami</b></h1>
-            <p>Jika Anda memiliki kendala, saran, atau masukan tentang website kami,<br> Anda dapat mengirim pesan atau email.</p>
-
-            <!-- Formulir untuk mengirim pesan -->
-            <form action="{{ route('process_contact') }}" method="POST" class="contact-form" id="contactForm">
-                <input type="text" name="name" placeholder="Masukkan Nama Anda" required>
-                <input type="email" name="email" placeholder="Masukkan Email Anda" required>
-                <textarea name="message" rows="5" placeholder="Tuliskan Pesan Anda" required></textarea>
-                <button type="submit" class="btn">Kirim Pesan</button>
-            </form>
-        </center>
-
-        <!-- Gambar kontak -->
-        <img src="{{ asset('uploads/hubungi.png') }}" width="40%" height="40%">
+    <div class="ulasan-item">
+      <div class="tanggal">
+        <span class="tgl">15</span>
+        <div class="bulan-tahun">
+          <span>Juni</span>
+          <span>2025</span>
+        </div>
+      </div>
+      <div class="bintang">★★★★★</div>
+      <p>Ada harga ada kualitas.</p>
+      <span class="nama">-Jeon Wonwo-</span>
     </div>
-
-    <!-- Bagian footer -->
-    <footer class="footer">
-        <div class="container2">
-            <!-- Bagian Google Maps -->
-            <div class="maps-section">
-                <h3>Alamat Kami</h3>
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.064662479408!2d103.9796009740352!3d1.1136661622914406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98becb5643ef7%3A0x3b4a9a5464a1cf9c!2sJl.%20Tiban%20Indah%20Permai%2C%20Tiban%20Indah%2C%20Kec.%20Sekupang%2C%20Kota%20Batam%2C%20Kepulauan%20Riau!5e0!3m2!1sid!2sid!4v1734656940157!5m2!1sid!2sid" 
-                    width="100%" 
-                    height="300" 
-                    style="border:0; margin-top: 20px; margin-bottom: 20px;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-
-            <!-- Bagian media sosial -->
-            <div class="social-section">
-                <div class="social-title"><b>Ikuti kami</b></div>
-                <div class="social-icons">
-                    <!-- Tautan media sosial -->
-                    <a href="https://www.instagram.com/polibatamofficial">
-                        <img src="{{ asset('uploads/instagram.png') }}" alt="Instagram">
-                    </a>
-                    <a href="https://www.tiktok.com/@polibatamofficial">
-                        <img src="https://static.vecteezy.com/system/resources/previews/023/741/129/original/tiktok-logo-icon-social-media-icon-free-png.png" alt="TikTok">
-                    </a>
-                    <a href="https://twitter.com/polibatamofficial">
-                        <img src="{{ asset('uploads/x.png') }}" alt="X (Twitter)">
-                    </a>
-                    <a href="https://chat.whatsapp.com/FEM3SNcya4qFfjOh6qEqEk">
-                        <img src="{{ asset('uploads/wa.png') }}" alt="WhatsApp">
-                    </a>
-                </div>
-            </div>
-
-            <!-- Bagian Links -->
-            <div class="links">
-                <div class="sumber">
-                    <h3>Sponsor</h3>
-                    <p>Polibatam</p>
-                </div>
-                <div class="perusahaan">
-                    <h3>Perusahaan</h3>
-                    <p>Car Rental.id</p>
-                </div>
-                <div class="produk">
-                    <h3>Produk</h3>
-                    <p>Mobil</p>
-                </div>
-            </div>
+    <div class="ulasan-item">
+      <div class="tanggal">
+        <span class="tgl">15</span>
+        <div class="bulan-tahun">
+          <span>Juni</span>
+          <span>2025</span>
         </div>
+      </div>
+      <div class="bintang">★★★★★</div>
+      <p>Banyak pilihan mobil yang bisa disewa dengan kualitas yang baik.</p>
+      <span class="nama">-Hong Jisoo-</span>
+    </div>
+    <!-- Ulasan lainnya... -->
+  </div>
+</section>
 
-        <!-- Bagian Copyright -->
-        <div class="container1">
-            <div class="copyright">
-                &copy; 2024 All rights reserved.
-            </div>
-        </div>
-    </footer>
+<!-- Section Bagian Kontak Kami -->
+<section class="kontak" id="Kontak">
+  <div class="kontak-container">
+    <!-- Form kontak -->
+     <!-- ini belum tersambung -->
+    <form class="form-box" action="process_contact.php" method="POST">
+      <h2>KONTAK KAMI</h2>
+      <input type="text" name="nama" placeholder="Masukkan nama Anda" required>
+      <input type="email" name="email" placeholder="Masukkan email Anda" required>
+      <textarea name="pesan" placeholder="Tulis pesan di sini" required></textarea>
+      <button type="submit" class="btn">Kirim Pesan</button>
+    </form>
 
-    <!-- Script JavaScript -->
-    <script>
-        // Fungsi untuk menampilkan atau menyembunyikan pop-up
-        function togglePopup() {
-            const popup = document.getElementById('popup');
-            const isVisible = popup.style.display === 'block';
+    <!-- Gambar mobil di kontak kami-->
+    <div class="mobil-box">
+      <p>Ada saran atau pertanyaan tentang website kami? Kirimkan pesan Anda di bawah ini.</p>
+      <img src="gambarberanda/image.png" alt="Mobil" />
+    </div>
+  </div>
+</section>
 
-            // Menampilkan atau menyembunyikan pop-up berdasarkan keadaan saat ini
-            popup.style.display = isVisible ? 'none' : 'block';
-        }
 
-        // Fungsi untuk menampilkan modal edit profil
-        function showEditProfileModal() {
-            const popup = document.getElementById('popup');
-            const editProfileModal = document.getElementById('edit-profile-modal');
+<!-- Section alamat penjemputan mobil-->
+<section class="alamat-section">
+  <!-- Peta google maps-->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31912.464679468314!2d104.04287462104998!3d1.1185155169965935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sbatam%20Center!5e0!3m2!1sid!2sid!4v1745720739558!5m2!1sid!2sid" 
+    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+  </iframe> 
 
-            popup.style.display = 'none'; // Menyembunyikan popup utama
-            editProfileModal.style.display = 'block'; // Menampilkan modal edit profil
-        }
+  <!-- Teks Alamat penjemputan-->
+  <div class="alamat-text">
+    <h2>Kunjungi Alamat Kami</h2>
+    <p>Lokasi kami berada di pusat Kota Batam, Kepulauan Riau. Mudah dijangkau dari berbagai arah dan dekat dengan pusat transportasi utama.</p>
+  </div>
+</section>
 
-        // Fungsi untuk menyembunyikan modal edit profil
-        function hideEditProfileModal() {
-            const popup = document.getElementById('popup');
-            const editProfileModal = document.getElementById('edit-profile-modal');
+<!-- Section Panduan Penyewaan mobil-->
+<section class="panduan-section">
+  <h2>Panduan Penyewaan Mobil</h2>
 
-            editProfileModal.style.display = 'none'; // Menyembunyikan modal
-            popup.style.display = 'block'; // Menampilkan kembali popup utama
-        }
+  <!-- Grid Panduan-->
+  <div class="panduan-grid">
+    <div class="panduan-item">
+      <h4>1. Lengkapi Dokumen</h4>
+      <p>Siapkan SIM, KTP, dan bukti pemesanan untuk mempercepat proses sewa.</p>
+    </div>
+    <div class="panduan-item">
+      <h4>2. Cek Kondisi Mobil</h4>
+      <p>Periksa mobil secara menyeluruh, termasuk ban, lampu, dan mesin.</p>
+    </div>
+    <div class="panduan-item">
+      <h4>3. Periksa Bahan Bakar</h4>
+      <p>Pastikan bahan bakar sesuai dengan ketentuan awal sewa kendaraan.</p>
+    </div>
+    <div class="panduan-item">
+      <h4>4. Cek Fitur Utama</h4>
+      <p>Pastikan AC, rem, wiper, dan sistem audio berfungsi dengan baik.</p>
+    </div>
+    <div class="panduan-item">
+      <h4>5. Minta Kontak Darurat</h4>
+      <p>Selalu minta nomor kontak untuk keadaan darurat selama masa sewa.</p>
+    </div>
+    <div class="panduan-item">
+      <h4>6. Pahami Aturan Sewa</h4>
+      <p>Baca dan pahami aturan denda, keterlambatan, dan area penggunaan kendaraan.</p>
+    </div>
+  </div>
+</section>
 
-        // Fungsi untuk logout dengan konfirmasi
-        function confirmLogout() {
-            const confirmation = confirm("Apakah Anda yakin ingin keluar dari akun?");
+<!-- Bagian Footer -->
+<footer class="footer-custom">
+  <div class="footer-container">
+    <h2>VEHICLE RENTAL<br>ON ONE MOVE</h2>
 
-            if (confirmation) {
-                window.location.href = '{{ route('landingpage_before') }}'; // Arahkan ke halaman logout
-            }
-        }
+    <!-- Link dan ikon media sosial -->
+    <div class="social-icons">
+      <a href="https://www.instagram.com/polibatamofficial">
+        <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=000000" alt="Instagram">
+      </a>
+      <a href="https://www.tiktok.com/@polibatamofficial">
+        <img src="https://img.icons8.com/?size=100&id=84521&format=png&color=000000" alt="TikTok">
+      </a>
+      <a href="https://www.linkedin.com/feed/">
+        <img src="https://img.icons8.com/?size=100&id=447&format=png&color=000000" alt="Linkedln">
+      </a>
+      <a href="https://chat.whatsapp.com/FEM3SNcya4qFfjOh6qEqEk">
+        <img src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000" alt="WhatsApp">
+      </a>    
+    </div>
+  </div>
+</footer>
 
-        // Fungsi untuk menangani pengiriman form
-        function handleSubmit(event) {
-            event.preventDefault(); // Mencegah pengiriman default
+<!-- Copyright-->
+<center>
+  <div class="copyright">
+    &copy; 2024 All rights reserved.
+  </div>
+</center>
 
-            const formData = new FormData(event.target);
-
-            try {
-                fetch('{{ route('update_profile') }}', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Response:', data); // Debugging response
-
-                        if (data.trim() === 'success') {
-                            alert("Pengubahan Data Profile berhasil");
-                            window.location.href = '{{ route('landingpage') }}'; // Arahkan ke halaman setelah berhasil
-                        } else {
-                            alert("Terjadi kesalahan saat mengubah data: " + data);
-                        }
-                    });
-            } catch (error) {
-                console.error('Error:', error);
-                alert("Terjadi kesalahan saat memproses data. Silakan coba lagi nanti.");
-            }
-        }
-
-        // Event listener untuk menutup popup dan modal saat pengguna melakukan scroll
-        window.addEventListener('scroll', function () {
-            const popup = document.getElementById('popup');
-            const editProfileModal = document.getElementById('edit-profile-modal');
-
-            // Periksa apakah popup utama sedang terlihat
-            if (popup.style.display === 'block') {
-                popup.style.display = 'none'; // Sembunyikan popup
-            }
-
-            // Periksa apakah modal edit profil sedang terlihat
-            if (editProfileModal.style.display === 'block') {
-                editProfileModal.style.display = 'none'; // Sembunyikan modal edit profil
-            }
-        });
-
-        // Ambil elemen tombol hamburger dan navbar
-        const navbarToggler = document.querySelector('.navbar-toggler');
-        const navbarNav = document.querySelector('.navbar-nav');
-
-        // Event listener untuk membuka dan menutup menu
-        navbarToggler.addEventListener('click', function () {
-            navbarNav.classList.toggle('active');
-        });
-
-        // Event listener untuk menutup menu jika klik di luar area menu
-        document.addEventListener('click', function (event) {
-            // Periksa apakah klik di luar menu dan tombol hamburger
-            if (!navbarNav.contains(event.target) && !navbarToggler.contains(event.target)) {
-                navbarNav.classList.remove('active'); // Menutup menu
-            }
-        });
-
-        // Gabungkan search dan hash menjadi satu URL lengkap
-        const fullURL = window.location.search + window.location.hash;
-
-        try {
-            // Parse parameter URL termasuk hash
-            const urlParams = new URLSearchParams(fullURL);
-            const status = urlParams.get('status');
-            const message = urlParams.get('message');
-
-            // Tampilkan pesan berdasarkan parameter jika ada
-            if (status && message) {
-                const notifElement = document.getElementById('formNotif');
-
-                // Tentukan warna teks berdasarkan status
-                notifElement.style.color = status === 'success' ? 'green' : 'red';
-
-                // Tampilkan pesan di elemen notifikasi
-                notifElement.innerHTML = message;
-
-                // Reset form jika pengiriman berhasil
-                if (status === 'success') {
-                    document.getElementById('contactForm').reset();
-                }
-
-                // Bersihkan URL agar pesan tidak terus muncul saat refresh
-                window.history.replaceState({}, document.title, window.location.pathname + '#hubungi');
-            }
-        } catch (error) {
-            // Tangani error jika terjadi masalah saat parsing URL atau manipulasi DOM
-            console.error('Error handling URL parameters:', error);
-        }
-    </script>
-
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-    <!-- Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-    <!-- Bootstrap 4 JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

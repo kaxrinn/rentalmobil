@@ -22,67 +22,57 @@
       <button class="text-black text-2xl" onclick="togglePopup()">
         <i class="fas fa-user-circle"></i>
       </button>
-      <button class="text-[#3a57e8] text-2xl lg:hidden" id="hamburger-icon" onclick="toggleDropdown()">
+      <button class="text-[#3a57e8] text-2xl lg:hidden" id="hamburger-icon" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </nav>
 
- <!-- Sidebar Tailwind -->
-<div class="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-52 bg-[#112769] text-white p-4">
-  <ul class="space-y-3">
-    <li>
-      <a href="landingadmin.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
-        <i class="fas fa-home mr-3"></i> Beranda
-      </a>
-    </li>
-    <li>
-      <a href="pemesanan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
-        <i class="fas fa-tachometer-alt mr-3"></i> Pemesanan
-      </a>
-    </li>
-    <li>
-      <a href="mobil.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
-        <i class="fas fa-car mr-3"></i> Mobil
-      </a>
-    </li>
-    <li>
-      <a href="ulasan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
-        <i class="fas fa-star-half-alt mr-3"></i> Ulasan
-      </a>
-    </li>
-    <li>
-      <a href="pesan.php" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
-        <i class="fas fa-envelope mr-3"></i> Pesan
-      </a>
-    </li>
-  </ul>
-</div>
-
-
-  <!-- Dropdown Menu (mobile) -->
-  <div id="dropdown-menu" class="hidden absolute top-[70px] right-2 bg-white shadow-lg rounded-lg p-2 z-[1000] w-[200px] lg:hidden">
-    <a class="block px-4 py-2 border-b border-gray-200 text-black hover:bg-gray-100" href="landingadmin.php">Beranda</a>
-    <a class="block px-4 py-2 border-b border-gray-200 text-black hover:bg-gray-100" href="pemesanan.php">Pemesanan</a>
-    <a class="block px-4 py-2 border-b border-gray-200 text-black hover:bg-gray-100" href="mobil.php">Mobil</a>
-    <a class="block px-4 py-2 border-b border-gray-200 text-black hover:bg-gray-100" href="ulasan.php">Ulasan</a>
-    <a class="block px-4 py-2 border-b border-gray-200 text-black hover:bg-gray-100" href="pesan.php">Pesan</a>
+  <!-- Sidebar (samping) -->
+  <div id="sidebar" class="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-52 bg-[#112769] text-white p-4 transition-transform transform -translate-x-full lg:translate-x-0 lg:block sm:hidden">
+    <ul class="space-y-3">
+      <li>
+        <a href="{{ route('beranda') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+          <i class="fas fa-home mr-3"></i> Beranda
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('pemesanan') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+          <i class="fas fa-tachometer-alt mr-3"></i> Pemesanan
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('mobil') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+          <i class="fas fa-car mr-3"></i> Mobil
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('ulasan') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+          <i class="fas fa-star-half-alt mr-3"></i> Ulasan
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('hubungi_kami') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+          <i class="fas fa-envelope mr-3"></i> Pesan
+        </a>
+      </li>
+    </ul>
   </div>
 
+<!-- Popup -->
+<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#236d94] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
+  <label class="font-bold">Selamat datang,</label>
+  <p><strong>Nama:</strong> Admin Contoh</p>
+  <p><strong>Email:</strong> admin@example.com</p>
+  <p><strong>Nomor HP:</strong> 08123456789</p>
+  <div class="flex justify-between mt-4">
+    <a class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="togglePopup()">Tutup</a>
+    <a href="#" class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="confirmLogout()">Keluar</a>
+  </div>
+</div>
   <!-- Overlay -->
   <div class="hidden fixed inset-0 bg-black bg-opacity-50 z-[999]" id="overlay" onclick="togglePopup()"></div>
 
-  <!-- Popup -->
-  <div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#236d94] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
-    <label class="font-bold">Selamat datang,</label>
-    <p><strong>Nama:</strong> Admin Contoh</p>
-    <p><strong>Email:</strong> admin@example.com</p>
-    <p><strong>Nomor HP:</strong> 08123456789</p>
-    <div class="flex justify-between mt-4">
-      <a class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="togglePopup()">Tutup</a>
-      <a href="#" class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="confirmLogout()">Keluar</a>
-    </div>
-  </div>
 
   <!-- Main Content -->
   <div class="pt-20 px-4 lg:ml-[12.5rem]">
@@ -148,10 +138,10 @@
       overlay.classList.toggle('hidden');
     }
 
-    function toggleDropdown() {
-      const menu = document.getElementById('dropdown-menu');
-      menu.classList.toggle('hidden');
-    }
+    function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('-translate-x-full');
+}
   </script>
 </body>
 </html>

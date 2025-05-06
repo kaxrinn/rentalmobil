@@ -37,17 +37,17 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
-// Route untuk halaman registrasi
+// Route untuk login
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-// Route untuk halaman registrasi
+// Route untuk mobil
 Route::get('/mobil', function () {
     return view('mobil');
-});
+})->name('mobil');
 
-// Route untuk halaman registrasi
+// Route untuk lupa sandi
 Route::get('/lupasandi', function () {
     return view('lupasandi');
 })->name('lupasandi');
@@ -57,14 +57,7 @@ Route::get('/landingpage_before', function () {
     return view('landingpage_before');
 })->name('landingpage_before');
 
-// Route untuk login
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
 // Route untuk ulasan
 Route::get('/ulasan', function () {
     return view('ulasan');
 })->name('ulasan');
-
-

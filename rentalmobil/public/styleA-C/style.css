@@ -1,0 +1,776 @@
+
+    /* Reset default margin, padding, dan buat semua elemen pakai box-sizing border-box */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      /* Style untuk body */
+      body {
+        overflow-x: hidden; /* Mencegah scroll ke samping */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+    /* Style untuk navbr */
+    nav {
+        position: fixed; /* Navbar selalu nempel di atas */
+        top: 0;
+        width: 100%;
+        max-height: 55px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 10px 10px 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Bayangan navbar */
+        z-index: 1000; /* Navbar selalu di atas konten */
+      }
+  
+      /* Logo di navbar */
+      .logo {
+        display: flex;
+        align-items: center;
+  
+      }
+      .logo img {
+        height: 100px;
+        width: auto;
+      }
+  
+      .nav-center {
+        flex: 1;
+        display: flex;
+        justify-content: right; /* Menu di tengah */
+      }
+  /* Link dan opsi di navbar */
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0;
+      }
+  
+      .nav-links a {
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+        padding: 15px 30px;
+        background: white;
+        clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%); /* Membentuk jajar genjang */  
+        z-index: 1;
+      }
+  
+      .nav-links a:hover {
+        background: linear-gradient(to right, #115EAD, #219FE3); /* Gradasi biru saat hover */
+        color: white;
+        border-color: #007BFF;
+        z-index: 2;
+      }
+      /* Style untuk search */
+      .search-login {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+  
+      .search-box {
+        display: flex;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 8px;
+        padding: 5px 10px;
+        background: white;
+      }
+  
+      .search-box input {
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 5px;
+        font-size: 14px;
+        width: 120px;
+      }
+  
+      .search-icon {
+        font-size: 16px;
+        color: black;
+        margin-right: 5px;
+      }
+      /* Style untuk landingpage before (link halaman login) */
+      .login-btn {
+        display: inline-block;   /* <-- supaya bisa di-style kayak tombol */
+        text-decoration: none;   /* <-- supaya gak ada underline */
+        background-color: #0d3c8a;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        
+      }
+  
+      .login-btn:hover {
+        background-color:rgb(0, 111, 176);
+      }
+      
+    /*ikon diujung*/
+      .icon-btn {
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+      }
+      
+  /* Gaya untuk popup */
+  .popup {
+    /* Box Model */
+    display: none; /* Tersembunyi secara default */
+    position: fixed; /* Posisi tetap di layar */
+    top: 10%; /* 10% dari atas layar */
+    right: 1%; /* Tepat di sisi kanan layar */
+    width: 18.75rem; /* Lebar popup menggunakan rem */
+    padding: 1.25rem; /* Spasi dalam popup menggunakan rem */
+    border-radius: 0.625rem 0 0 0.625rem; /* Sudut melengkung di sisi kiri */
+    /* Visual */
+    background: linear-gradient(90deg,  #115EAD, #219FE3);
+    box-shadow: -0.25rem 0 0.375rem rgba(0, 0, 0, 0.2); /* Bayangan di sisi kiri */
+    /* Tipografi */
+    color: white; /* Warna teks */
+    z-index: 1000; /* Di atas elemen lain */
+  }
+  
+  /* Gaya untuk input di popup */
+  .popup input {
+    /* Box Model */
+    width: 100%; /* Lebar penuh */
+    padding: 0.625rem; /* Spasi dalam input menggunakan rem */
+    margin: 0.625rem 0; /* Jarak antar input menggunakan rem */
+    /* Visual */
+    border: none; /* Tanpa garis tepi */
+    border-radius: 0.3125rem; /* Sudut melengkung */
+  }
+  
+  /* Gaya untuk grup tombol di popup */
+  .button-group {
+    /* Box Model */
+    display: flex; /* Atur tombol secara horizontal */
+    justify-content: space-between; /* Jarak antar tombol */
+    margin-top: 0.9375rem; /* Jarak atas grup tombol menggunakan rem */
+  }
+  
+  /* Gaya untuk tombol close dan logout */
+  .close-btn,
+  .logout-btn {
+    /* Box Model */
+    padding: 0.625rem 0.9375rem; /* Ukuran tombol menggunakan rem */
+    width: 45%; /* Tombol berdampingan */
+    /* Visual */
+    background-color: white; /* Warna tombol putih */
+    border: none; /* Tidak ada garis tepi */
+    border-radius: 0.3125rem; /* Membulatkan tepi tombol */
+    /* Tipografi */
+    color: #1e1f4a; /* Warna teks ungu */
+    text-align: center; /* Teks di tengah */
+    cursor: pointer; /* Ubah kursor menjadi pointer */
+  }
+  
+  /* Gaya untuk tautan dalam grup tombol */
+  .button-group a {
+    /* Visual */
+    text-decoration: none; /* Hilangkan garis bawah */
+    /* Tipografi */
+    cursor: pointer; /* Kursor berubah menjadi pointer */
+  }
+  
+  /* Gaya saat tautan di-hover */
+  .button-group a:hover {
+    /* Visual */
+    text-decoration: underline; /* Garis bawah saat di-hover */
+  }
+  
+      /* Style untuk burger menu */
+      .burger-menu {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        width: 25px;
+        height: 20px;
+        justify-content: space-between;
+        margin-right: 15px; /* ➔ Ini nambah jarak burger dan login */
+  }
+  
+  
+  /* Responsif navbar*/
+  @media (max-width: 768px) {
+    nav {
+      flex-wrap: nowrap; /* Supaya tidak turun */
+      justify-content: space-between; /* Logo kiri, burger kanan */
+      padding: 10px 20px;
+    }
+  
+    .nav-center {
+      margin-left: 0;
+    }
+  
+    .nav-links {
+      display: none; /* Sembunyikan menu utama */
+      position: absolute;
+      top: 60px; /* Agak turunkan dikit dari navbar */
+      right: 0;
+      background-color: #ffffff;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 999; /* Di atas konten */
+    }
+  
+    .nav-links.active {
+      display: flex; /* Tampilkan saat klik burger */
+    }
+  
+    .nav-links a {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+  
+    .burger-menu {
+      display: flex; /* Tampilkan burger di HP */
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+  
+    .burger-menu div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+  }
+      
+      /*Section Slide Beranda*/
+      .slider {
+        width: 100vw; /* Lebar slider 100% lebar layar */
+        height: 100vh; /* Tinggi slider 100% tinggi layar */
+        overflow: hidden; /* Agar gambar tidak keluar dari area slider */
+        position: relative; /* Supaya bisa pakai posisi absolute di dalam */
+        margin: 50px 0 0 0;
+      }
+  
+      .slides {
+        display: flex; /* Susun gambar secara horizontal */
+        width: 300vw; /* Karena ada 3 gambar, 3x lipat lebar layar */
+        height: 100%;
+        transition: transform 1s ease-in-out; /* Gerakan halus saat bergeser */
+      }
+  
+      .slides img {
+        width: 100vw; /* Tiap gambar lebarnya penuh 1 layar */
+        height: 100%;
+        object-fit: cover; /* Gambar menutupi area tanpa pecah */
+      }
+  
+      /* Dot navigasi di bawah slider */
+      .dots {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+  
+      .dot {
+        width: 12px;
+        height: 12px;
+        background-color: white;
+        border-radius: 50%;
+        opacity: 0.5;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+  
+      .dot.active {
+        opacity: 1;
+        background-color: #007BFF; /* Warna biru saat aktif */
+      }
+  
+      /* Section tentang Aplikasi*/
+      .aplikasi {
+        padding: 50px 20px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+      }
+  
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        max-width: 1200px;
+        width: 100%;
+        margin: auto;
+      }
+  
+      .image img {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 10px;
+      }
+  
+      .content {
+        max-width: 600px;
+      }
+  
+      .content h2 {
+        font-size: 24px;
+        color: #1e2b5c;
+        margin-bottom: 20px;
+      }
+  
+      .content h2 span {
+        color: #1e2b5c;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+  
+      .content p {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+  
+      /*Section Produk mobil*/
+      .produk {
+        padding: 50px 20px;
+        text-align: center;
+        background-color: #F9FAFF;
+      }
+  
+      .produk h2 {
+        font-size: 28px;
+        color: #1e2b5c;
+        margin-bottom: 30px;
+      }
+  
+      .produk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Tiga kolom */
+        gap: 50px;
+        max-width: 800px;
+        margin: auto;
+        justify-items: center;
+      }
+   /* Responsif produk mobil */
+      /* Responsive untuk tablet */
+      @media (max-width: 768px) {
+        .produk-grid {
+          grid-template-columns: repeat(2, 1fr); /* Jadi dua kolom */
+        }
+      }
+  
+      /* Responsive untuk HP */
+      @media (max-width: 480px) {
+        .produk-grid {
+          grid-template-columns: 1fr; /* Jadi satu kolom */
+        }
+      }
+  
+      .produk-item {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+      }
+  
+      .produk-item img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+      }
+  
+      .produk-item h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+  
+      .produk-item p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 10px;
+      }
+  
+      .produk-item a {
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: #1e2b5c;
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+      }
+  
+      /*Responsif tambahan buat slider dan aplikasi*/
+      @media (max-width: 768px) {
+        .slider {
+          height: 70vh; /* Slider lebih pendek di layar kecil */
+        }
+  
+        .slides img {
+          height: auto;
+        }
+  
+        .dots {
+          bottom: 15px;
+          gap: 8px;
+        }
+  
+        .dot {
+          width: 10px;
+          height: 10px;
+        }
+  
+        .container {
+          flex-direction: column; /* Susunan konten aplikasi jadi vertikal */
+          text-align: center;
+        }
+      }
+  
+      #product-detail {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* overlay gelap */
+        display: none; /* disembunyikan dulu */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* muncul di atas segalanya */
+      }
+      
+      #product-detail .popup-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 600px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+      
+       /* --Section Ulasan-- */
+      .ulasan {
+        padding: 50px 20px;
+        background: #fff;
+        text-align: center;
+        margin: 0 0 100px 0;
+        box-shadow: 10px 10px 10px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+      }
+  
+      .ulasan h2 {
+        font-size: 28px;
+        color: #1e2b5c;
+        margin: 50px 0 70px 0;
+      }
+  
+      .ulasan-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 1000px;
+        margin: auto;
+        justify-items: center;
+      }
+  
+      .ulasan-item {
+        background: #f9faff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+      }
+  
+      /* Tanggal ulasan */
+      .tanggal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+      .tanggal .tgl {
+        font-size: 36px;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      .tanggal .bulan-tahun {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+  
+      /* Bintang rating */
+      .bintang {
+        color: #007BFF;
+        margin-bottom: 10px;
+      }
+  
+      /* Nama pengguna */
+      .nama {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        font-weight: bold;
+      }
+  
+      /*--Section Kontak--*/
+      .kontak {
+        padding: 30px 20px;
+        background: #f9faff;
+      }
+  
+      .kontak-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        max-width: 1200px;
+        margin: auto;
+        margin-left: 100px;
+      }
+  
+      /* Formulir kontak */
+      .form-box {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+  
+      .form-box h2 {
+        color: #1e2b5c;
+        margin-bottom: 10px;
+      }
+  
+      .form-box input,
+      .form-box textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+   /* Button Kontak */
+      .form-box button {
+        padding: 10px;
+        background: #1e2b5c;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+  
+    /* Gambar mobil di sebelah form */
+      .mobil-box {
+        position: relative;
+        margin-left: -55px;
+      }
+  
+      .mobil-box img {
+        width: 600px;
+      }
+  
+      .mobil-box p {
+        margin-top: 100px;
+        font-size: 16px;
+        width: 300px;
+        margin-left: 130px;
+      }
+  
+    /* --- Responsif Section Ulasan dan Kontak --- */
+      @media (max-width: 768px) {
+        .ulasan-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .kontak-container {
+          flex-direction: column;
+          text-align: center;
+          margin-left: 0;
+        }
+        .mobil-box {
+          margin-left: 0;
+          margin-top: 20px;
+        }
+        .mobil-box img {
+          width: 100%;
+          max-width: 400px;
+          height: auto;
+        }
+        .mobil-box p {
+          margin-left: 0;
+          margin-top: 20px;
+        }
+      }
+  
+      @media (max-width: 480px) {
+        .ulasan-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+  
+      /* Bagian style alamat penjemputan mobil*/
+      .alamat-section {
+        background: linear-gradient(135deg, #eef3fb, #ffffff); /* Gradasi background */
+        padding: 60px 20px; /* Ruang di dalam */
+        display: flex;
+        flex-wrap: wrap; /* Supaya responsif */
+        justify-content: center;
+        align-items: center;
+        gap: 40px; /* Jarak antar elemen */
+      }
+  
+      .alamat-section iframe {
+        width: 400px;
+        height: 250px;
+        border: none;
+        border-radius: 10px; /* Membulatkan sudut peta */
+      }
+  
+      .alamat-text {
+        max-width: 400px; /* Biar teks tidak terlalu lebar */
+      }
+  
+      .alamat-text h2 {
+        color: #1e2b5c; /* Warna biru */
+        font-size: 26px;
+        margin-bottom: 15px;
+      }
+  
+      .alamat-text p {
+        color: #555; /* Warna abu-abu gelap */
+        font-size: 14px;
+        line-height: 1.6; /* Jarak antar baris */
+      }
+  
+    
+      /* Bagian sction panduan penyewaan */
+      .panduan-section {
+        background-color: #ffffff;
+        text-align: center;
+        padding: 60px 20px;
+      }
+  
+      .panduan-section h2 {
+        color: #0d3c8a;
+        font-size: 28px;
+        margin-bottom: 40px;
+      }
+  
+      /* Membuat 3 kolom grid untuk panduan */
+      .panduan-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+        gap: 20px;
+        max-width: 900px;
+        margin: auto;
+      }
+  
+      /* Style untuk tiap item panduan */
+      .panduan-item {
+        padding: 25px;
+        border-radius: 10px;
+        background-color: #f9faff; /* Belang warna 1 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Bayangan halus */
+        transition: transform 0.3s ease; /* Animasi saat hover */
+      }
+  
+      /* Belang warna 2 untuk item ke-2, ke-4, ke-6 */
+      .panduan-item:nth-child(2),
+      .panduan-item:nth-child(4),
+      .panduan-item:nth-child(6) {
+        background-color: #eef3fb;
+      }
+  
+      /* Animasi saat hover item */
+      .panduan-item:hover {
+        transform: translateY(-5px); /* Naik sedikit saat dihover */
+      }
+  
+      /* Style judul dalam panduan */
+      .panduan-item h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #0d3c8a;
+      }
+  
+      /* Style paragraf panduan */
+      .panduan-item p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+      }
+  
+      /* Bagian footer */
+      footer.footer-custom {
+        background: linear-gradient(90deg,  #115EAD, #219FE3); /* Gradasi biru */
+        color: white;
+        padding: 20px 20px;
+      }
+  
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+  
+      .footer-container h2 {
+        font-size: 28px;
+        margin: 0;
+        font-weight: bold;
+      }
+  
+      /* Style icon media sosial */
+      .social-icons {
+        display: flex;
+        gap: 20px; /* Jarak antar ikon */
+      }
+  
+      .social-icons a img {
+        width: 30px;
+        height: 30px;
+        filter: brightness(0) invert(1); /* Membuat icon berwarna putih */
+      }
+  
+     
+      /* Responsive untuk peta, panduan, dan footer*/
+      @media (max-width: 992px) {
+        .panduan-grid {
+          grid-template-columns: repeat(2, 1fr); /* Jadi 2 kolom */
+        }
+        .alamat-section iframe {
+          width: 100%;
+          max-width: 500px; /* Supaya peta mengikuti ukuran layar */
+        }
+      }
+  
+      @media (max-width: 600px) {
+        .panduan-grid {
+          grid-template-columns: 1fr; /* Jadi 1 kolom */
+        }
+        .footer-container {
+          align-items: center;
+          text-align: center; /* Footer center di HP */
+        }
+      }
+   
