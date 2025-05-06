@@ -37,7 +37,7 @@
 
         <p class="text-sm mt-4">
             Sudah Memiliki Akun?
-            <a href="#" class="text-blue-900 font-semibold hover:underline">Log in</a>
+            <a href="{{ route('login') }}" class="text-blue-900 font-semibold hover:underline">Masuk</a>
         </p>
     </div>
 

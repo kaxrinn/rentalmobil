@@ -61,3 +61,7 @@ Route::get('/landingpage_before', function () {
 Route::get('/ulasan', function () {
     return view('ulasan');
 })->name('ulasan');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');

@@ -25,7 +25,7 @@
             class="w-3/4 py-2 bg-blue-900 text-white rounded-md font-bold hover:bg-blue-800 transition duration-300">
             Simpan
           </button>
-          <a href="login.php"
+          <a href="{{ route('login') }}"
             class="w-3/4 py-2 bg-blue-400 text-white rounded-md font-bold text-center hover:bg-blue-900 transition duration-300">
             Kembali
           </a>
