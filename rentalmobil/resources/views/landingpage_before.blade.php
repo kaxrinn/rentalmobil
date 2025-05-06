@@ -1,267 +1,157 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Car Rental</title>
-    <link rel="stylesheet" href="style1.css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aplikasi Mobil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <!-- Header dan Navbar -->
-    <header>
-        <div class="hero-text" id="Beranda">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
-                <!-- Konten Navbar -->
-                <div class="container-fluid">
-                    <!-- Logo -->
-                    <a class="navbar-brand logo">
-                        <img src="uploads/logo.png" alt="Gambar Mobil">
-                        <span>CAR RENTAL</span>
-                    </a>
-                    <!-- Menu -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#Beranda">Beranda</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#brands-section">Produk</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.php">Riwayat</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#Ulasan">Ulasan</a>
-                            </li>
-                            <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a href="login.php" class="btn">Masuk Akun</a>
-                            </li>   
-                            </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Overlay untuk background gelap -->
-    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
-
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-text" id="Beranda">
-                <h1>
-                    Hanya Satu Klik,<br>
-                    Untuk Perjalan <br>
-                    Anda yang Tak<br>
-                    Terlupakan!
-                </h1>
-                <a class="btn" href="#brands-section">Pesan Sekarang</a> <!-- Tombol untuk menuju halaman produk -->
-            </div>
-            <div class="hero-image">
-                <img src="uploads/MOBILBG.png" alt="Gambar Mobil"> <!-- Gambar hero -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Section dengan Gambar dan Teks -->
-    <section id="home">
-        <div class="container">
-            <!-- Bagian Gambar -->
-            <div class="image-section">
-                <img src="uploads/TENTANG.png" alt="Setir Mobil">
-                <div class="badge">
-                    <p>Dari berbagai brand-brand ternama</p> <!-- Badge untuk informasi gambar -->
-                </div>
-            </div>
-
-            <!-- Bagian Teks -->
-            <div class="text-section">
-                <center>
-                    <h1>Percayakan perjalanan anda kepada kami</h1>
-                </center>
-                <h4>Temukan cara mudah dan cepat untuk menyewa mobil kapan saja dan di mana saja dengan aplikasi Car Rental kami!</h4>
-                <br>
-                <p>"Hanya dengan satu klik, dalam hitungan menit, Anda bisa memilih mobil sesuai kebutuhan dan langsung melakukan pemesanan. Nikmati kemudahan, kenyamanan, dan layanan terbaik yang siap menemani perjalanan Anda. Yuk, pesan sekarang dan rasakan pengalaman sewa mobil yang lebih praktis dan terpercaya!"</p>
-                <center>
-                    <a class="btn" href="#hubungi">Hubungi kami</a> <!-- Tombol untuk menuju halaman ulasan -->
-                </center>
-            </div>
-        </div>
-    </section>
-
-<!-- Brands Section -->
-<div class="container-fluid" id="brands-section">
-    <!-- Judul untuk Brands -->
-    <center><h1 class="text-section">BRANDS</h1></center>
-
-    <!-- Baris untuk menampilkan logo-brand -->
-    <div class="row justify-content-center align-items-center text-center mt-5">
-        <!-- Logo Ferrari -->
-        <div class="col-2">
-            <img src="uploads/Ferari.png" alt="Ferrari" class="brand-logo">
-        </div>
-
-        <!-- Logo Hyundai -->
-        <div class="col-2">
-            <img src="uploads/Hyundai.png" alt="Hyundai" class="brand-logo">
-        </div>
-
-        <!-- Logo Toyota -->
-        <div class="col-2">
-            <img src="uploads/Toyota.png" alt="Toyota" class="brand-logo">
-        </div>
-
-        <!-- Logo BMW -->
-        <div class="col-2">
-            <img src="uploads/BMW.png" alt="BMW" class="brand-logo">
-        </div>
-
-        <!-- Logo Mercedes -->
-        <div class="col-2">
-            <img src="uploads/Mercedes.png" alt="Mercedes" class="brand-logo">
-        </div>
+<body class="font-sans">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+    <div><img src="gambarberanda/Logo 6.png" alt="Logo" class="h-10 w-auto"></div>
+    <div class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="#Beranda" class="hover:text-blue-600">Beranda</a>
+      <a href="#Produk" class="hover:text-blue-600">Produk</a>
+      <a href="login.php" class="hover:text-blue-600">Riwayat</a>
+      <a href="#Ulasan" class="hover:text-blue-600">Ulasan</a>
+      <a href="#Kontak" class="hover:text-blue-600">Kontak</a>
     </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <!-- Products Section -->
-<div class="container-fluid" id="products-section">
-    <div class="text-center mt-3">
-        <h2 id="brand-title">Products</h2>
+    <div class="flex items-center space-x-4">
+      <div class="relative">
+        <input type="text" placeholder="Pencarian" class="border rounded-full pl-10 pr-4 py-2 text-sm">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+        </svg>
+      </div>
+      <a href="login.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</a>
     </div>
-    <div class="row justify-content-center align-items-center text-center mt-5" id="product-cards">
-        <!-- Products will be inserted here dynamically -->
+  </nav>
+
+  <!-- Slide Beranda -->
+  <section id="Beranda" class="overflow-hidden relative">
+    <div id="slides" class="flex transition-transform duration-700">
+      <img src="gambarberanda/gambar 1.jpg" class="w-full" alt="Gambar 1" />
+      <img src="gambarberanda/gambar 2.jpg" class="w-full" alt="Gambar 2" />
+      <img src="gambarberanda/gambar 3.jpg" class="w-full" alt="Gambar 3" />
     </div>
-</div>        
-</div>
-</div>
-
-<!-- Tambahkan clearfix di sini -->
-<div class="clearfix"></div>
-
-
-<!-- Bagian ulasan -->
-<div class="review-section" id="Ulasan">
-    <!-- Judul Ulasan -->
-    <h1><b>ULASAN</b></h1>
-    
-    <!-- Grid untuk menampilkan ulasan -->
-    <div class="review-grid">
-        <!-- Ulasan akan dimasukkan di sini secara dinamis -->
+    <div class="flex justify-center mt-4 space-x-2">
+      <div class="dot w-3 h-3 rounded-full bg-gray-400 cursor-pointer" onclick="moveToSlide(0)"></div>
+      <div class="dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" onclick="moveToSlide(1)"></div>
+      <div class="dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" onclick="moveToSlide(2)"></div>
     </div>
-</div>
+  </section>
 
-<!-- Bagian Hubungi kami -->
-<div class="container" id="hubungi">
-    <!-- Menampilkan pesan sukses atau error jika ada -->
-    <div id="formNotif"></div>
-    
-    <center>
-        <!-- Judul dan penjelasan singkat -->
-        <h1><b>Hubungi Kami</b></h1>
-        <p>Jika Anda memiliki kendala, saran, atau masukan tentang website kami,<br> Anda dapat mengirim pesan atau email.</p>
-
-        <!-- Formulir untuk mengirim pesan -->
-        <form action="process_contact.php" method="POST" class="contact-form" id="contactForm">
-            <input type="text" name="name" placeholder="Masukkan Nama Anda" required>
-            <input type="email" name="email" placeholder="Masukkan Email Anda" required>
-            <textarea name="message" rows="5" placeholder="Tuliskan Pesan Anda" required></textarea>
-            <button type="button" class="btn" onclick="window.location.href='login.php';">Kirim Pesan</button>
-        </form>
-    </center>
-
-    <!-- Gambar kontak -->
-    <img src="uploads/hubungi.png" width="40%" height="40%">
-</div>
-
-<!-- Bagian footer -->
-<footer class="footer">
-    <div class="container2">
-        <!-- Bagian Google Maps -->
-        <div class="maps-section">
-            <h3>Alamat Kami</h3>
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.064662479408!2d103.9796009740352!3d1.1136661622914406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98becb5643ef7%3A0x3b4a9a5464a1cf9c!2sJl.%20Tiban%20Indah%20Permai%2C%20Tiban%20Indah%2C%20Kec.%20Sekupang%2C%20Kota%20Batam%2C%20Kepulauan%20Riau!5e0!3m2!1sid!2sid!4v1734656940157!5m2!1sid!2sid" 
-                width="100%" 
-                height="300" 
-                style="border:0; margin-top: 20px; margin-bottom: 20px;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-
-        <!-- Bagian media sosial -->
-        <div class="social-section">
-            <div class="social-title"><b>Ikuti kami</b></div>
-            <div class="social-icons">
-                <!-- Tautan media sosial -->
-                <a href="https://www.instagram.com/polibatamofficial">
-                    <img src="uploads/instagram.png" alt="Instagram">
-                </a>
-                <a href="https://www.tiktok.com/@polibatamofficial">
-                    <img src="https://static.vecteezy.com/system/resources/previews/023/741/129/original/tiktok-logo-icon-social-media-icon-free-png.png" alt="TikTok">
-                </a>
-                <a href="https://twitter.com/polibatamofficial">
-                    <img src="uploads/x.png" alt="X (Twitter)">
-                </a>
-                <a href="https://chat.whatsapp.com/FEM3SNcya4qFfjOh6qEqEk">
-                    <img src="uploads/wa.png" alt="WhatsApp">
-                </a>
-            </div>
-        </div>
-
-        <!-- Bagian Links -->
-        <div class="links">
-            <div class="sumber">
-                <h3>Sponsor</h3>
-                <p>Polibatam</p>
-            </div>
-            <div class="perusahaan">
-                <h3>Perusahaan</h3>
-                <p>Car Rental.id</p>
-            </div>
-            <div class="produk">
-                <h3>Produk</h3>
-                <p>Mobil</p>
-            </div>
-        </div>
+  <!-- Tentang Aplikasi -->
+  <section class="py-12 px-6 md:px-20 bg-white">
+    <div class="flex flex-col md:flex-row items-center gap-10">
+      <img src="gambarberanda/gambar 4.jpeg" alt="Mobil" class="w-full md:w-1/2 rounded-lg" />
+      <div>
+        <h2 class="text-2xl font-bold mb-4"><span class="text-blue-600">|</span> TENTANG APLIKASI</h2>
+        <p class="mb-4">VROOM adalah solusi terbaik untuk Anda yang membutuhkan kemudahan dalam memesan mobil...</p>
+        <p>Temukan mobil yang Anda butuhkan dengan mudah, dan rasakan pengalaman reservasi yang nyaman bersama VROOM.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- Bagian Copyright -->
-    <div class="container1">
-        <div class="copyright">
-            &copy; 2024 All rights reserved.
-        </div>
+  <!-- Produk -->
+  <section id="Produk" class="py-12 bg-gray-100">
+    <h2 class="text-2xl font-bold text-center mb-8">PRODUK</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-6">
+      <div class="bg-white rounded-lg shadow p-4 text-center">
+        <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="mb-4 rounded">
+        <h3 class="text-lg font-semibold">Toyota Raize</h3>
+        <p class="text-gray-600">Rp. 250.000.000</p>
+        <a href="#" class="text-blue-600 hover:underline">Detail</a>
+      </div>
+      <!-- Tambahkan item lain sesuai kebutuhan -->
     </div>
-</footer>
+  </section>
+
+  <!-- Ulasan -->
+  <section id="Ulasan" class="py-12 px-6">
+    <h2 class="text-2xl font-bold text-center mb-8">ULASAN APLIKASI</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <div class="text-lg font-bold">15 Juni 2025</div>
+        <div class="text-yellow-500">★★★★★</div>
+        <p class="mt-2">Mobil bagus dan nyaman.</p>
+        <span class="block mt-2 text-gray-500">-Kim Mingyu-</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontak Kami -->
+  <section id="Kontak" class="py-12 px-6 bg-gray-100">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
+      <form class="bg-white p-6 rounded-lg shadow space-y-4" action="process_contact.php" method="POST">
+        <h2 class="text-xl font-bold">KONTAK KAMI</h2>
+        <input type="text" name="nama" placeholder="Masukkan nama Anda" required class="w-full border px-4 py-2 rounded">
+        <input type="email" name="email" placeholder="Masukkan email Anda" required class="w-full border px-4 py-2 rounded">
+        <textarea name="pesan" placeholder="Tulis pesan di sini" required class="w-full border px-4 py-2 rounded"></textarea>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Kirim Pesan</button>
+      </form>
+      <div class="flex flex-col justify-center items-center text-center">
+        <p class="mb-4">Ada saran atau pertanyaan tentang website kami? Kirimkan pesan Anda di bawah ini.</p>
+        <img src="gambarberanda/image.png" alt="Mobil" class="rounded">
+      </div>
+    </div>
+  </section>
+
+  <!-- Alamat Penjemputan -->
+  <section class="py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <iframe class="w-full h-96 rounded" src="https://www.google.com/maps/embed?..." allowfullscreen="" loading="lazy"></iframe>
+      <div class="mt-6 text-center">
+        <h2 class="text-xl font-bold">Kunjungi Alamat Kami</h2>
+        <p class="mt-2">Lokasi kami berada di pusat Kota Batam...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panduan Penyewaan -->
+  <section class="py-12 px-6 bg-gray-100">
+    <h2 class="text-2xl font-bold text-center mb-8">Panduan Penyewaan Mobil</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h4 class="font-semibold">1. Lengkapi Dokumen</h4>
+        <p>Siapkan SIM, KTP, dan bukti pemesanan...</p>
+      </div>
+      <!-- Tambahkan panduan lainnya -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="max-w-screen-xl mx-auto px-6 text-center">
+      <h2 class="text-xl font-bold mb-6">VEHICLE RENTAL<br>ON ONE MOVE</h2>
+      <div class="flex justify-center space-x-6 mb-4">
+        <a href="#"><img src="https://img.icons8.com/?size=100&id=32292&format=png&color=ffffff" alt="Instagram" class="h-6"></a>
+        <a href="#"><img src="https://img.icons8.com/?size=100&id=84521&format=png&color=ffffff" alt="TikTok" class="h-6"></a>
+        <a href="#"><img src="https://img.icons8.com/?size=100&id=447&format=png&color=ffffff" alt="LinkedIn" class="h-6"></a>
+        <a href="#"><img src="https://img.icons8.com/?size=100&id=16712&format=png&color=ffffff" alt="WhatsApp" class="h-6"></a>
+      </div>
+      <p class="text-sm text-gray-400">&copy; 2024 All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.getElementById('slides');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    const totalSlides = dots.length;
+
+    function moveToSlide(index) {
+      slides.style.transform = `translateX(-${index * 100}vw)`;
+      dots.forEach(dot => dot.classList.remove('bg-gray-400'));
+      dots[index].classList.add('bg-gray-400');
+      currentIndex = index;
+    }
+
+    setInterval(() => {
+      let nextIndex = (currentIndex + 1) % totalSlides;
+      moveToSlide(nextIndex);
+    }, 5000);
+  </script>
 </body>
-
-<!-- Bootstrap 4 CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<!-- Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-<!-- Bootstrap 4 JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </html>

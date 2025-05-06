@@ -52,3 +52,14 @@ Route::get('/landingpage_before', function () {
     return view('landingpage_before');
 })->name('landingpage_before');
 
+// Route untuk login
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+// Route untuk ulasan
+Route::get('/ulasan', function () {
+    return view('ulasan');
+})->name('ulasan');
+
+
