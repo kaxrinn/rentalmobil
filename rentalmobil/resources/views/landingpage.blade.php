@@ -1,3 +1,10 @@
+
+<!-- Ini belum tersambung -->
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -18,11 +25,15 @@
     <div class="nav-links">
       <a href="#Beranda">Beranda</a>
       <a href="#Produk">Produk</a>
-      <a a href="login.php" class="login-btn">Riwayat</a> <!-- ini belum tersambung -->
+      <a href="{{ route('riwayat') }}">Riwayat</a> <!-- ini belum tersambung -->
       <a href="#Ulasan">Ulasan</a>
       <a href="#Kontak">Kontak</a>
     </div>
   </div>
+
+  <button class="btn btn-link" onclick="togglePopup()">
+        <i class="fas fa-user-circle fa-2x"></i>
+      </button>
 
    <!-- Burger Menu -->
    <div class="burger-menu" onclick="toggleMenu()">
@@ -41,9 +52,15 @@
       <input type="text" placeholder="Pencarian">
     </div>
 
-<!-- Tombol Login-->
+<!-- Logo Profil -->
  <!-- Ini belum tersambung -->
-    <a href="login.php" class="login-btn">Login</a>
+    <button class="icon-btn" onclick="togglePopup()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#0d3c8a" class="bi bi-person-circle" viewBox="0 0 16 16">
+    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+  </svg>
+</button>
+
   </div>
   </nav>
 
@@ -53,6 +70,35 @@
     const navLinks = document.querySelector('.nav-links');
     navLinks.classList.toggle('active');// mengaktifkan burger menu saat layar lebih kecil
   }
+</script>
+ <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <label><strong><b>Selamat Datang,</b></strong></label>
+    <p><strong>Nama:</strong> Kim Mingyu </p>
+    <p><strong>Email:</strong> mingyukarina@gmail.com</p>
+    <p><strong>Nomor Handphone:</strong> 0895xxxxxxxx </p>
+    <div class="button-group" style="margin-top: 10px;">
+      <a href="{{ route('edit_profile') }}"class="close-btn" onclick="togglePopup()">Edit Profil</a>
+      <a href="#" class="logout-btn" onclick="confirmLogout()">Keluar</a>
+    </div>
+  </div>
+
+  <script>
+function togglePopup() {
+  var popup = document.getElementById('popup');
+  var overlay = document.getElementById('overlay');
+  // Toggle muncul/nggak
+  if (popup.style.display === 'block') {
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
+  } else {
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+  }
+}
 </script>
 
 <!--section Slide Beranda-->
@@ -119,31 +165,45 @@ setInterval(() => {
     <div class="produk-item">
       <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize">
       <h3>Toyota Raize</h3>
-      <p>Rp. 250.000.000</p>
-      <a href="#">Detail</a>
+      <p>Rp. 250.000</p>
+      <a href="{ route('detail') }}">Detail</a>
     </div>
 
     <div class="produk-item">
       <img src="gambarproduk/mobil 2.png" alt="Toyota Rush">
       <h3>Toyota Rush</h3>
-      <p>Rp. 280.000.000</p>
+      <p>Rp. 280.000</p>
       <a href="#">Detail</a>
     </div>
 
     <div class="produk-item">
       <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize">
       <h3>Toyota Raize</h3>
-      <p>Rp. 250.000.000</p>
+      <p>Rp. 250.000</p>
       <a href="#">Detail</a>
     </div>
 
     <div class="produk-item">
       <img src="gambarproduk/mobil 5.png" alt="Toyota Raize">
       <h3>Toyota Raize</h3>
-      <p>Rp. 250.000.000</p>
-      <a href="#">Detail</a>  
+      <p>Rp. 250.000</p>
+      <a href="#">Detail</a>
     </div>
-<!-- Mobil lainnya... -->
+
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 5.png" alt="Toyota Raize">
+      <h3>Toyota Raize</h3>
+      <p>Rp. 250.000</p>
+      <a href="#">Detail</a>
+    </div>
+
+    <div class="produk-item">
+      <img src="gambarproduk/mobil 5.png" alt="Toyota Raize">
+      <h3>Toyota Raize</h3>
+      <p>Rp. 250.000</p>
+      <a href="#">Detail</a>
+    </div>
+    <!-- Ulasan lainnya... -->
   </div>
 </section>
 

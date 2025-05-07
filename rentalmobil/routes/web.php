@@ -65,3 +65,12 @@ Route::get('/ulasan', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+
+Route::get('/edit_profile', function () {
+    return view('edit_profile');
+})->name('edit_profile');
+
+Route::get('/detail', function () {
+    return view('detail');
+})->name('detail');
+

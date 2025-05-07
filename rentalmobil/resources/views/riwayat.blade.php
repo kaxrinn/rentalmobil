@@ -19,11 +19,11 @@
     <!-- Links -->
     <div class="flex-1 flex justify-end">
       <div class="hidden md:flex items-center">
-        <a href="#Beranda" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Beranda</a>
-        <a href="#Produk" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Produk</a>
-        <a href="halriwayat.php" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Riwayat</a>
-        <a href="#Ulasan" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Ulasan</a>
-        <a href="#Kontak" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Kontak</a>
+        <a href="{{ route('landingpage') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Beranda</a>
+        <a href="{{ url('landingpage#Produk') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Produk</a>
+        <a href="{{ route('riwayat') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Riwayat</a>
+        <a href="{{ url('landingpage#Ulasan') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Ulasan</a>
+        <a href="{{ url('landingpage#Kontak') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Kontak</a>
       </div>
     </div>
 
@@ -60,20 +60,20 @@
   </script>
 
   <!-- Table Container -->
-  <div class="container mx-auto mt-[100px] p-5 w-[95%] bg-white rounded-md overflow-x-auto">
-    <table class="w-full border-collapse mt-6">
-      <thead>
-        <tr class="bg-[#f1f4ff] text-black">
-          <th class="border border-gray-500 p-2">No</th>
-          <th class="border border-gray-500 p-2">Kode Pemesanan</th>
-          <th class="border border-gray-500 p-2">Nama Lengkap</th>
-          <th class="border border-gray-500 p-2">Tanggal</th>
-          <th class="border border-gray-500 p-2">Mobil</th>
-          <th class="border border-gray-500 p-2">Detail Mobil</th>
-          <th class="border border-gray-500 p-2">Status</th>
-          <th class="border border-gray-500 p-2">Aksi</th>
-        </tr>
-      </thead>
+  <div class="container mx-auto mt-[80px] p-5 w-[95%] bg-white rounded-md overflow-x-auto">
+  <table class="min-w-max w-full table-auto text-sm">
+    <thead>
+      <tr class="bg-[#f1f4ff] text-black text-center">
+        <th class="border border-gray-500 p-2">No</th>
+        <th class="border border-gray-500 p-2">Kode Pemesanan</th>
+        <th class="border border-gray-500 p-2">Nama Lengkap</th>
+        <th class="border border-gray-500 p-2">Tanggal</th>
+        <th class="border border-gray-500 p-2">Mobil</th>
+        <th class="border border-gray-500 p-2">Detail Mobil</th>
+        <th class="border border-gray-500 p-2">Status</th>
+        <th class="border border-gray-500 p-2">Aksi</th>
+      </tr>
+    </thead>
       <tbody>
         <!-- Row 1 -->
         <tr>
