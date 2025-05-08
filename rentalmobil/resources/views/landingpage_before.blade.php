@@ -7,45 +7,34 @@
   <link rel="stylesheet" href="styleA-C/style.css">
 </head>
 
-<body>
-  <!-- Navbar aplikasi -->
-<nav>
-  <div class="logo">
-  <img src="gambarberanda/Logo 6.png" alt="Logo">
-  </div>
- <!-- Link di navbar -->
-  <div class="nav-center">
-    <div class="nav-links">
-      <a href="#Beranda">Beranda</a>
-      <a href="#Produk">Produk</a>
-      <a a href="{{ route('login') }}" class="login-btn">Riwayat</a> <!-- ini belum tersambung -->
-      <a href="#Ulasan">Ulasan</a>
-      <a href="#Kontak">Kontak</a>
+<body class="font-sans">
+<nav class="flex items-center justify-between px-6 py-3 bg-white shadow-md">
+  <!-- Logo kiri -->
+  <div class="flex items-center space-x-6">
+    <img src="gambarberanda/Logo 6.png" alt="Logo" class="h-10 w-auto">
+    <!-- Menu navbar -->
+    <div class="flex space-x-6 text-sm font-medium">
+      <a href="#Beranda" class="hover:text-blue-600">Beranda</a>
+      <a href="#Produk" class="hover:text-blue-600">Produk</a>
+      <a href="{{ route('login') }}" class="hover:text-blue-600">Riwayat</a>
+      <a href="#Ulasan" class="hover:text-blue-600">Ulasan</a>
+      <a href="#Kontak" class="hover:text-blue-600">Kontak</a>
     </div>
   </div>
 
-   <!-- Burger Menu -->
-   <div class="burger-menu" onclick="toggleMenu()">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
-
-<!-- Kontak pencarian -->
- <!-- Ini belum tersambung -->
-  <div class="search-login">
-    <div class="search-box">
-    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" viewBox="0 0 16 16">
-  <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-</svg>
-      <input type="text" placeholder="Pencarian">
+  <!-- Pencarian & Login -->
+  <div class="flex items-center space-x-3">
+    <div class="relative">
+      <input type="text" placeholder="Pencarian" class="border border-black rounded px-8 py-1 text-sm">
+      <svg class="absolute left-2 top-1/2 transform -translate-y-1/2 text-black" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+      </svg>
     </div>
-
-<!-- Tombol Login-->
- <!-- Ini belum tersambung -->
-    <a href="{{ route('login') }}" class="login-btn">Login</a>
+    <a href="{{ route('login') }}" class="bg-blue-800 text-white px-3 py-1 rounded hover:bg-blue-900 text-sm">Login</a>
   </div>
-  </nav>
+</nav>
+
+
 
 <!--Javascript untuk burger menu-->
 <script>
