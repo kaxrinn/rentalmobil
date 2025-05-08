@@ -62,7 +62,7 @@
  <div class="hidden fixed inset-0 bg-black bg-opacity-50 z-[999]" id="overlay" onclick="togglePopup()"></div>
 
 <!-- Popup -->
-<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#236d94] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
+<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#112769] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
   <label class="font-bold">Selamat datang,</label>
   <p><strong>Nama:</strong> Admin Contoh</p>
   <p><strong>Email:</strong> admin@example.com</p>
@@ -71,7 +71,8 @@
     <a class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="togglePopup()">Tutup</a>
     <a href="#" class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline" onclick="confirmLogout()">Keluar</a>
   </div>
-</div>
+</div> 
+
   <!-- Overlay -->
   <div class="hidden fixed inset-0 bg-black bg-opacity-50 z-[999]" id="overlay" onclick="togglePopup()"></div>
 
@@ -122,15 +123,28 @@
   </div>
   </div>
 
+  <!-- Script JavaScript -->
   <script>
-    function togglePopup() {
-      const popup = document.getElementById("popup");
-      popup.classList.toggle("active");
-    }
+    // Fungsi untuk men-toggle sidebar pada layar kecil
     function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.classList.toggle('-translate-x-full');
-}
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function confirmLogout() {
+      const confirmation = confirm("Apakah Anda yakin ingin keluar dari akun?");
+      if (confirmation) {
+        window.location.href = "{{ route('landingpage_before') }}";
+      }
+    }
+
+    function togglePopup() {
+      const popup = document.getElementById('popup');
+      const overlay = document.getElementById('overlay');
+      popup.classList.toggle('hidden');
+      overlay.classList.toggle('hidden');
+    }
   </script>
+  
 </body>
 </html>

@@ -1,63 +1,101 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aplikasi Mobil</title>
-  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="overflow-x-hidden font-sans">
 
-  <!-- Navbar -->
-  <nav class="fixed top-0 w-full max-h-[55px] bg-white flex items-center justify-between px-4 py-2 shadow-md z-[1000]">
-    
-    <!-- Logo -->
-    <div class="flex items-center">
-      <img src="gambarberanda/Logo 6.png" alt="Logo" class="h-[100px] w-auto">
+<!-- Navbar -->
+<nav class="flex items-center justify-between px-6 bg-white shadow-md fixed top-0 w-full z-50 h-16 overflow-hidden">
+  <!-- Logo kiri -->
+  <div class="flex items-center space-x-2">
+  <img src="gambarberanda/Logo 6.png" alt="Logo" class="h-[100px] w-auto">
+  </div>
+
+  <!-- Menu + Search + Login kanan -->
+  <div class="flex items-center space-x-6">
+    <!-- Menu (hidden by default, shows in larger screens) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a href="{{ route('landingpage') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Beranda</a>
+      <a href="{{ url('landingpage#Produk') }}"class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Produk</a>
+      <a href="{{ route('riwayat') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Riwayat</a>
+      <a href="{{ url('landingpage#Ulasan') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Ulasan</a>
+      <a href="{{ url('landingpage#Kontak') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Kontak</a>
     </div>
 
-    <!-- Links -->
-    <div class="flex-1 flex justify-end">
-      <div class="hidden md:flex items-center">
-        <a href="{{ route('landingpage') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Beranda</a>
-        <a href="{{ url('landingpage#Produk') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Produk</a>
-        <a href="{{ route('riwayat') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Riwayat</a>
-        <a href="{{ url('landingpage#Ulasan') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Ulasan</a>
-        <a href="{{ url('landingpage#Kontak') }}" class="text-black text-sm px-6 py-4 bg-white hover:bg-gradient-to-r hover:from-[#115EAD] hover:to-[#219FE3] hover:text-white">Kontak</a>
-      </div>
+    <!-- Search Box -->
+    <div class="hidden md:flex items-center border border-gray-400 rounded-md px-2 py-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 text-gray-600">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+      </svg>
+      <input type="text" placeholder="Pencarian" class="ml-2 outline-none bg-transparent text-sm">
     </div>
 
-    <!-- Burger Menu -->
-    <div class="md:hidden flex flex-col gap-1 w-[25px] h-[20px] justify-between cursor-pointer" onclick="toggleMenu()">
-      <div class="w-full h-1 bg-black"></div>
-      <div class="w-full h-1 bg-black"></div>
-      <div class="w-full h-1 bg-black"></div>
-    </div>
+   <!-- Tombol Icon Profil -->
+<button class="icon-btn" onclick="togglePopup()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#0d3c8a" class="bi bi-person-circle" viewBox="0 0 16 16">
+    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+  </svg>
+</button>
 
-    <!-- Search + Profile -->
-    <div class="hidden md:flex items-center gap-4 ml-4">
-      <div class="flex items-center border border-black rounded-md px-3 py-1 bg-white">
-        <svg class="w-5 h-5 text-black mr-1" xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16">
-          <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-        </svg>
-        <input type="text" placeholder="Pencarian" class="bg-transparent outline-none border-none text-sm w-[120px]">
-      </div>
-      <button class="bg-transparent p-1" onclick="togglePopup()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#0d3c8a" class="bi bi-person-circle" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+<!-- Overlay -->
+<div id="overlay" onclick="togglePopup()" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden"></div>
+
+<!-- Popup -->
+<div id="popup" class="fixed top-16 right-4 w-72 p-5 bg-gradient-to-r from-[#115EAD] to-[#219FE3] text-white rounded-l-xl shadow-lg z-50 hidden transition-all duration-300">
+  <label class="block text-lg font-bold mb-2">Selamat Datang,</label>
+  <p class="text-sm mb-1"><strong>Nama:</strong> Kim Mingyu</p>
+  <p class="text-sm mb-1"><strong>Email:</strong> mingyukarina@gmail.com</p>
+  <p class="text-sm mb-4"><strong>Nomor Handphone:</strong> 0895xxxxxxxx</p>
+  
+  <div class="flex justify-between space-x-2">
+    <a href="{{ route('edit_profile') }}" class="w-1/2 text-center bg-white text-[#1e1f4a] py-2 rounded-md font-semibold hover:underline">Edit Profil</a>
+    <a href="#" class="w-1/2 text-center bg-white text-[#1e1f4a] py-2 rounded-md font-semibold hover:underline" onclick="confirmLogout()">Keluar</a>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+  function togglePopup() {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const isVisible = popup.classList.contains('hidden');
+
+    if (isVisible) {
+      popup.classList.remove('hidden');
+      overlay.classList.remove('hidden');
+    } else {
+      popup.classList.add('hidden');
+      overlay.classList.add('hidden');
+    }
+  }
+</script>
+
+    <!-- Burger Icon for Mobile -->
+    <div class="md:hidden flex items-center space-x-3">
+      <button id="burger-btn" class="text-gray-800 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Script for Burger Menu -->
-  <script>
-    function toggleMenu() {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.classList.toggle('hidden');
-    }
-  </script>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden fixed top-0 right-0 w-3/4 h-full bg-gray-900 bg-opacity-75 z-40 transform translate-x-full transition-all duration-500 ease-in-out">
+  <div class="flex flex-col items-center justify-center h-full space-y-6">
+    <a href="{{ route('landingpage') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Beranda</a>
+    <a href="{{ url('landingpage#Produk') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Produk</a>
+    <a href="{{ route('riwayat') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Riwayat</a>
+    <a href="{{ url('landingpage#Ulasan') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Ulasan</a>
+    <a href="{{ url('landingpage#Kontak') }}"  class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Kontak</a>
+  </div>
+</div>
 
   <!-- Table Container -->
   <div class="container mx-auto mt-[80px] p-5 w-[95%] bg-white rounded-md overflow-x-auto">

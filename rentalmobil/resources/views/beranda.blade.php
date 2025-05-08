@@ -62,7 +62,7 @@
  <div class="hidden fixed inset-0 bg-black bg-opacity-50 z-[999]" id="overlay" onclick="togglePopup()"></div>
 
 <!-- Popup -->
-<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#236d94] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
+<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#112769] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
   <label class="font-bold">Selamat datang,</label>
   <p><strong>Nama:</strong> Admin Contoh</p>
   <p><strong>Email:</strong> admin@example.com</p>

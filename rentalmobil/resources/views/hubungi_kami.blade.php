@@ -60,7 +60,7 @@
   </div>
 
 <!-- Popup -->
-<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#236d94] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
+<div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#112769] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
   <label class="font-bold">Selamat datang,</label>
   <p><strong>Nama:</strong> Admin Contoh</p>
   <p><strong>Email:</strong> admin@example.com</p>
@@ -76,7 +76,7 @@
 <!-- Main Content -->
 <div class="pt-20 px-4 lg:ml-[12.5rem]">
     <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
-      <h3 class="text-xl font-semibold mb-4">List Pemesanan</h3>
+      <h3 class="text-xl font-semibold mb-4">List Pesan</h3>
       <table class="w-full min-w-[800px] border border-gray-300 text-center">
         <thead class="bg-gray-100">
           <tr>

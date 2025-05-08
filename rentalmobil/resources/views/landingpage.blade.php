@@ -1,10 +1,3 @@
-
-<!-- Ini belum tersambung -->
-<?php
-session_start();
-
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,426 +5,563 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aplikasi Mobil</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
-<body class="font-sans overflow-x-hidden">
-<nav class="fixed top-0 left-0 w-full bg-white shadow z-50 px-4 py-2 flex items-center justify-between">
-  <!-- Logo -->
-  <div class="flex items-center">
-    <img src="gambarberanda/Logo 6.png" alt="Logo" class="h-10 w-auto">
+<body class="overflow-x-hidden font-sans">
+
+<!-- Navbar -->
+<nav class="flex items-center justify-between px-6 bg-white shadow-md fixed top-0 w-full z-50 h-16 overflow-hidden">
+  <!-- Logo kiri -->
+  <div class="flex items-center space-x-2">
+  <img src="gambarberanda/Logo 6.png" alt="Logo" class="h-[100px] w-auto">
   </div>
 
-  <!-- Menu links (left aligned) -->
-  <div class="hidden md:flex items-center space-x-2 lg:space-x-4 ml-6">
-    <a href="#Beranda"
-       class="group relative px-4 py-2 text-black font-medium overflow-hidden transition duration-300">
-      <span class="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-      <span class="relative group-hover:text-white group-hover:-rotate-2 transition duration-300">Beranda</span>
-    </a>
-    <a href="#Produk"
-       class="group relative px-4 py-2 text-black font-medium overflow-hidden transition duration-300">
-      <span class="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-      <span class="relative group-hover:text-white group-hover:-rotate-2 transition duration-300">Produk</span>
-    </a>
-    <a href="{{ route('riwayat') }}"
-       class="group relative px-4 py-2 text-black font-medium overflow-hidden transition duration-300">
-      <span class="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-      <span class="relative group-hover:text-white group-hover:-rotate-2 transition duration-300">Riwayat</span>
-    </a>
-    <a href="#Ulasan"
-       class="group relative px-4 py-2 text-black font-medium overflow-hidden transition duration-300">
-      <span class="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-      <span class="relative group-hover:text-white group-hover:-rotate-2 transition duration-300">Ulasan</span>
-    </a>
-    <a href="#Kontak"
-       class="group relative px-4 py-2 text-black font-medium overflow-hidden transition duration-300">
-      <span class="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-400 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-      <span class="relative group-hover:text-white group-hover:-rotate-2 transition duration-300">Kontak</span>
-    </a>
-  </div>
+  <!-- Menu + Search + Login kanan -->
+  <div class="flex items-center space-x-6">
+    <!-- Menu (hidden by default, shows in larger screens) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a href="#Beranda" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Beranda</a>
+      <a href="#Produk" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Produk</a>
+      <a href="{{ route('riwayat') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Riwayat</a>
+      <a href="#Ulasan" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Ulasan</a>
+      <a href="#Kontak" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Kontak</a>
+    </div>
 
-  <!-- Search and Login -->
-  <div class="flex items-center space-x-4">
-    <div class="hidden md:flex items-center border border-black rounded-lg px-2 py-1">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-black mr-1" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M11 6a5 5 0 1 0-1.293 3.707l3.182 3.182a1 1 0 0 0 1.414-1.414l-3.182-3.182A4.978 4.978 0 0 0 11 6zm-5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+    <!-- Search Box -->
+    <div class="hidden md:flex items-center border border-gray-400 rounded-md px-2 py-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 text-gray-600">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
       </svg>
-      <input type="text" placeholder="Pencarian" class="bg-transparent focus:outline-none text-sm">
+      <input type="text" placeholder="Pencarian" class="ml-2 outline-none bg-transparent text-sm">
     </div>
-    <a href="login.php" class="bg-blue-800 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 transition">Login</a>
-    
-    <!-- Burger (mobile only) -->
-    <div class="md:hidden cursor-pointer" onclick="toggleMenu()">
-      <div class="w-6 h-1 bg-black my-1"></div>
-      <div class="w-6 h-1 bg-black my-1"></div>
-      <div class="w-6 h-1 bg-black my-1"></div>
-    </div>
-  </div>
-</nav>
 
-
-<!-- Slide Beranda -->
-<section id="Beranda" class="pt-[70px]">
-  <div class="relative w-screen h-screen overflow-hidden">
-    <div id="slides" class="flex transition-transform duration-1000 w-[300vw] h-full">
-      <img src="gambarberanda/gambar 1.jpg" class="w-screen h-full object-cover" alt="Gambar 1">
-      <img src="gambarberanda/gambar 2.jpg" class="w-screen h-full object-cover" alt="Gambar 2">
-      <img src="gambarberanda/gambar 3.jpg" class="w-screen h-full object-cover" alt="Gambar 3">
-    </div>
-    <div id="dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
-      <div class="w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer" onclick="moveToSlide(0)"></div>
-      <div class="w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer" onclick="moveToSlide(1)"></div>
-      <div class="w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer" onclick="moveToSlide(2)"></div>
-    </div>
-  </div>
-
-  <script>
-    const slides = document.getElementById('slides');
-    const dots = document.querySelectorAll('#dots div');
-    let currentIndex = 0;
-    const totalSlides = dots.length;
->>>>>>> Stashed changes
-
-    function moveToSlide(index) {
-      slides.style.transform = `translateX(-${index * 100}vw)`;
-      dots.forEach(dot => dot.classList.remove('opacity-100'));
-      dots[index].classList.add('opacity-100');
-      currentIndex = index;
-    }
-
-<<<<<<< Updated upstream
-<!-- Logo Profil -->
- <!-- Ini belum tersambung -->
-    <button class="icon-btn" onclick="togglePopup()">
+   <!-- Tombol Icon Profil -->
+<button class="icon-btn" onclick="togglePopup()">
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#0d3c8a" class="bi bi-person-circle" viewBox="0 0 16 16">
     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
   </svg>
 </button>
 
-  </div>
-  </nav>
+<!-- Overlay -->
+<div id="overlay" onclick="togglePopup()" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden"></div>
 
-<!--Javascript untuk burger menu-->
-<script>
-  function toggleMenu() { 
-    const navLinks = document.querySelector('.nav-links');
-    navLinks.classList.toggle('active');// mengaktifkan burger menu saat layar lebih kecil
-  }
-</script>
- <!-- Overlay -->
-  <div class="overlay" id="overlay" onclick="togglePopup()"></div>
-
-  <!-- Popup -->
-  <div class="popup" id="popup">
-    <label><strong><b>Selamat Datang,</b></strong></label>
-    <p><strong>Nama:</strong> Kim Mingyu </p>
-    <p><strong>Email:</strong> mingyukarina@gmail.com</p>
-    <p><strong>Nomor Handphone:</strong> 0895xxxxxxxx </p>
-    <div class="button-group" style="margin-top: 10px;">
-      <a href="{{ route('edit_profile') }}"class="close-btn" onclick="togglePopup()">Edit Profil</a>
-      <a href="#" class="logout-btn" onclick="confirmLogout()">Keluar</a>
-    </div>
-  </div>
-
-  <script>
-function togglePopup() {
-  var popup = document.getElementById('popup');
-  var overlay = document.getElementById('overlay');
-  // Toggle muncul/nggak
-  if (popup.style.display === 'block') {
-    popup.style.display = 'none';
-    overlay.style.display = 'none';
-  } else {
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
-  }
-}
-</script>
-
-<!--section Slide Beranda-->
-<section class="Beranda" id="Beranda">
-<div class="slider">
-  <div class="slides" id="slides">
-    <!-- 3 gambar untuk slider -->
-    <img src="gambarberanda/gambar 1.jpg" alt="Gambar 1">
-    <img src="gambarberanda/gambar 2.jpg" alt="Gambar 2">
-    <img src="gambarberanda/gambar 3.jpg" alt="Gambar 3">
-  </div>
-
-  <div class="dots" id="dots">
-    <!-- Dot navigasi slider -->
-    <div class="dot active" onclick="moveToSlide(0)"></div>
-    <div class="dot" onclick="moveToSlide(1)"></div>
-    <div class="dot" onclick="moveToSlide(2)"></div>
+<!-- Popup -->
+<div id="popup" class="fixed top-16 right-4 w-72 p-5 bg-gradient-to-r from-[#115EAD] to-[#219FE3] text-white rounded-l-xl shadow-lg z-50 hidden transition-all duration-300">
+  <label class="block text-lg font-bold mb-2">Selamat Datang,</label>
+  <p class="text-sm mb-1"><strong>Nama:</strong> Kim Mingyu</p>
+  <p class="text-sm mb-1"><strong>Email:</strong> mingyukarina@gmail.com</p>
+  <p class="text-sm mb-4"><strong>Nomor Handphone:</strong> 0895xxxxxxxx</p>
+  
+  <div class="flex justify-between space-x-2">
+    <a href="{{ route('edit_profile') }}" class="w-1/2 text-center bg-white text-[#1e1f4a] py-2 rounded-md font-semibold hover:underline">Edit Profil</a>
+    <a href="#" class="w-1/2 text-center bg-white text-[#1e1f4a] py-2 rounded-md font-semibold hover:underline" onclick="confirmLogout()">Keluar</a>
   </div>
 </div>
 
-<!-- Javascript Untuk Slide Beranda-->
+<!-- Script -->
 <script>
-// Ambil elemen slides dan dots
-const slides = document.getElementById('slides');
-const dots = document.querySelectorAll('.dot');
-let currentIndex = 0; // posisi slide sekarang
-const totalSlides = dots.length; // total slide yang ada
+  function togglePopup() {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const isVisible = popup.classList.contains('hidden');
 
-// Fungsi pindah ke slide tertentu
-function moveToSlide(index) {
-  slides.style.transform = `translateX(-${index * 100}vw)`; // geser slider
-  dots.forEach(dot => dot.classList.remove('active')); // hapus semua aktif
-  dots[index].classList.add('active'); // aktifkan dot yg dipilih
-  currentIndex = index; // update index
-}
-
-// Auto-slide tiap 5 detik
-setInterval(() => {
-  let nextIndex = (currentIndex + 1) % totalSlides; // ke slide berikutnya
-  moveToSlide(nextIndex); // panggil fungsi pindah slide
-}, 5000); // 5000 ms = 5 detik
+    if (isVisible) {
+      popup.classList.remove('hidden');
+      overlay.classList.remove('hidden');
+    } else {
+      popup.classList.add('hidden');
+      overlay.classList.add('hidden');
+    }
+  }
 </script>
 
-<!--Tentang Aplikasi-->
-<section class="aplikasi">
-  <div class="container">
-    <div class="image">
-      <img src="gambarberanda/gambar 4.jpeg" alt="Mobil">
-    </div>
-    <div class="content">
-      <h2><span>|</span> TENTANG APLIKASI</h2>
-      <p>VROOM adalah solusi terbaik untuk Anda yang membutuhkan kemudahan dalam memesan mobil. Dengan beragam pilihan mobil favorit, proses pemesanan yang cepat, serta sistem yang aman dan terpercaya, kami berkomitmen untuk memberikan layanan terbaik bagi setiap perjalanan Anda</p>
-
-      <p>Temukan mobil yang Anda butuhkan dengan mudah, dan rasakan pengalaman reservasi yang nyaman bersama VROOM.</p>
+    <!-- Burger Icon for Mobile -->
+    <div class="md:hidden flex items-center space-x-3">
+      <button id="burger-btn" class="text-gray-800 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   </div>
-</section>
+</nav>
 
-<section class="bg-[#f7f7fc] py-10 px-4">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-center text-2xl font-bold text-[#1d1c2b] mb-10">PRODUK</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-      <!-- Kartu Produk -->
-      <div class="bg-white shadow-md rounded-lg p-5 w-full max-w-xs text-center">
-        <img src="gambarproduk/mobil 2.png" alt="Toyota Raize" class="h-36 mx-auto mb-4 object-contain">
-        <h3 class="font-bold mb-1">Toyota Raize</h3>
-        <p class="text-gray-600 text-sm mb-3">Rp. 250.000.000</p>
-        <a href="#" class="bg-blue-800 text-white text-sm px-4 py-1 rounded hover:bg-blue-700 transition">Detail</a>
-      </div>
-
-      <!-- Duplikat Produk (bisa pakai loop PHP) -->
-      <div class="bg-white shadow-md rounded-lg p-5 w-full max-w-xs text-center">
-        <img src="gambarproduk/mobil 2.png"alt="Toyota Rush" class="h-36 mx-auto mb-4 object-contain">
-        <h3 class="font-bold mb-1">Toyota Rush</h3>
-        <p class="text-gray-600 text-sm mb-3">Rp. 280.000.000</p>
-        <a href="#" class="bg-blue-800 text-white text-sm px-4 py-1 rounded hover:bg-blue-700 transition">Detail</a>
-      </div>
-
-      <!-- Tambahan produk lainnya -->
-      <div class="bg-white shadow-md rounded-lg p-5 w-full max-w-xs text-center">
-        <img src="gambarproduk/mobil 2.png" alt="Toyota Raize" class="h-36 mx-auto mb-4 object-contain">
-        <h3 class="font-bold mb-1">Toyota Raize</h3>
-        <p class="text-gray-600 text-sm mb-3">Rp. 250.000.000</p>
-        <a href="#" class="bg-blue-800 text-white text-sm px-4 py-1 rounded hover:bg-blue-700 transition">Detail</a>
-      </div>
-
-      <div class="bg-white shadow-md rounded-lg p-5 w-full max-w-xs text-center">
-        <img src="gambarproduk/mobil 2.png" alt="Toyota Raize" class="h-36 mx-auto mb-4 object-contain">
-        <h3 class="font-bold mb-1">Toyota Raize</h3>
-        <p class="text-gray-600 text-sm mb-3">Rp. 250.000.000</p>
-        <a href="#" class="bg-blue-800 text-white text-sm px-4 py-1 rounded hover:bg-blue-700 transition">Detail</a>
-      </div>
-    </div>
->>>>>>> Stashed changes
-  </div>
-</section>
-<!-- ULASAN PELANGGAN -->
-<!-- ULASAN APLIKASI -->
-<div class="w-full px-4 py-16 bg-white">
-  <h2 class="text-center text-2xl md:text-3xl font-bold text-blue-900 uppercase mb-12">ULASAN APLIKASI</h2>
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-    
-    <!-- Card 1 -->
-    <div class="bg-gray-100 rounded-xl p-6 shadow text-center">
-      <p class="text-4xl font-bold text-black leading-tight">15</p>
-      <p class="text-gray-600 text-sm -mt-1">Juni</p>
-      <p class="text-gray-600 text-sm mb-2">2025</p>
-      <p class="text-blue-600 text-sm mb-3">★★★★★</p>
-      <p class="text-gray-800 mb-3">Mobil bagus dan nyaman.</p>
-      <p class="font-semibold text-black">-Kim Mingyu-</p>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="bg-gray-100 rounded-xl p-6 shadow text-center">
-      <p class="text-4xl font-bold text-black leading-tight">15</p>
-      <p class="text-gray-600 text-sm -mt-1">Juni</p>
-      <p class="text-gray-600 text-sm mb-2">2025</p>
-      <p class="text-blue-600 text-sm mb-3">★★★★★</p>
-      <p class="text-gray-800 mb-3">Ada harga ada kualitas.</p>
-      <p class="font-semibold text-black">-Jeon Wonwoo-</p>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="bg-gray-100 rounded-xl p-6 shadow text-center">
-      <p class="text-4xl font-bold text-black leading-tight">15</p>
-      <p class="text-gray-600 text-sm -mt-1">Juni</p>
-      <p class="text-gray-600 text-sm mb-2">2025</p>
-      <p class="text-blue-600 text-sm mb-3">★★★★★</p>
-      <p class="text-gray-800 mb-3">Banyak pilihan mobil yang bisa disewa dengan kualitas yang baik.</p>
-      <p class="font-semibold text-black">-Hong Jisoo-</p>
-    </div>
-
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden fixed top-0 right-0 w-3/4 h-full bg-gray-900 bg-opacity-75 z-40 transform translate-x-full transition-all duration-500 ease-in-out">
+  <div class="flex flex-col items-center justify-center h-full space-y-6">
+    <a href="#Beranda" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Beranda</a>
+    <a href="#Produk" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Produk</a>
+    <a href="{{ route('riwayat') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Riwayat</a>
+    <a href="#Ulasan" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Ulasan</a>
+    <a href="#Kontak" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Kontak</a>
   </div>
 </div>
 
+<!-- Section Beranda Slider -->
+<section id="Beranda" class="mt-[55px] w-screen relative overflow-hidden" style="height: calc(100vh - 55px);">
+  <div class="flex transition-transform duration-1000 ease-in-out w-[300vw]" id="slides">
+    <img src="gambarberanda/gambar 1.jpg" class="w-full h-full object-cover" />
+    <img src="gambarberanda/gambar 2.jpg" class="w-full h-full object-cover" />
+    <img src="gambarberanda/gambar 3.jpg" class="w-full h-full object-cover" />
+  </div>
 
-<!-- KONTAK -->
-<div class="bg-[#f6f7fb] py-16 px-4">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+  <!-- Navigasi dot -->
+  <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3" id="dots">
+    <div class="w-3 h-3 rounded-full bg-white opacity-50 cursor-pointer" onclick="moveToSlide(0)"></div>
+    <div class="w-3 h-3 rounded-full bg-white opacity-50 cursor-pointer" onclick="moveToSlide(1)"></div>
+    <div class="w-3 h-3 rounded-full bg-white opacity-50 cursor-pointer" onclick="moveToSlide(2)"></div>
+  </div>
+</section>
+
+<!-- Script Slider -->
+<script>
+  const slides = document.getElementById('slides');
+  const dots = document.querySelectorAll('#dots div');
+  let currentIndex = 0;
+  const totalSlides = dots.length;
+
+  function moveToSlide(index) {
+    slides.style.transform = `translateX(-${index * 100}vw)`;
+    dots.forEach(dot => dot.classList.remove('bg-blue-500', 'opacity-100'));
+    dots[index].classList.add('bg-blue-500', 'opacity-100');
+    currentIndex = index;
+  }
+
+  setInterval(() => {
+    const nextIndex = (currentIndex + 1) % totalSlides;
+    moveToSlide(nextIndex);
+  }, 5000);
+
+  // Burger Button Functionality
+  document.getElementById('burger-btn').addEventListener('click', () => {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const isMenuVisible = !mobileMenu.classList.contains('translate-x-full');
+    mobileMenu.classList.toggle('translate-x-full', isMenuVisible);
+  });
+</script>
+
+<!-- Tentang Aplikasi -->
+<section class="mt-[50px] py-[50px] px-[20px] bg-white shadow-lg rounded-[10px] mb-[15px]">
+  <div class="flex items-center justify-center gap-[40px] max-w-[1200px] w-full mx-auto">
+    <div class="w-full max-w-[300px]">
+      <img src="gambarberanda/gambar 4.jpeg" alt="Mobil" class="w-full rounded-[10px]">
+    </div>
+    <div class="max-w-[600px]">
+      <h2 class="text-[24px] text-[#1e2b5c] font-bold mb-[20px]">
+        <span class="text-[#1e2b5c] font-bold mr-[10px]">|</span> TENTANG APLIKASI
+      </h2>
+      <p class="text-[16px] leading-[1.7] mb-[15px]">
+        VROOM adalah solusi terbaik untuk Anda yang membutuhkan kemudahan dalam memesan mobil. Dengan beragam pilihan mobil favorit, proses pemesanan yang cepat, serta sistem yang aman dan terpercaya, kami berkomitmen untuk memberikan layanan terbaik bagi setiap perjalanan Anda
+      </p>
+      <p class="text-[16px] leading-[1.7] mb-[15px]">
+        Temukan mobil yang Anda butuhkan dengan mudah, dan rasakan pengalaman reservasi yang nyaman bersama VROOM.
+      </p>
+    </div>
+  </div>
+</section>
+<section id="Produk" class="py-[50px] px-[20px] text-center bg-[#F9FAFF]">
+  <h2 class="text-[28px] text-[#1e2b5c] font-bold mb-[30px]">PRODUK</h2>
+
+  <div class="relative max-w-[1200px] mx-auto">
+    <!-- Tombol Panah Kiri -->
+    <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#1e2b5c] text-white p-2 rounded-full shadow">
+      &lt;
+    </button>
+
+    <!-- Wrapper dengan overflow-hidden -->
+    <div class="overflow-hidden">
+      <!-- Produk Container -->
+      <div id="produk-container" class="flex transition-transform duration-300 ease-in-out gap-6">
+        <!-- Ulangi blok ini sesuai jumlah produk -->
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex space-x-2">
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+</div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+</div>
+
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+</div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 4.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+
+        <div class="min-w-[250px] flex-shrink-0 border border-gray-300 rounded-[10px] p-4 bg-white shadow-md">
+          <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
+          <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
+          <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
+          <div class="flex justify-center space-x-2">
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
+  <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
+</div>
+        </div>
+        <!-- Tambahkan lebih banyak produk di sini -->
+        <!-- Copy-paste div di atas untuk produk tambahan -->
+      </div>
+    </div>
+
+    <!-- Tombol Panah Kanan -->
+    <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#1e2b5c] text-white p-2 rounded-full shadow">
+      &gt;
+    </button>
+  </div>
+</section>
+
+<script>
+  const container = document.getElementById('produk-container');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+
+  let scrollAmount = 0;
+  const scrollStep = 270; // Sesuaikan dengan lebar item + gap
+
+  next.addEventListener('click', () => {
+    scrollAmount += scrollStep;
+    container.style.transform = `translateX(-${scrollAmount}px)`;
+  });
+
+  prev.addEventListener('click', () => {
+    scrollAmount -= scrollStep;
+    if (scrollAmount < 0) scrollAmount = 0;
+    container.style.transform = `translateX(-${scrollAmount}px)`;
+  });
+</script>
+
+
+<!-- section ulasan -->
+<section class="py-[50px] px-[20px] bg-white text-center shadow-md mb-6" id="Ulasan">
+  <h2 class="text-[28px] text-[#1e2b5c] mb-[40px] font-bold">ULASAN APLIKASI</h2>
+
+  <div class="relative max-w-[1200px] mx-auto overflow-hidden" id="slider">
+    <!-- Wrapper Scroll -->
+    <div id="ulasanWrapper" class="flex overflow-x-auto scroll-smooth space-x-6 no-scrollbar">
+      <!-- 1 -->
+      <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">15</span>
+          <div><div>Juni</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Mobilnya bersih dan nyaman. Sangat cocok untuk perjalanan jauh.</p>
+        <span class="block mt-3 font-semibold">-Kim Mingyu-</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">10</span>
+          <div><div>Mei</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+        <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">10</span>
+          <div><div>Mei</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+        <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">10</span>
+          <div><div>Mei</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+        <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">10</span>
+          <div><div>Mei</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+        <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+      </div> 
+
+<!-- 2 -->
+<div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+  <div class="flex justify-center mb-2">
+    <span class="text-[32px] font-bold mr-2">10</span>
+    <div><div>Mei</div><div>2025</div></div>
+  </div>
+  <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+  <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+  <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+</div> 
+
+<!-- 2 -->
+<div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+  <div class="flex justify-center mb-2">
+    <span class="text-[32px] font-bold mr-2">10</span>
+    <div><div>Mei</div><div>2025</div></div>
+  </div>
+  <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+  <p class="text-sm text-gray-700">Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.</p>
+  <span class="block mt-3 font-semibold">-Jeon Wonwoo-</span>
+</div>  
     
+     <!-- 1 -->
+     <div class="bg-[#f9faff] rounded-lg p-4 min-w-[250px] text-center flex-shrink-0">
+        <div class="flex justify-center mb-2">
+          <span class="text-[32px] font-bold mr-2">15</span>
+          <div><div>Juni</div><div>2025</div></div>
+        </div>
+        <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
+        <p class="text-sm text-gray-700">Mobilnya bersih dan nyaman. Sangat cocok untuk perjalanan jauh.</p>
+        <span class="block mt-3 font-semibold">-Kim Mingyu-</span>
+      </div>
+
+      <!-- Tambahkan item ulasan lainnya di sini... -->
+    </div>
+
+    <!-- Dots -->
+    <div class="flex justify-center mt-6 space-x-2" id="dotsContainer"></div>
+  </div>
+</section>
+
+<script>
+  const ulasanWrapper = document.getElementById("ulasanWrapper");
+  const dotsContainer = document.getElementById("dotsContainer");
+  const cards = ulasanWrapper.children;
+  const cardWidth = 270; // harus cocok dengan min-width + gap
+  const totalCards = cards.length;
+  const maxVisible = Math.floor(ulasanWrapper.offsetWidth / cardWidth);
+  const totalPages = Math.ceil(totalCards / maxVisible);
+
+  let currentPage = 0;
+  let intervalId;
+
+  // Buat dots
+  for (let i = 0; i < totalPages; i++) {
+    const dot = document.createElement("div");
+    dot.className = "w-3 h-3 rounded-full bg-gray-300 cursor-pointer";
+    dot.addEventListener("click", () => {
+      currentPage = i;
+      scrollToPage(i);
+      resetInterval();
+    });
+    dotsContainer.appendChild(dot);
+  }
+
+  function updateDots() {
+    [...dotsContainer.children].forEach((dot, idx) => {
+      dot.classList.toggle("bg-[#1e2b5c]", idx === currentPage);
+      dot.classList.toggle("bg-gray-300", idx !== currentPage);
+    });
+  }
+
+  function scrollToPage(page) {
+    ulasanWrapper.scrollLeft = page * cardWidth * maxVisible;
+    updateDots();
+  }
+
+  function autoScroll() {
+    currentPage = (currentPage + 1) % totalPages;
+    scrollToPage(currentPage);
+  }
+
+  function resetInterval() {
+    clearInterval(intervalId);
+    intervalId = setInterval(autoScroll, 3000);
+  }
+
+  // Jalankan
+  scrollToPage(0);
+  intervalId = setInterval(autoScroll, 3000);
+
+  // Pause saat hover
+  ulasanWrapper.addEventListener("mouseenter", () => clearInterval(intervalId));
+  ulasanWrapper.addEventListener("mouseleave", resetInterval);
+</script>
+
+<!--form kontak -->
+<section id="Kontak" class="relative bg-[#f7f9ff] py-24 px-10 overflow-hidden">
+  <div class="max-w-7xl mx-auto relative flex items-center justify-start">
+
     <!-- Form Kontak -->
-    <div class="bg-white rounded-xl shadow-md p-8">
-      <h2 class="text-2xl font-bold text-blue-900 mb-6">KONTAK KAMI</h2>
-      <form action="process_contact.php" method="POST">
-        <div class="mb-4">
-          <input type="text" name="nama" placeholder="Masukkan nama Anda" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-        <div class="mb-4">
-          <input type="email" name="email" placeholder="Masukkan email Anda" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-        <div class="mb-6">
-          <textarea name="pesan" rows="4" placeholder="Tulis pesan di sini" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-        </div>
-        <button type="submit"
-          class="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-800 transition-colors font-semibold">
-          Kirim Pesan
-        </button>
-      </form>
-    </div>
+    <form action="process_contact.php" method="POST"
+      class="relative z-0 bg-white p-10 rounded-xl shadow-xl w-[550px] space-y-5 ml-[140px]">
+      <h2 class="text-3xl font-bold text-[#1e2b5c]">KONTAK KAMI</h2>
+      <input type="text" name="nama" placeholder="Masukkan nama Anda" required
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1e2b5c]">
+      <input type="email" name="email" placeholder="Masukkan email Anda" required
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1e2b5c]">
+      <textarea name="pesan" placeholder="Tulis pesan di sini" required rows="4"
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1e2b5c]"></textarea>
+      <button type="submit"
+        class="w-full py-3 bg-[#1e2b5c] text-white rounded-md font-semibold hover:bg-[#151f47] transition">
+        Kirim Pesan
+      </button>
+    </form>
 
-    <!-- Gambar & Deskripsi -->
-    <div class="text-center md:text-left">
-      <p class="text-gray-700 text-lg mb-6">
+    <!-- Gambar Mobil & Teks -->
+    <div class="absolute right-0 top-[20%] z-10 w-[650px] -mt-10">
+      <p class="text-[16px] w-[300px] mb-4 ml-[150px] text-gray-700">
         Ada saran atau pertanyaan tentang website kami? Kirimkan pesan Anda di bawah ini.
       </p>
-      <img src="gambarberanda/image.png" alt="Mobil" class="mx-auto md:mx-0 max-w-full h-auto">
-    </div>
-  </div>
-</div>
-
-
-<!-- ALAMAT -->
-<div class="bg-[#f6f7fb] py-16 px-4">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    
-    <!-- Google Maps Embed -->
-    <div class="w-full h-full">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.013726968598!2d104.02542406643984!3d1.1235985279674244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3b3e9d994bbb%3A0x2d3b5b751f059edf!2sBatam%20Centre!5e0!3m2!1sen!2sid!4v1649876543210!5m2!1sen!2sid" 
-        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        class="rounded-md shadow-md">
-      </iframe>
-    </div>
-
-    <!-- Deskripsi -->
-    <div class="text-center md:text-left">
-      <h3 class="text-2xl font-bold text-blue-900 mb-4">Kunjungi Alamat Kami</h3>
-      <p class="text-gray-700 text-base">
-        Lokasi kami berada di pusat Kota Batam, Kepulauan Riau. Mudah dijangkau dari berbagai arah dan dekat dengan pusat transportasi utama.
-      </p>
+      <img src="gambarberanda/image.png" alt="Mobil" class="w-full">
     </div>
 
   </div>
-</div>
+</section>
+
+<!-- Section alamat penjemputan mobil-->
+<section class="bg-gradient-to-r from-[#eef3fb] to-[#ffffff] py-16 px-5 flex flex-wrap justify-center items-center gap-10">
+  <!-- Peta google maps-->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31912.464679468314!2d104.04287462104998!3d1.1185155169965935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sbatam%20Center!5e0!3m2!1sid!2sid!4v1745720739558!5m2!1sid!2sid" 
+    class="w-[400px] h-[250px] border-none rounded-lg">
+  </iframe> 
+
+  <!-- Teks Alamat penjemputan-->
+  <div class="max-w-[400px]">
+    <h2 class="text-[#1e2b5c] text-[26px] font-bold mb-4">Kunjungi Alamat Kami</h2>
+    <p class="text-[#555] text-[14px] leading-6">Lokasi kami berada di pusat Kota Batam, Kepulauan Riau. Mudah dijangkau dari berbagai arah dan dekat dengan pusat transportasi utama.</p>
+  </div>
+</section>
 
 
-<!-- PANDUAN PENYEWAAN -->
-<div class="bg-[#f6f7fb] py-16 px-4">
-  <div class="max-w-7xl mx-auto text-center">
-    <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-10">Panduan Penyewaan Mobil</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      <!-- Langkah 1 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">1. Lengkapi Dokumen</h3>
-        <p class="text-gray-700 text-sm">Siapkan SIM, KTP, dan bukti pemesanan untuk mempercepat proses sewa.</p>
-      </div>
-      
-      <!-- Langkah 2 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">2. Cek Kondisi Mobil</h3>
-        <p class="text-gray-700 text-sm">Periksa mobil secara menyeluruh, termasuk ban, lampu, dan mesin.</p>
-      </div>
-      
-      <!-- Langkah 3 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">3. Periksa Bahan Bakar</h3>
-        <p class="text-gray-700 text-sm">Pastikan bahan bakar sesuai dengan ketentuan awal sewa kendaraan.</p>
-      </div>
-      
-      <!-- Langkah 4 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">4. Cek Fitur Utama</h3>
-        <p class="text-gray-700 text-sm">Pastikan AC, rem, wiper, dan sistem audio berfungsi dengan baik.</p>
-      </div>
-      
-      <!-- Langkah 5 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">5. Minta Kontak Darurat</h3>
-        <p class="text-gray-700 text-sm">Selalu minta nomor kontak untuk keadaan darurat selama masa sewa.</p>
-      </div>
-      
-      <!-- Langkah 6 -->
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="font-bold text-blue-800 mb-2">6. Pahami Aturan Sewa</h3>
-        <p class="text-gray-700 text-sm">Baca dan pahami aturan denda, keterlambatan, dan area penggunaan kendaraan.</p>
-      </div>
-
+<!-- Section Panduan Penyewaan mobil-->
+<section class="bg-white text-center font-bold py-16 px-5">
+  <h2 class="text-[#0d3c8a] text-[28px] mb-10">Panduan Penyewaan Mobil</h2>
+  <!-- Grid Panduan-->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[900px] mx-auto">
+    <div class="panduan-item p-6 rounded-xl bg-[#f9faff] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">1. Lengkapi Dokumen</h4>
+      <p class="text-[#666] text-[14px] leading-6">Siapkan SIM, KTP, dan bukti pemesanan untuk mempercepat proses sewa.</p>
+    </div>
+    <div class="panduan-item p-6 rounded-xl bg-[#eef3fb] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">2. Cek Kondisi Mobil</h4>
+      <p class="text-[#666] text-[14px] leading-6">Periksa mobil secara menyeluruh, termasuk ban, lampu, dan mesin.</p>
+    </div>
+    <div class="panduan-item p-6 rounded-xl bg-[#f9faff] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">3. Periksa Bahan Bakar</h4>
+      <p class="text-[#666] text-[14px] leading-6">Pastikan bahan bakar sesuai dengan ketentuan awal sewa kendaraan.</p>
+    </div>
+    <div class="panduan-item p-6 rounded-xl bg-[#eef3fb] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">4. Cek Fitur Utama</h4>
+      <p class="text-[#666] text-[14px] leading-6">Pastikan AC, rem, wiper, dan sistem audio berfungsi dengan baik.</p>
+    </div>
+    <div class="panduan-item p-6 rounded-xl bg-[#f9faff] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">5. Minta Kontak Darurat</h4>
+      <p class="text-[#666] text-[14px] leading-6">Selalu minta nomor kontak untuk keadaan darurat selama masa sewa.</p>
+    </div>
+    <div class="panduan-item p-6 rounded-xl bg-[#eef3fb] shadow-md transition-transform duration-300 hover:translate-y-[-5px]">
+      <h4 class="text-[#0d3c8a] text-[18px] font-bold mb-3">6. Pahami Aturan Sewa</h4>
+      <p class="text-[#666] text-[14px] leading-6">Baca dan pahami aturan denda, keterlambatan, dan area penggunaan kendaraan.</p>
     </div>
   </div>
-</div>
+</section>
 
+<!-- Bagian Footer -->
+<footer class="bg-gradient-to-r from-[#115EAD] to-[#219FE3] text-white py-5 px-5">
+  <div class="max-w-[1200px] mx-auto flex flex-col items-start gap-2">
+    <h2 class="text-[28px] font-bold m-0">VEHICLE RENTAL<br>ON ONE MOVE</h2>
 
-<!-- FOOTER -->
-<footer class="text-white">
-  <!-- Kotak biru gradasi -->
-  <div class="bg-gradient-to-r from-blue-800 to-blue-400 py-10">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start">
-        <!-- Kiri: Teks dan ikon -->
-        <div class="mb-6 md:mb-0">
-          <h2 class="text-2xl font-bold leading-tight">VEHICLE RENTAL</h2>
-          <h3 class="text-2xl font-bold mb-4">ON ONE MOVE</h3>
-          <div class="flex space-x-4">
-            <a href="#" class="transform hover:scale-110 transition duration-300">
-              <i class="fab fa-instagram text-2xl"></i>
-            </a>
-            <a href="#" class="transform hover:scale-110 transition duration-300">
-              <i class="fab fa-tiktok text-2xl"></i>
-            </a>
-            <a href="#" class="transform hover:scale-110 transition duration-300">
-              <i class="fab fa-linkedin-in text-2xl"></i>
-            </a>
-            <a href="#" class="transform hover:scale-110 transition duration-300">
-              <i class="fab fa-whatsapp text-2xl"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+    <!-- Link dan ikon media sosial -->
+    <div class="flex gap-5">
+      <a href="https://www.instagram.com/polibatamofficial">
+        <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=000000" alt="Instagram" class="w-[30px] h-[30px] filter invert">
+      </a>
+      <a href="https://www.tiktok.com/@polibatamofficial">
+        <img src="https://img.icons8.com/?size=100&id=84521&format=png&color=000000" alt="TikTok" class="w-[30px] h-[30px] filter invert">
+      </a>
+      <a href="https://www.linkedin.com/feed/">
+        <img src="https://img.icons8.com/?size=100&id=447&format=png&color=000000" alt="Linkedln" class="w-[30px] h-[30px] filter invert">
+      </a>
+      <a href="https://chat.whatsapp.com/FEM3SNcya4qFfjOh6qEqEk">
+        <img src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000" alt="WhatsApp" class="w-[30px] h-[30px] filter invert">
+      </a>    
     </div>
-  </div>
-
-  <!-- Copyright di luar kotak biru -->
-  <div class="text-center text-sm text-gray-700 py-4 bg-white">
-    &copy; 2024 All rights reserved.
   </div>
 </footer>
 
+<!-- Copyright-->
+<center>
+  <div class="copyright text-sm text-gray-400 py-2">
+    &copy; 2024 All rights reserved.
+  </div>
+</center>
 
-<!-- Tambahkan Font Awesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
