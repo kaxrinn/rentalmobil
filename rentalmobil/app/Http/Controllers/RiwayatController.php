@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class RiwayatController extends Controller
+class HistoryController extends Controller
 {
     public function index()
     {
-        // Kamu bisa load data dari database di sini kalau perlu.
-        return view('riwayat');
+        // Ambil riwayat pemesanan user
+        $bookings = Auth::user()->bookings()->latest()->get();
+        
+        return view('history.index', compact('bookings'));
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HistoryController;
 
 // Route untuk pemesanan
 Route::get('/pemesanan', function () {
@@ -74,6 +78,20 @@ Route::get('/detail', function () {
     return view('detail');
 })->name('detail');
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+
+
+// Halaman Utama
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Kontak
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Profil
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('edit_profile');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+// Riwayat
+Route::get('/riwayat', [HistoryController::class, 'index'])->name('riwayat');
+
+// Logout
+Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');

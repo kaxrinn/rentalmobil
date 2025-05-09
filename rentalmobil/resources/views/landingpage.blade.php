@@ -159,6 +159,8 @@
     </div>
   </div>
 </section>
+
+<!-- produk -->
 <section id="Produk" class="py-[50px] px-[20px] text-center bg-[#F9FAFF]">
   <h2 class="text-[28px] text-[#1e2b5c] font-bold mb-[30px]">PRODUK</h2>
 
@@ -177,7 +179,7 @@
           <img src="gambarproduk/mobil 1.jpg" alt="Toyota Raize" class="w-full h-[150px] object-cover mb-3 rounded">
           <h3 class="text-[18px] font-semibold mb-2">Toyota Raize</h3>
           <p class="text-[16px] text-gray-600 mb-3">Rp. 250.000.000</p>
-          <div class="flex space-x-2">
+          
           <div class="flex justify-center space-x-2">
   <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Detail</a>
   <a href="#" class="inline-block px-4 py-2 bg-[#1e2b5c] text-white rounded text-sm">Sewa</a>
