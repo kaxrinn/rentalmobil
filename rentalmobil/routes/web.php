@@ -8,6 +8,8 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\EditProfileController;
+
 
 // Halaman Utama
 Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
@@ -49,5 +51,6 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkReques
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 // EDIT PROFIL
-Route::get('/edit-profile', [AuthController::class, 'editProfile'])->middleware('auth')->name('edit.profile');
-Route::post('/edit-profile', [AuthController::class, 'updateProfile'])->middleware('auth')->name('update.profile');
+
+Route::get('/edit-profile', [EditProfileController::class, 'show'])->name('edit-profile');
+Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');
