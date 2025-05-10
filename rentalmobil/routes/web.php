@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgotPasswordController;
 
 // Halaman Utama
 Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
@@ -33,3 +35,19 @@ Route::get('/mobiladmin', [AdminController::class, 'mobiladmin'])->name('mobilad
 Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasanadmin');
 
 Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hubungiadmin');
+
+// REGISTRASI
+Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('registerpage');
+Route::post('/registerpage', [AuthController::class, 'register'])->name('registerpage.post');
+
+// LOGIN
+Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('loginpage');
+Route::post('/loginpage', [AuthController::class, 'login'])->name('loginpage.post');
+
+// RESET PASSWORD
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// EDIT PROFIL
+Route::get('/edit-profile', [AuthController::class, 'editProfile'])->middleware('auth')->name('edit.profile');
+Route::post('/edit-profile', [AuthController::class, 'updateProfile'])->middleware('auth')->name('update.profile');
