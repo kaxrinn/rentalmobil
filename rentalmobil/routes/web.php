@@ -17,10 +17,6 @@ Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landi
 // Kontak
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-// Profil
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('edit_profile');
-Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
 // Riwayat
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
 
@@ -51,6 +47,5 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkReques
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 // EDIT PROFIL
-
 Route::get('/edit-profile', [EditProfileController::class, 'show'])->name('edit-profile');
 Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');

@@ -7,7 +7,7 @@
         <div class="text-center mb-1">
             <img src="/gambarberanda/Logo 6 - Copy.png" alt="Logo VROOM" class="mx-auto w-24">
             <h2 class="text-xl font-reguler text-gray-800">
-                Edit Profile
+                Buat Akun Anda<br>Untuk Memulai!
             </h2>
         </div>
 
@@ -18,27 +18,22 @@
 
         <form action="{{ route('registerpage.post') }}" method="POST" class="space-y-4 flex flex-col items-center">
             @csrf
-       
             <input type="text" name="name" placeholder="Nama Pengguna" class="{{ $inputClass }}" required>
-         
             <input type="email" name="email" placeholder="Email" class="{{ $inputClass }}" required>
-        
             <input type="tel" name="phone" placeholder="Nomor Handphone" class="{{ $inputClass }}" required>
-            
-            <input type="password" name="password" placeholder="Password baru/kosongkan" class="{{ $inputClass }}" required>
+            <input type="password" name="password" placeholder="Kata Sandi" class="{{ $inputClass }}" required>
 
             <button type="submit"
                 class="w-[250px] mx-auto flex justify-center bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition duration-300 text-sm">
-                Simpan
-            </button>
-            <button type="batal"
-                class="w-[250px] mx-auto flex justify-center bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition duration-300 text-sm">
-                Batal
+                DAFTAR
             </button>
 
         </form>
 
-       
+        <p class="text-center text-sm text-gray-700 mt-3">
+            Sudah punya akun?
+            <a href="{{ route('loginpage') }}" class="text-blue-900 font-semibold hover:underline">Masuk</a>
+        </p>
     </div>
 </div>
 @endsection
