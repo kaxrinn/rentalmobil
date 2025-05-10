@@ -13,6 +13,7 @@
 <body class="overflow-x-hidden font-sans">
   @include('components.navbar')
   
+
   <main>
     @yield('content')
   </main>
