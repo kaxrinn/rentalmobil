@@ -14,8 +14,7 @@
         <th class="border border-gray-500 p-2">Mobil</th>
         <th class="border border-gray-500 p-2">Detail Mobil</th>
         <th class="border border-gray-500 p-2">Status</th>
-        <th class="border border-gray-500 p-2">Aksi</th>
-      </tr>
+        <th class="border border-gray-500 p-2">Aksi</th> </tr>
     </thead>
     <tbody>
       @for ($i = 1; $i <= 4; $i++)
