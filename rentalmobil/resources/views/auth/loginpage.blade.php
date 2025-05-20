@@ -5,7 +5,7 @@
 <div class="flex items-center justify-center min-h-screen px-4">
     <div class="bg-white bg-opacity-90 p-6 rounded-xl shadow-md max-w-md w-[400px] h-[450px] flex flex-col items-center justify-center">
         <div class="text-center mb-4">
-            <img src="/gambarberanda/Logo 6 - Copy.png" alt="Logo VROOM" class="mx-auto w-24">
+            <img src="gambarberanda/Logo 6 - Copy.png" alt="Logo VROOM" class="mx-auto w-24">
             <h2 class="text-xl font-reguler text-gray-800">
                 Selamat Datang di VROOM!
             </h2>

@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingpageController;
+use App\Http\Controllers\LandingpagebfController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\EditProfileController;
 
 // Halaman Utama
 Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
+
+Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('landingpagebf');
 
 // Kontak
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
