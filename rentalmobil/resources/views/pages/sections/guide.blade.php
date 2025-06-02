@@ -1,5 +1,5 @@
 <!-- Section Panduan Penyewaan mobil-->
-<section class="bg-white text-center font-bold py-16 px-5">
+<section class="bg-white text-center font-bold pt-10 pb-20 px-5">
   <h2 class="text-[#0d3c8a] text-[28px] mb-10">Panduan Penyewaan Mobil</h2>
   <!-- Grid Panduan-->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[900px] mx-auto">

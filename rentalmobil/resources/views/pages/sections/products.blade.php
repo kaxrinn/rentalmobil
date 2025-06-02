@@ -19,13 +19,13 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
     .bg-primary {
-      background-color: #1e2b5c;
+      background-color: #3b82f6;
     }
     .text-primary {
-      color: #1e2b5c;
+      color: #3b82f6;
     }
     .border-primary {
-      border-color: #1e2b5c;
+      border-color: #3b82f6;
     }
     .form-section {
       padding: 1rem;
@@ -308,19 +308,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Fetch car data from API
-
-
-  // Fetch car data from API - PERBAIKAN DI SINI
   fetch('/api/mobils')
-    .then(response => {
-      // Tambahkan pengecekan status response
-      if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.status);
-      }
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-      // Pastikan mengakses properti yang benar
       mobilsData = data.data || [];
       
       if (!mobilsData.length) {
@@ -332,31 +322,8 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
       console.error('Error fetching car data:', error);
-      carouselItems.innerHTML = `<p class="text-center text-red-600 py-12 w-full">Error: ${error.message}</p>`;
+      carouselItems.innerHTML = '<p class="text-center text-red-600 py-12 w-full">Gagal memuat data mobil.</p>';
     });
-     
-     
-  // Fungsi untuk setup event listener pada tombol detail dan sewa
-  function setupProductButtons() {
-    document.querySelectorAll('.btn-detail').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const kodeMobil = this.getAttribute('data-id');
-        const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
-        showDetailModal(mobil);
-      });
-    });
-    
-    document.querySelectorAll('.btn-sewa').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const kodeMobil = this.getAttribute('data-id');
-        const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
-        if (!this.disabled) {
-          showPemesananModal(mobil);
-        }
-      });
-    });
-  }
-  
 
   // Render carousel with 3 products per slide
   function renderCarousel() {
@@ -372,12 +339,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const slideProducts = mobilsData.slice(startIdx, endIdx);
       
       slideProducts.forEach(mobil => {
-        const isDisabled = mobil.jumlah <= 0;
-        const buttonClass = isDisabled ? 
-          'bg-gray-300 text-gray-500 px-3 py-1 rounded text-sm cursor-not-allowed' : 
-          'bg-primary hover:bg-blue-700 text-white px-3 py-1 rounded text-sm';
-        const buttonText = isDisabled ? 'Habis' : 'Sewa';
-        
         const productCard = document.createElement('div');
         productCard.className = 'product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200';
         productCard.innerHTML = `
@@ -390,10 +351,9 @@ document.addEventListener('DOMContentLoaded', function() {
                       data-id="${mobil.kode_mobil}">
                 <i class="fas fa-info-circle mr-1"></i> Detail
               </button>
-              <button class="btn-sewa ${buttonClass}"
-                      data-id="${mobil.kode_mobil}"
-                      ${isDisabled ? 'disabled' : ''}>
-                <i class="fas fa-shopping-cart mr-1"></i> ${buttonText}
+              <button class="btn-sewa bg-primary hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                      data-id="${mobil.kode_mobil}">
+                <i class="fas fa-shopping-cart mr-1"></i> Sewa
               </button>
             </div>
           </div>
@@ -401,12 +361,40 @@ document.addEventListener('DOMContentLoaded', function() {
         slide.appendChild(productCard);
       });
       
+      // Add empty cards if less than 3 products in last slide
+      while (slide.children.length < itemsPerSlide) {
+        const emptyCard = document.createElement('div');
+        emptyCard.className = 'invisible';
+        slide.appendChild(emptyCard);
+      }
+      
       carouselItems.appendChild(slide);
     }
     
+    // Set up event listeners for detail and rent buttons
     setupProductButtons();
   }
 
+  // Set up event listeners for product buttons
+  function setupProductButtons() {
+    document.querySelectorAll('.btn-detail').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const kodeMobil = this.getAttribute('data-id');
+        const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+        showDetailModal(mobil);
+      });
+    });
+    
+    document.querySelectorAll('.btn-sewa').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const kodeMobil = this.getAttribute('data-id');
+        const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+        showPemesananModal(mobil);
+      });
+    });
+  }
+
+  // Show detail modal
   function showDetailModal(mobil) {
     document.getElementById('detail-merk').textContent = `${mobil.merek} ${mobil.jenis}`;
     document.getElementById('detail-image').src = mobil.foto_url;
@@ -416,22 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('detail-mesin').textContent = mobil.mesin;
     document.getElementById('detail-harga').textContent = `Rp${Number(mobil.harga_harian).toLocaleString('id-ID')}/hari`;
     
-    // Update button sewa di modal detail
-    const btnSewa = document.getElementById('btn-sewa');
-    if (mobil.jumlah <= 0) {
-      btnSewa.disabled = true;
-      btnSewa.classList.remove('bg-primary', 'hover:bg-blue-700');
-      btnSewa.classList.add('bg-gray-300', 'cursor-not-allowed');
-      btnSewa.innerHTML = '<i class="fas fa-times mr-2"></i> Habis';
-    } else {
-      btnSewa.disabled = false;
-      btnSewa.classList.remove('bg-gray-300', 'cursor-not-allowed');
-      btnSewa.classList.add('bg-primary', 'hover:bg-blue-700');
-      btnSewa.innerHTML = '<i class="fas fa-shopping-cart mr-2"></i> Sewa Sekarang';
-    }
-    
-    // Set up rent button
-    btnSewa.onclick = () => {
+    // Set up rent button in detail modal
+    document.getElementById('btn-sewa').onclick = () => {
       detailModalInstance.hide();
       showPemesananModal(mobil);
     };

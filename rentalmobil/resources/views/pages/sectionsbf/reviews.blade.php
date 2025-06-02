@@ -1,5 +1,5 @@
-<section class="py-[50px] px-[20px] bg-white text-center shadow-md mb-6" id="Ulasan">
-  <h2 class="text-[28px] text-[#1e2b5c] mb-[40px] font-bold">ULASAN APLIKASI</h2>
+<section class="pt-[60px] pb-[20px] px-[20px] bg-white text-center shadow-md mb-2 " id="Ulasan">
+  <h2 class="text-[28px] text-[#1e2b5c] mb-[30px] font-bold">ULASAN APLIKASI</h2>
 
   <div class="relative max-w-[1200px] mx-auto overflow-hidden">
     <div id="reviews-carousel" class="relative" data-carousel="static">
@@ -33,7 +33,6 @@
               @endif
             @endfor
           </div>
-        </div>
         @endfor
       </div>
 

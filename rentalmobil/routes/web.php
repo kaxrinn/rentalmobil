@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\LandingpagebfController;
-use App\Http\Controllers\ContactController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\RiwayatController;
@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EditProfileController;
-use App\Http\Controllers\MobilController;
+use App\Http\Controllers\PesanController;
 
 
 // Halaman Utama
@@ -19,7 +19,6 @@ Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landi
 Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('landingpagebf');
 
 // Kontak
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Riwayat
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
@@ -32,22 +31,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
 Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
 
-
-Route::prefix('mobiladmin')->group(function () {
-    Route::get('/', [MobilController::class, 'index'])->name('mobiladmin');
-    Route::get('/{kode_mobil}/edit', [MobilController::class, 'edit'])->name('mobil.edit');
-    Route::post('/', [MobilController::class, 'store'])->name('mobil.store');
-    Route::put('/{kode_mobil}', [MobilController::class, 'update'])->name('mobil.update');
-    Route::delete('/{kode_mobil}', [MobilController::class, 'destroy'])->name('mobil.destroy');
-    Route::get('/debug-storage', [MobilController::class, 'debugStorage']);
-});
-Route::get('/storage/{path}', function ($path) {
-    $file = storage_path('app/public/' . $path);
-    if (file_exists($file)) {
-        return response()->file($file);
-    }
-    abort(404);
-})->where('path', '.*');
+Route::get('/mobiladmin', [AdminController::class, 'mobiladmin'])->name('mobiladmin');
 
 Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasanadmin');
 
@@ -68,3 +52,4 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 // EDIT PROFIL
 Route::get('/edit-profile', [EditProfileController::class, 'show'])->name('edit-profile');
 Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');
+
