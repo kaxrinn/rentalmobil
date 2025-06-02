@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id('id_order');
+        Schema::create('pemesanan', function (Blueprint $table) {
+            $table->id('id_penyewaan');
             $table->string('kode_mobil');
-            $table->string('nama_pemesan');
+            $table->string('nama_penyewa');
             $table->string('email');
-            $table->string('no_hp');
+            $table->string('nomor_telepon');
             $table->text('alamat');
             $table->date('tanggal_pengambilan');
             $table->date('tanggal_pengembalian');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('total_harga', 12, 2);
             $table->string('ktp_path');
             $table->string('bukti_pembayaran_path');
-            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['Menunggu', 'Konfirmasi', 'Selesai', 'Batal'])->default('Menunggu');
             $table->timestamps();
 
             $table->foreign('kode_mobil')->references('kode_mobil')->on('mobil');
@@ -30,6 +30,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('pemesanan');
     }
 };

@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Pemesanan extends Model
 {
     use HasFactory;
 
-    protected $table = 'orders';
-    protected $primaryKey = 'id_order';
+    protected $table = 'pemesanan';
+    protected $primaryKey = 'id_penyewaan';
     public $timestamps = true;
 
     protected $fillable = [
         'kode_mobil',
-        'nama_pemesan',
+        'nama_penyewa',
         'email',
-        'no_hp',
+        'nomor_telepon',
         'alamat',
         'tanggal_pengambilan',
         'tanggal_pengembalian',

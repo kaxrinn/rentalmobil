@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('pemesanan', function (Blueprint $table) {
             $table->string('alamat_pengambilan')->after('alamat');
             $table->string('nomor_rekening')->after('total_harga');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('pemesanan', function (Blueprint $table) {
             $table->dropColumn(['alamat_pengambilan', 'nomor_rekening']);
         });
     }

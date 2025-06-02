@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MobilController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PemesananController;
 
 Route::middleware('api')->group(function () {
     // Endpoint untuk mendapatkan semua mobil yang tersedia
@@ -13,5 +13,5 @@ Route::middleware('api')->group(function () {
     Route::get('/mobils/{kode_mobil}', [MobilController::class, 'apiShow']);
     
     // Endpoint untuk membuat order baru
-    Route::post('/orders', [OrderController::class, 'store']);
+    Route::post('/pemesanan', [PemesananController::class, 'store']);
 });

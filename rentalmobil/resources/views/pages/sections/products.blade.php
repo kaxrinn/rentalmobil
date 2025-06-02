@@ -128,7 +128,7 @@
 </div>
 
 <!-- Order Modal -->
-<div id="order-modal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 overflow-y-auto modal-overlay">
+<div id="pemesanan-modal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 overflow-y-auto modal-overlay">
   <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
       <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -140,19 +140,19 @@
           <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-2xl leading-6 font-bold text-primary">Formulir Pemesanan</h3>
-              <button type="button" class="close-order-modal text-gray-400 hover:text-gray-500">
+              <button type="button" class="close-pemesanan-modal text-gray-400 hover:text-gray-500">
                 <span class="sr-only">Close</span>
                 <i class="fas fa-times"></i>
               </button>
             </div>
             
-            <form id="order-form" enctype="multipart/form-data" class="space-y-4">
-              <input type="hidden" name="kode_mobil" id="order-kode-mobil" />
+            <form id="pemesanan-form" enctype="multipart/form-data" class="space-y-4">
+              <input type="hidden" name="kode_mobil" id="pemesanan-kode-mobil" />
               <input type="hidden" name="harga_harian" id="harga-harian" />
               
               <div class="form-section bg-blue-50">
                 <h3 class="font-bold text-primary mb-2">Mobil</h3>
-                <p id="order-mobil-detail" class="text-gray-700"></p>
+                <p id="pemesanan-mobil-detail" class="text-gray-700"></p>
               </div>
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -259,7 +259,7 @@
               </div>
               
               <div class="flex justify-end space-x-3">
-                <button type="button" class="close-order-modal bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+                <button type="button" class="close-pemesanan-modal bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
                   Batal
                 </button>
                 <button type="submit" class="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
@@ -285,8 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const prevBtn = document.getElementById('carousel-prev');
   const nextBtn = document.getElementById('carousel-next');
   const detailModal = document.getElementById('detail-modal');
-  const orderModal = document.getElementById('order-modal');
-  const orderForm = document.getElementById('order-form');
+  const pemesananModal = document.getElementById('pemesanan-modal');
+  const pemesananForm = document.getElementById('pemesanan-form');
   
   // State variables
   let mobilsData = [];
@@ -296,15 +296,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize modals
   const detailModalInstance = new Modal(detailModal);
-  const orderModalInstance = new Modal(orderModal);
+  const pemesananModalInstance = new Modal(pemesananModal);
 
   // Close modal handlers
   document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', () => detailModalInstance.hide());
   });
   
-  document.querySelectorAll('.close-order-modal').forEach(btn => {
-    btn.addEventListener('click', () => orderModalInstance.hide());
+  document.querySelectorAll('.close-pemesanan-modal').forEach(btn => {
+    btn.addEventListener('click', () => pemesananModalInstance.hide());
   });
 
   // Fetch car data from API
@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.addEventListener('click', function() {
         const kodeMobil = this.getAttribute('data-id');
         const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
-        showOrderModal(mobil);
+        showPemesananModal(mobil);
       });
     });
   }
@@ -407,24 +407,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up rent button in detail modal
     document.getElementById('btn-sewa').onclick = () => {
       detailModalInstance.hide();
-      showOrderModal(mobil);
+      showPemesananModal(mobil);
     };
     
     detailModalInstance.show();
   }
 
   // Show order modal
-  function showOrderModal(mobil) {
-    document.getElementById('order-kode-mobil').value = mobil.kode_mobil;
+  function showPemesananModal(mobil) {
+    document.getElementById('pemesanan-kode-mobil').value = mobil.kode_mobil;
     document.getElementById('harga-harian').value = mobil.harga_harian;
-    document.getElementById('order-mobil-detail').textContent = 
+    document.getElementById('pemesanan-mobil-detail').textContent = 
       `${mobil.merek} ${mobil.jenis} - Rp${Number(mobil.harga_harian).toLocaleString('id-ID')}/hari`;
     
     // Reset form
-    orderForm.reset();
+    pemesananForm.reset();
     document.getElementById('total-pembayaran').textContent = 'Rp. 0';
     
-    orderModalInstance.show();
+    pemesananModalInstance.show();
   }
 
   // Carousel navigation
@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle form submission
-  orderForm.addEventListener('submit', async function(e) {
+  pemesananForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const formData = new FormData(this);
@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
       
-      const response = await fetch('/api/orders', {
+      const response = await fetch('/api/pemesanan', {
         method: 'POST',
         body: formData,
         headers: {
@@ -497,10 +497,10 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Show success message and close modal
       alert('Pemesanan berhasil dikirim!');
-      orderModalInstance.hide();
+      pemesananModalInstance.hide();
       
     } catch (error) {
-      console.error('Error submitting order:', error);
+      console.error('Error submitting pemesanan:', error);
       alert(error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.');
     } finally {
       // Reset button state
