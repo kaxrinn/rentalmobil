@@ -60,7 +60,7 @@
                     <td class="border px-4 py-2">Rp. {{ number_format($mobil->harga_harian, 0, ',', '.') }}</td>
                     <td class="border px-4 py-2">{{ $mobil->jumlah_kursi }}</td>
                     <td class="border px-4 py-2">{{ $mobil->mesin }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->jumlah }}</td>
+                    <td class="border px-4 py-2 {{ $mobil->jumlah <= 0 ? 'bg-red-100' : '' }}">{{ $mobil->jumlah }}</td>
                     <td class="border px-4 py-2">{{ $mobil->created_at->format('d/m/Y') }}</td>
                     <td class="border px-4 py-2">
                         <div class="flex flex-col items-center gap-1">

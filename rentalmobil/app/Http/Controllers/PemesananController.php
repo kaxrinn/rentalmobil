@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
-use App\Models\Mobil; // Tambah import
+use App\Models\Mobil;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +23,7 @@ class PemesananController extends Controller
             'alamat_pengambilan' => 'required',
             'nomor_rekening' => 'required',
             'ktp' => 'required|file|mimes:jpeg,png,pdf|max:2048',
-            'payment_proof' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Validasi bukti pembayaran
+            'payment_proof' => 'required|file|mimes:jpeg,png,pdf|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -34,12 +34,20 @@ class PemesananController extends Controller
         }
 
         try {
+            // Cek stok mobil
+            $mobil = Mobil::where('kode_mobil', $request->kode_mobil)->firstOrFail();
+            if ($mobil->jumlah <= 0) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['kode_mobil' => ['Stok mobil habis, tidak dapat melakukan pemesanan']]
+                ], 422);
+            }
+
             // Simpan file
             $ktpPath = $request->file('ktp')->store('public/ktp');
             $paymentPath = $request->file('payment_proof')->store('public/payments');
 
             // Hitung harga
-            $mobil = Mobil::where('kode_mobil', $request->kode_mobil)->firstOrFail();
             $days = \Carbon\Carbon::parse($request->pickup_date)
                 ->diffInDays($request->return_date) + 1;
             
@@ -60,6 +68,9 @@ class PemesananController extends Controller
                 'bukti_pembayaran_path' => str_replace('public/', '', $paymentPath),
                 'status' => 'Menunggu',
             ]);
+
+            // Kurangi stok mobil
+            $mobil->decrement('jumlah');
 
             return response()->json([
                 'success' => true,

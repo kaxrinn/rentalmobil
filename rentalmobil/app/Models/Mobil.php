@@ -35,7 +35,6 @@ class Mobil extends Model
         'updated_at' => 'datetime'
     ];
 
-    // Auto-generate kode_mobil saat creating
     protected static function boot()
     {
         parent::boot();
@@ -47,7 +46,6 @@ class Mobil extends Model
         });
     }
 
-    // Generator kode mobil
     private static function generateKodeMobil()
     {
         $prefix = 'MB';
@@ -65,39 +63,16 @@ class Mobil extends Model
         return $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
     }
 
-    // Accessor untuk format harga
-    public function getFormattedHargaAttribute()
-    {
-        return 'Rp. ' . number_format($this->harga_harian, 0, ',', '.');
-    }
-
-    // Accessor untuk URL foto - DIPERBAIKI MENGGUNAKAN PUBLIC/IMAGES
     public function getFotoUrlAttribute()
     {
-        // Jika tidak ada foto, return default image
         if (!$this->foto) {
             return asset('images/default-car.png');
         }
         
-        // Cek apakah file ada di public/images
         if (file_exists(public_path('images/' . $this->foto))) {
             return asset('images/' . $this->foto);
         }
         
-        // Jika file tidak ditemukan, return default image
         return asset('images/default-car.png');
-    }
-
-    // Method untuk debug path foto
-    public function debugFotoPath()
-    {
-        return [
-            'foto_name' => $this->foto,
-            'public_path' => public_path('images/' . $this->foto),
-            'file_exists' => file_exists(public_path('images/' . $this->foto)),
-            'url' => $this->foto_url,
-            'asset_url' => asset('images/' . $this->foto),
-            'default_exists' => file_exists(public_path('images/default-car.png'))
-        ];
     }
 }
