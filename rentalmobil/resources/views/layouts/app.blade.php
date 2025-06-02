@@ -9,6 +9,8 @@
   <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="overflow-x-hidden font-sans">
   @include('components.navbar')

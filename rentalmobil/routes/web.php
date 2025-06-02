@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\MobilController;
 
 
 // Halaman Utama
@@ -31,7 +32,22 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
 Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
 
-Route::get('/mobiladmin', [AdminController::class, 'mobiladmin'])->name('mobiladmin');
+
+Route::prefix('mobiladmin')->group(function () {
+    Route::get('/', [MobilController::class, 'index'])->name('mobiladmin');
+    Route::get('/{kode_mobil}/edit', [MobilController::class, 'edit'])->name('mobil.edit');
+    Route::post('/', [MobilController::class, 'store'])->name('mobil.store');
+    Route::put('/{kode_mobil}', [MobilController::class, 'update'])->name('mobil.update');
+    Route::delete('/{kode_mobil}', [MobilController::class, 'destroy'])->name('mobil.destroy');
+    Route::get('/debug-storage', [MobilController::class, 'debugStorage']);
+});
+Route::get('/storage/{path}', function ($path) {
+    $file = storage_path('app/public/' . $path);
+    if (file_exists($file)) {
+        return response()->file($file);
+    }
+    abort(404);
+})->where('path', '.*');
 
 Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasanadmin');
 
