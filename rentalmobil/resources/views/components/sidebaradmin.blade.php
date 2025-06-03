@@ -25,5 +25,10 @@
           <i class="fas fa-envelope mr-3"></i> Pesan
         </a>
       </li>
+     <li>
+      <a href="{{ route('penggunaadmin') }}" class="flex items-center px-4 py-3 bg-white text-black rounded-md font-medium hover:bg-gray-200">
+        <i class="fas fa-user mr-3"></i> Pengguna
+      </a>
+    </li>
   </ul>
 </div>

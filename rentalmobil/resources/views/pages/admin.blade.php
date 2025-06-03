@@ -44,6 +44,16 @@
           </div>
         </div>
       </a>
+
+       <!-- Card 5 -->
+      <a href="{{ route('penggunaadmin') }}" class="no-underline">
+        <div class="rounded-lg bg-[#e74c3c] text-white p-5 shadow">
+          <i class="fa fa-comments text-1xl"></i>
+          <div class="flex justify-between items-center">
+            <p class="text-lg font-bold">List Data Pengguna</p>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 @endsection

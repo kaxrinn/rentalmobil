@@ -63,7 +63,7 @@ Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('regi
 Route::post('/registerpage', [AuthController::class, 'registerpage'])->name('registerpage.post');
 
 // LOGIN
-Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('loginpage');
+Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/loginpage', [AuthController::class, 'login'])->name('loginpage.post');
 
 //LOGOUT
@@ -92,6 +92,9 @@ Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name(
 
 });
 
+// Halaman admin untuk melihat daftar pengguna
+Route::get('/admin/pengguna', [AdminController::class, 'daftarPengguna'])->name('penggunaadmin');
+Route::delete('/admin/pengguna/{id}', [AdminController::class, 'hapusPengguna'])->name('pengguna.hapus');
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 });

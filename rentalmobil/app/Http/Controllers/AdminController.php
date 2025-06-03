@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -26,6 +27,18 @@ class AdminController extends Controller
     public function hubungiadmin()
     {
         return view('pages.hubungiadmin');
+    }
+     public function daftarPengguna()
+    {
+    $pengguna = User::all();
+    return view('pages.penggunaadmin', compact('pengguna'));
+    }
+    public function hapusPengguna($id)
+    {
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return redirect()->route('penggunaadmin')->with('success', 'Pengguna berhasil dihapus.');
     }
 }
 
