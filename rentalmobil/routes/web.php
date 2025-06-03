@@ -29,9 +29,6 @@ Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
 // Logout
 Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 
-//route untuk halaman admin page
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-
 Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
 
 
@@ -90,7 +87,7 @@ Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name(
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
