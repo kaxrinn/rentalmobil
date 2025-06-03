@@ -30,33 +30,9 @@ class Pemesanan extends Model
         'status',
     ];
 
-    protected static function booted()
-    {
-        static::updated(function ($pemesanan) {
-            $originalStatus = $pemesanan->getOriginal('status');
-            $newStatus = $pemesanan->status;
-            
-            // Handle pengurangan/penambahan stok mobil
-            if (($originalStatus === 'Menunggu' || $originalStatus === 'Konfirmasi') && 
-                in_array($newStatus, ['Selesai', 'Batal'])) {
-                // Tambah kembali stok mobil
-                $mobil = Mobil::where('kode_mobil', $pemesanan->kode_mobil)->first();
-                if ($mobil) {
-                    $mobil->increment('jumlah');
-                }
-            } elseif (in_array($newStatus, ['Menunggu', 'Konfirmasi']) && 
-                !in_array($originalStatus, ['Menunggu', 'Konfirmasi'])) {
-                // Kurangi stok mobil
-                $mobil = Mobil::where('kode_mobil', $pemesanan->kode_mobil)->first();
-                if ($mobil && $mobil->jumlah > 0) {
-                    $mobil->decrement('jumlah');
-                }
-            }
-        });
-    }
-
     public function mobil()
     {
         return $this->belongsTo(Mobil::class, 'kode_mobil', 'kode_mobil');
     }
+    
 }

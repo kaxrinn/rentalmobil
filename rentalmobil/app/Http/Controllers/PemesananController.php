@@ -19,7 +19,7 @@ class PemesananController extends Controller
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'pickup_date' => 'required|date|after_or_equal:today',
-            'return_date' => 'required|date|after:pickup_date',
+            'return_date' => 'required|date|after_or_equal:pickup_date',
             'alamat_pengambilan' => 'required',
             'nomor_rekening' => 'required',
             'ktp' => 'required|file|mimes:jpeg,png,pdf|max:2048',
@@ -34,20 +34,12 @@ class PemesananController extends Controller
         }
 
         try {
-            // Cek stok mobil
-            $mobil = Mobil::where('kode_mobil', $request->kode_mobil)->firstOrFail();
-            if ($mobil->jumlah <= 0) {
-                return response()->json([
-                    'success' => false,
-                    'errors' => ['kode_mobil' => ['Stok mobil habis, tidak dapat melakukan pemesanan']]
-                ], 422);
-            }
-
             // Simpan file
             $ktpPath = $request->file('ktp')->store('public/ktp');
             $paymentPath = $request->file('payment_proof')->store('public/payments');
 
             // Hitung harga
+            $mobil = Mobil::where('kode_mobil', $request->kode_mobil)->firstOrFail();
             $days = \Carbon\Carbon::parse($request->pickup_date)
                 ->diffInDays($request->return_date) + 1;
             
@@ -69,12 +61,15 @@ class PemesananController extends Controller
                 'status' => 'Menunggu',
             ]);
 
-            // Kurangi stok mobil
-            $mobil->decrement('jumlah');
+            // Jika request dari form (bukan API), redirect ke riwayat
+            if (!$request->wantsJson()) {
+                return redirect()->route('riwayat')->with('success', 'Pemesanan berhasil!');
+            }
 
             return response()->json([
                 'success' => true,
                 'data' => $pemesanan,
+                'redirect' => route('riwayat'), // Tambahkan info redirect untuk AJAX
                 'message' => 'Pemesanan berhasil!'
             ]);
 
@@ -85,4 +80,13 @@ class PemesananController extends Controller
             ], 500);
         }
     }
+    public function riwayat()
+{
+    // Ambil data pemesanan dari database
+    $pemesanans = Pemesanan::with('mobil')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('pages.riwayat', compact('pemesanans'));
+}
 }

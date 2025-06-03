@@ -13,7 +13,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PesanController;
-
+use App\Http\Controllers\PemesananController;
 
 // Halaman Utama
 Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
@@ -24,7 +24,8 @@ Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('l
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Riwayat
-Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
+Route::get('/riwayat', [PemesananController::class, 'riwayat'])->name('riwayat');
+
 
 // Logout
 Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
@@ -33,7 +34,7 @@ Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
 Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
-
+Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
 
 Route::prefix('mobiladmin')->group(function () {
     Route::get('/', [MobilController::class, 'index'])->name('mobiladmin');
