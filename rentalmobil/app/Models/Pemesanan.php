@@ -34,5 +34,12 @@ class Pemesanan extends Model
     {
         return $this->belongsTo(Mobil::class, 'kode_mobil', 'kode_mobil');
     }
-    
+     
+    public function getBuktiPembayaranUrlAttribute()
+{
+    if (!$this->bukti_pembayaran_path) {
+        return asset('images/default-payment.png');
+    }
+    return asset('storage/' . $this->bukti_pembayaran_path);
+}
 }

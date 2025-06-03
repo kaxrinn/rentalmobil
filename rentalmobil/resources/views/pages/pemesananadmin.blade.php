@@ -1,25 +1,28 @@
 @extends('layouts.appadmin')
 
-@section('title', 'pemesananadmin')
+@section('title', 'Admin Pemesanan')
 
 @section('content')
 <div class="pt-10">
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
     <h3 class="text-xl font-semibold mb-4">List Pemesanan</h3>
+    
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+      {{ session('success') }}
+    </div>
+    @endif
+
     <table class="w-full min-w-[800px] border border-gray-300 text-center">
-      <!-- Table content remains the same as before -->
       <thead class="bg-gray-100">
         <tr>
           <th class="p-3 border">NO</th>
           <th class="p-3 border">ID PENYEWAAN</th>
           <th class="p-3 border">NAMA PENYEWA</th>
           <th class="p-3 border">EMAIL</th>
-          <th class="p-3 border">ALAMAT</th>
           <th class="p-3 border">TGL AMBIL</th>
           <th class="p-3 border">TGL KEMBALI</th>
           <th class="p-3 border">MOBIL</th>
-          <th class="p-3 border">TEMPAT</th>
-          <th class="p-3 border">NOREK</th>
           <th class="p-3 border">TOTAL</th>
           <th class="p-3 border">BUKTI</th>
           <th class="p-3 border">STATUS</th>
@@ -27,159 +30,153 @@
         </tr>
       </thead>
       <tbody>
+        @forelse($pemesanans as $index => $pemesanan)
         <tr>
-          <td class="p-3 border">1</td>
-          <td class="p-3 border">CR00123</td>
-          <td class="p-3 border">Kim Mingyu</td>
-          <td class="p-3 border">KarinaMingyu@gmail.com</td>
-          <td class="p-3 border">Jl. tiban 1</td>
-          <td class="p-3 border">2025-04-20</td>
-          <td class="p-3 border">2025-04-25</td>
+          <td class="p-3 border">{{ $index + 1 }}</td>
+          <td class="p-3 border">PSN-{{ $pemesanan->id_penyewaan }}</td>
+          <td class="p-3 border">{{ $pemesanan->nama_penyewa }}</td>
+          <td class="p-3 border">{{ $pemesanan->email }}</td>
+          <td class="py-2 px-4 border">
+    {{ date('d M Y', strtotime($pemesanan->tanggal_pengambilan)) }}
+</td>
+          <td class="py-2 px-4 border">
+    {{ date('d M Y', strtotime($pemesanan->tanggal_pengembalian)) }}
+</td>
           <td class="p-3 border">
-            <img src="{{ asset('images/mobil 2.png') }}" alt="Toyota Rush" class="max-w-[150px] h-auto mx-auto">
+            @if($pemesanan->mobil)
+              {{ $pemesanan->mobil->merek }} {{ $pemesanan->mobil->jenis }}
+            @else
+              <span class="text-red-500">Mobil dihapus</span>
+            @endif
           </td>
-          <td class="p-3 border">Jl. tiban indah permai</td>
-          <td class="p-3 border">3312401067123 a/n kharina</td>
-          <td class="p-3 border">Rp.300.000</td>
+          <td class="p-3 border">Rp {{ number_format($pemesanan->total_harga, 0, ',', '.') }}</td>
           <td class="p-3 border">
-            <img src="{{ asset('images/buktibyr.jpg') }}" alt="bukti" class="max-w-[150px] h-auto mx-auto">
-          </td>
+    <a href="{{ $pemesanan->bukti_pembayaran_url }}" target="_blank" class="text-blue-500 hover:underline">
+        <img src="{{ $pemesanan->bukti_pembayaran_url }}" 
+             alt="Bukti Pembayaran" 
+             class="max-w-[100px] h-auto mx-auto">
+    </a>
+</td>
           <td class="p-3 border">
-            <span class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold text-sm inline-flex items-center justify-center">Konfirmasi</span>
+            @php
+              $statusColors = [
+                'Menunggu' => 'bg-yellow-500',
+                'Konfirmasi' => 'bg-green-500',
+                'Batal' => 'bg-red-500',
+                'Selesai' => 'bg-blue-500'
+              ];
+            @endphp
+            <span class="{{ $statusColors[$pemesanan->status] }} text-white px-3 py-1 rounded-full text-xs">
+              {{ $pemesanan->status }}
+            </span>
           </td>
           <td class="p-3 border">
             <div class="flex gap-2 justify-center">
-              <button onclick="openEditModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">Edit</button>
-              <button class="bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">Hapus</button>
+              <button onclick="openEditModal('{{ $pemesanan->id_penyewaan }}', '{{ $pemesanan->status }}')" 
+                      class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                Edit
+              </button>
+              <form action="{{ route('admin.pemesanan.destroy', $pemesanan->id_penyewaan) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" 
+                        class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
+                        onclick="return confirm('Hapus pemesanan ini?')">
+                  Hapus
+                </button>
+              </form>
             </div>
           </td>
         </tr>
+        @empty
+        <tr>
+          <td colspan="11" class="p-4 text-center">Tidak ada data pemesanan</td>
+        </tr>
+        @endforelse
       </tbody>
     </table>
-  </div>
-</div>
 
-<!-- Edit Modal -->
-<div id="editModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto">
-  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <!-- Background overlay -->
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-    <!-- Modal content -->
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="mb-6">
-          <h2 class="text-xl font-bold">Edit Data Pemesanan</h2>
-        </div>
-
-        <form class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Mobil -->
-            <div class="col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-900">Mobil</label>
-              <input type="text" value="Toyota Rush" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Tanggal Pengambilan -->
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Tanggal Pengambilan</label>
-              <input type="text" value="20/04/2025" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Tanggal Pengembalian -->
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Tanggal Pengembalian</label>
-              <input type="text" value="25/04/2025" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Nama Lengkap -->
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Nama Lengkap</label>
-              <input type="text" value="Kim Mingyu" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Email -->
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">Email</label>
-              <input type="email" value="mingyukarina@gmail.com" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- No Hp -->
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-900">No Hp</label>
-              <input type="text" value="09849574856" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Alamat -->
-            <div class="col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-900">Alamat</label>
-              <textarea rows="2" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md">Nongsa</textarea>
-            </div>
-
-            <!-- No Rekening Penjual -->
-            <div class="col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-900">No Rekening Penjual</label>
-              <input type="text" value="3312401067 a/n Kharina" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Jumlah Total Pembayaran -->
-            <div class="col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-900">Jumlah Total Pembayaran</label>
-              <input type="text" value="Rp. 500.000" readonly class="w-full p-2 text-sm bg-gray-100 border border-gray-300 rounded-md" />
-            </div>
-
-            <!-- Bukti KTP dan Pembayaran -->
-            <div class="col-span-2 grid grid-cols-2 gap-4">
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Bukti KTP</label>
-                <img src="{{ asset('gambarberanda/bukti ktp.jpg') }}" alt="KTP" class="w-full h-auto max-h-40 object-contain rounded-md shadow" />
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-900">Bukti Pembayaran</label>
-                <img src="{{ asset('gambarberanda/bukti tf.jpg') }}" alt="Bukti Transfer" class="w-full h-auto max-h-40 object-contain rounded-md shadow" />
-              </div>
-            </div>
-
-            <!-- Status (Editable) -->
-            <div class="col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-900">Status</label>
-              <select class="w-full p-2 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                <option>Konfirmasi</option>
-                <option>Tertahan</option>
-                <option>Batal</option>
-                <option>Selesai</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Tombol -->
-          <div class="flex justify-end gap-3 pt-4">
-            <button type="button" onclick="closeEditModal()" class="px-4 py-1.5 text-sm rounded-md bg-gray-300 text-gray-700 font-medium hover:bg-gray-400">Batal</button>
-            <button type="submit" class="px-4 py-1.5 text-sm rounded-md bg-[#0c1c56] text-white font-medium hover:bg-[#08123b]">Simpan</button>
-          </div>
-        </form>
-      </div>
+    <!-- Pagination -->
+    <div class="mt-4">
+      {{ $pemesanans->links() }}
     </div>
   </div>
 </div>
 
+<!-- Edit Modal -->
+<div id="editModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto" style="margin-top: 60px;">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        
+        <!-- Konten Modal -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Edit Status Pemesanan</h3>
+                <form id="editForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select name="status" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="Menunggu">Menunggu</option>
+                            <option value="Konfirmasi">Konfirmasi</option>
+                            <option value="Batal">Batal</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-gray-300 rounded-md text-gray-700 hover:bg-gray-400">
+                            Batal
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 rounded-md text-white hover:bg-blue-700">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-  function openEditModal() {
-    document.getElementById('editModal').classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-  }
+function openEditModal(id, currentStatus) {
+  const form = document.getElementById('editForm');
+  form.action = `/admin/pemesanan/${id}/status`;
+  form.querySelector('select[name="status"]').value = currentStatus;
+  document.getElementById('editModal').classList.remove('hidden');
+}
 
-  function closeEditModal() {
-    document.getElementById('editModal').classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
-  }
-
-  // Close modal when clicking outside
-  window.onclick = function(event) {
-    const modal = document.getElementById('editModal');
-    if (event.target === modal) {
-      closeEditModal();
-    }
-  }
+function closeEditModal() {
+  document.getElementById('editModal').classList.add('hidden');
+}
+// Ganti form delete dengan AJAX
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (confirm('Apakah Anda yakin ingin menghapus pemesanan ini?')) {
+            const form = this.closest('form');
+            const url = form.action;
+            
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    form.closest('tr').remove();
+                } else {
+                    alert('Gagal menghapus pemesanan');
+                }
+            });
+        }
+    });
+});
 </script>
 @endsection

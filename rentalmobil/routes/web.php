@@ -14,7 +14,7 @@ use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PemesananController;
-
+use App\Http\Controllers\AdminPemesananController;
 // Halaman Utama
 Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
 
@@ -33,6 +33,11 @@ Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 //route untuk halaman admin page
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
+Route::prefix('admin')->group(function () {
+    Route::get('/pemesanan', [AdminPemesananController::class, 'index'])->name('admin.pemesanan');
+    Route::put('/pemesanan/{id}/status', [AdminPemesananController::class, 'updateStatus'])->name('admin.pemesanan.status');
+    Route::delete('/pemesanan/{id}', [AdminPemesananController::class, 'destroy'])->name('admin.pemesanan.destroy');
+});
 Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
 Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
 
