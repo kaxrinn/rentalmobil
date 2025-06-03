@@ -63,16 +63,20 @@ class Mobil extends Model
         return $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
     }
 
-    public function getFotoUrlAttribute()
-    {
-        if (!$this->foto) {
-            return asset('images/default-car.png');
-        }
-        
-        if (file_exists(public_path('images/' . $this->foto))) {
-            return asset('images/' . $this->foto);
-        }
-        
+   public function getFotoUrlAttribute()
+{
+    if (!$this->foto) {
         return asset('images/default-car.png');
     }
+
+    // Cek langsung di public/images
+    $path = public_path('images/' . $this->foto);
+    if (file_exists($path)) {
+        return asset('images/' . $this->foto);
+    }
+
+    return asset('images/default-car.png');
+}
+
+    
 }

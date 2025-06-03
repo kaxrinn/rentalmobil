@@ -19,13 +19,13 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
     .bg-primary {
-      background-color: #3b82f6;
+      background-color: #1e2b5c;
     }
     .text-primary {
-      color: #3b82f6;
+      color: #1e2b5c;
     }
     .border-primary {
-      border-color: #3b82f6;
+      border-color: #1e2b5c;
     }
     .form-section {
       padding: 1rem;
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button id="btn-sewa" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+        <button id="btn-sewa" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-blue-950 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
           <i class="fas fa-shopping-cart mr-2"></i> Sewa Sekarang
         </button>
         <button type="button" class="close-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle form submission
-  pemesananForm.addEventListener('submit', async function(e) {
+pemesananForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const formData = new FormData(this);
@@ -477,36 +477,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const originalBtnText = submitBtn.innerHTML;
     
     try {
-      // Show loading state
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
-      
-      const response = await fetch('/api/pemesanan', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+        
+        const response = await fetch('/pemesanan', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json' // Tambahkan header Accept untuk response JSON
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(result.message || 'Terjadi kesalahan saat memproses pesanan');
         }
-      });
-      
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.message || 'Terjadi kesalahan saat memproses pesanan');
-      }
-      
-      // Show success message and close modal
-      alert('Pemesanan berhasil dikirim!');
-      pemesananModalInstance.hide();
-      
+        
+        // Jika response memiliki redirect, arahkan ke halaman riwayat
+        if (result.redirect) {
+            window.location.href = result.redirect;
+        } else {
+            // Fallback jika tidak ada redirect
+            alert('Pemesanan berhasil dikirim!');
+            pemesananModalInstance.hide();
+        }
+        
     } catch (error) {
-      console.error('Error submitting pemesanan:', error);
-      alert(error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.');
+        console.error('Error submitting pemesanan:', error);
+        alert(error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.');
     } finally {
-      // Reset button state
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
+        // Reset button state
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
     }
-  });
+});
 });
 </script>

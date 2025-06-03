@@ -14,32 +14,66 @@
         <th class="border border-gray-500 p-2">Mobil</th>
         <th class="border border-gray-500 p-2">Detail Mobil</th>
         <th class="border border-gray-500 p-2">Status</th>
-        <th class="border border-gray-500 p-2">Aksi</th> </tr>
+        <th class="border border-gray-500 p-2">Aksi</th>
+      </tr>
     </thead>
     <tbody>
-      @for ($i = 1; $i <= 4; $i++)
+      @forelse($pemesanans as $index => $pemesanan)
       <tr>
-        <td class="border p-2 text-center align-middle">{{ $i }}</td>
-        <td class="border p-2 text-center">CR00123</td>
-        <td class="border p-2 text-center">KIM MINGYU</td>
-        <td class="border p-2 text-center">Pengambilan : 2025-04-20<br>Pengembalian : 2025-04-25</td>
-        <td class="border p-2 text-center"><img src="images/mobil 2.png" class="w-[100px] mx-auto" alt="Mobil"></td>
+        <td class="border p-2 text-center align-middle">{{ $index + 1 }}</td>
+        <td class="border p-2 text-center">PSN-{{ $pemesanan->id_penyewaan }}</td>
+        <td class="border p-2 text-center">{{ $pemesanan->nama_penyewa }}</td>
+        <td class="border p-2 text-center">
+          Pengambilan : {{ $pemesanan->tanggal_pengambilan }}<br>
+          Pengembalian : {{ $pemesanan->tanggal_pengembalian }}
+        </td>
+        <td class="border p-2 text-center">
+    @if($pemesanan->mobil)
+        <img src="{{ $pemesanan->mobil->foto_url }}" 
+             class="w-[100px] mx-auto" 
+             alt="{{ $pemesanan->mobil->merek }} {{ $pemesanan->mobil->jenis }}">
+    @else
+        <div class="w-[100px] h-[75px] bg-gray-200 mx-auto flex items-center justify-center">
+            <span class="text-gray-500">No Image</span>
+        </div>
+    @endif
+</td>
         <td class="border p-2 text-sm leading-relaxed">
-          Merek : Toyota<br>Tipe : SUV Rush<br>Warna : Black<br>Harga : 350.000<br>Jumlah Kursi: 8<br>Mesin : 1.500 Cc
+          @if($pemesanan->mobil)
+            Merek : {{ $pemesanan->mobil->merek }}<br>
+            Tipe : {{ $pemesanan->mobil->jenis }}<br>
+            Warna : {{ $pemesanan->mobil->warna }}<br>
+            Harga : {{ number_format($pemesanan->mobil->harga_harian, 0, ',', '.') }}<br>
+            Jumlah Kursi: {{ $pemesanan->mobil->jumlah_kursi }}<br>
+            Mesin : {{ $pemesanan->mobil->mesin }}
+          @else
+            Data mobil tidak tersedia
+          @endif
         </td>
         <td class="border p-2 text-center">
           @php
-            $statuses = ['Konfirmasi', 'Menunggu', 'Batal', 'Selesai'];
-            $colors = ['bg-green-600', 'bg-yellow-500', 'bg-red-500', 'bg-blue-500'];
+            $statusColors = [
+              'Menunggu' => 'bg-yellow-500',
+              'Konfirmasi' => 'bg-green-600',
+              'Batal' => 'bg-red-500',
+              'Selesai' => 'bg-blue-500'
+            ];
+            $color = $statusColors[$pemesanan->status] ?? 'bg-gray-500';
           @endphp
-          <span class="px-2 py-1 rounded-full font-bold text-black {{ $colors[$i-1] }}">{{ $statuses[$i-1] }}</span>
+          <span class="px-2 py-1 rounded-full font-bold text-black {{ $color }}">
+            {{ $pemesanan->status }}
+          </span>
         </td>
         <td class="border p-2 text-center">
           <button class="bg-[#c9d2ff] hover:bg-[#aab8f2] px-3 py-1 rounded-md m-1">Resi</button>
           <button class="bg-[#c9d2ff] hover:bg-[#aab8f2] px-3 py-1 rounded-md m-1">Ulasan</button>
         </td>
       </tr>
-      @endfor
+      @empty
+      <tr>
+        <td colspan="8" class="border p-4 text-center">Belum ada riwayat pemesanan</td>
+      </tr>
+      @endforelse
     </tbody>
   </table>
 </div>
