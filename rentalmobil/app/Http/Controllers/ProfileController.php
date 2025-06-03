@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    
+    public function show()
+{
+    return view('pages.editprofile', ['user' => Auth::user()]);
+}
+
     public function edit()
     {
         return view('pages.editprofile', [

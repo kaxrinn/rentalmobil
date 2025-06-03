@@ -15,6 +15,19 @@
             $inputClass = 'w-[300px] h-[38px] px-2 py-1 text-sm placeholder:text-sm border-2 border-blue-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700';
         @endphp
 
+@if(session('success'))
+    <div class="text-green-600 text-sm font-semibold mb-2">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="text-red-600 text-sm font-semibold mb-2">
+        @foreach($errors->all() as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    </div>
+@endif
 
         <form action="{{ route('registerpage.post') }}" method="POST" class="space-y-4 flex flex-col items-center">
             @csrf

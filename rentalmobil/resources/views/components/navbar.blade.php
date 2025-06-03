@@ -37,11 +37,13 @@
     <!-- Profile Info dengan gradient -->
     <div class="px-5 py-4 bg-gradient-to-r from-[#115EAD] to-[#219FE3] text-white rounded-t-lg">
       <div class="font-bold text-lg">Selamat Datang,</div>
-      <div class="text-sm">
-        <p><strong>Nama:</strong> Kim Mingyu</p>
-        <p><strong>Email:</strong> mingyukarina@gmail.com</p>
-        <p><strong>Nomor Handphone:</strong> 0895xxxxxxxx</p>
-      </div>
+        <div class="text-sm">
+        @if(Auth::check())
+          <p><strong>Nama:</strong> {{ Auth::user()->name }}</p>
+          <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+          <p><strong>Nomor Handphone:</strong> {{ Auth::user()->phone }}</p>
+        @endif
+        </div>
     </div>
     
     <!-- Menu Items dengan tombol sesuai gambar -->

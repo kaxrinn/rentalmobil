@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EditProfileController;
@@ -56,17 +57,21 @@ Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hub
 
 // REGISTRASI
 Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('registerpage');
-Route::post('/registerpage', [AuthController::class, 'register'])->name('registerpage.post');
+Route::post('/registerpage', [AuthController::class, 'registerpage'])->name('registerpage.post');
 
 // LOGIN
 Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('loginpage');
 Route::post('/loginpage', [AuthController::class, 'login'])->name('loginpage.post');
+
+//LOGOUT
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // RESET PASSWORD
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 // EDIT PROFIL
+Route::middleware(['auth'])->group(function () {
 Route::get('/edit-profile', [EditProfileController::class, 'show'])->name('edit-profile');
 Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');
 
@@ -81,3 +86,13 @@ Route::get('/hubungiadmin', [PesanController::class, 'index'])->name('hubungiadm
 
 // Admin hapus pesan
 Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name('admin.hapuspesan');
+
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+});
+
+Route::middleware(['auth', 'role:pelanggan'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+});
