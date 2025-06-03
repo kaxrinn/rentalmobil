@@ -30,9 +30,6 @@ Route::get('/riwayat', [PemesananController::class, 'riwayat'])->name('riwayat')
 // Logout
 Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
 
-//route untuk halaman admin page
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-
 Route::prefix('admin')->group(function () {
     Route::get('/pemesanan', [AdminPemesananController::class, 'index'])->name('admin.pemesanan');
     Route::put('/pemesanan/{id}/status', [AdminPemesananController::class, 'updateStatus'])->name('admin.pemesanan.status');
@@ -96,7 +93,7 @@ Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name(
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 });
 
 Route::middleware(['auth', 'role:pelanggan'])->group(function () {
