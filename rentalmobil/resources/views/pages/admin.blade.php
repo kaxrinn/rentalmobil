@@ -50,7 +50,7 @@
         <div class="rounded-lg bg-[#e74c3c] text-white p-5 shadow">
           <i class="fa fa-comments text-1xl"></i>
           <div class="flex justify-between items-center">
-            <p class="text-lg font-bold">List Data Pengguna</p>
+            <p class="text-lg font-bold">List Data Penyewa</p>
           </div>
         </div>
       </a>

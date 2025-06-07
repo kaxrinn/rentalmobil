@@ -15,6 +15,12 @@
             $inputClass = 'w-full max-w-[300px] h-[40px] px-2 py-1 text-sm placeholder:text-sm border-2 border-blue-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700';
         @endphp
 
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 p-2 rounded mb-3 max-w-[300px] w-full text-center text-sm">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <form action="{{ route('loginpage.post') }}" method="POST" class="space-y-4 flex flex-col items-center w-full">
             @csrf
 

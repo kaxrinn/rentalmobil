@@ -13,34 +13,62 @@ class EditProfileController extends Controller
         return view('pages.editprofile'); // pastikan nama file view sesuai
     }
 
-     public function edit()
+     // ======== TAMPILKAN HALAMAN EDIT PROFIL ========
+    public function edit()
     {
-        $user = Auth::user();
-        return view('auth.edit', compact('user'));
+        if (Auth::guard('penyewa')->check()) {
+            $user = Auth::guard('penyewa')->user();
+        } elseif (Auth::guard('perental')->check()) {
+            $user = Auth::guard('perental')->user();
+        } else {
+            return redirect()->route('loginpage');
+        }
+
+        return view('pages.editprofile', compact('user'));
     }
 
-     public function update(Request $request)
-{
-    $user = Auth::user();
+    // ======== SIMPAN PERUBAHAN PROFIL (NAMA, EMAIL, HP, PASSWORD) ========
+    public function update(Request $request)
+    {
+        if (Auth::guard('penyewa')->check()) {
+            $user = Auth::guard('penyewa')->user();
+            $table = 'penyewa';
+        } elseif (Auth::guard('perental')->check()) {
+            $user = Auth::guard('perental')->user();
+            $table = 'perental';
+        } else {
+            return redirect()->route('loginpage');
+        }
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'phone' => 'required|string|max:20',
-        'password' => 'nullable|string|min:6',
-    ]);
+        // Validasi data
+        $request->validate([
+        'name'     => 'required|string|max:255',
+        'email'    => "required|email|unique:$table,email," . $user->id,
+        'phone'    => 'nullable|string|max:15',
+        'password' => 'nullable|string|min:6|confirmed',
+        'alamat'   => 'nullable|string|max:500',
+        'ktp'      => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->phone = $request->phone;
+        // Update field
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->alamat = $request->alamat;
 
-    if ($request->filled('password')) {
+        // Upload foto KTP jika diisi
+        if ($request->hasFile('ktp')) {
+        $filename = time() . '.' . $request->ktp->extension();
+        $request->ktp->move(public_path('uploads/ktp'), $filename);
+        $user->ktp = 'uploads/ktp/' . $filename;
+    }
+
+        if ($request->filled('password')) {
         $user->password = Hash::make($request->password);
     }
 
-    $user->save();
+        $user->save();
 
-    return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
-}
-
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    }
 }

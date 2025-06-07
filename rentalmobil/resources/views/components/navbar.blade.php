@@ -48,8 +48,12 @@
     
     <!-- Menu Items dengan tombol sesuai gambar -->
     <div class="py-2 px-2 bg-white rounded-b-lg">
-      <a href="{{ route('edit-profile') }}" class="block w-full text-sm font-medium text-white bg-blue-950 hover:bg-blue-800 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
-      <a href="#" class="block w-full text-sm font-medium text-white bg-red-800 hover:bg-red-900 px-4 py-2 rounded text-center" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
+      <a href="{{ route('edit-profile.edit') }}" class="block w-full text-sm font-medium text-white bg-blue-950 hover:bg-blue-800 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
+      <a href="#" 
+        class="block w-full text-sm font-medium text-white bg-red-800 hover:bg-red-900 px-4 py-2 rounded text-center" 
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        Keluar
+      </a>
     </div>
   </div>
 </div>

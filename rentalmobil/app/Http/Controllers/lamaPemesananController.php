@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PemesananController extends Controller
+class LamaPemesananController extends Controller
 {
     // Menampilkan halaman pemesanan
     public function index()

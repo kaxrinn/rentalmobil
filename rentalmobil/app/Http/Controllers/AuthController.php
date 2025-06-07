@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Penyewa;
+use App\Models\Perental;
 
 class AuthController extends Controller
 {
-    // TAMPILKAN FORM REGISTRASI
+    // ======== TAMPILKAN FORM REGISTRASI ========
     public function showRegister()
     {
         return view('auth.registerpage');
     }
 
-    // SIMPAN USER BARU
-    public function registerpage(Request $request)
+    // ======== SIMPAN DATA PENYEWA BARU ========
+    public function registerPenyewa(Request $request)
     {
         $request->validate([
             'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:penyewa',
             'password' => 'required|min:6',
             'phone'    => 'required',
         ]);
 
-        User::create([
+        Penyewa::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
@@ -35,59 +36,44 @@ class AuthController extends Controller
         return redirect()->route('loginpage')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
-    // TAMPILKAN FORM LOGIN
+    // ======== TAMPILKAN FORM LOGIN ========
     public function showLogin()
     {
         return view('auth.loginpage');
     }
 
-    // PROSES LOGIN
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+   public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
+    // Coba login penyewa dulu
+    if (Auth::guard('penyewa')->attempt($credentials)) {
         $request->session()->regenerate();
-
-        $user = Auth::user();
-        if ($user->role === 'admin') {
-            return redirect()->route('admin'); // arahkan ke halaman admin
-        } elseif ($user->role === 'pelanggan') {
-            return redirect()->route('landingpage'); // arahkan ke halaman pelanggan
-        } else {
-            Auth::logout();
-            return back()->withErrors(['email' => 'Role tidak dikenali.']);
-        }
+        return redirect()->route('landingpage');
     }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+    // Jika gagal, coba login perental
+    if (Auth::guard('perental')->attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect()->route('admin');
     }
 
+    return back()->withErrors(['email' => 'Email atau password salah.']);
+}
 
-    // LOGOUT
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('loginpage')->with('success', 'Berhasil logout.');
+
+      public function logout(Request $request)
+{
+    if (Auth::guard('penyewa')->check()) {
+        Auth::guard('penyewa')->logout();
+    } elseif (Auth::guard('perental')->check()) {
+        Auth::guard('perental')->logout();
     }
 
-    // TAMPILKAN FORM EDIT PROFIL
-    public function editProfile()
-    {
-        return view('auth.edit-profile', ['user' => Auth::user()]);
-    }
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-    // SIMPAN PERUBAHAN PROFIL
-    public function updateProfile(Request $request)
-    {
-        $request->validate([
-            'name'  => 'required|string|max:255',
-            'phone' => 'nullable|string|max:15',
-        ]);
+    return redirect()->route('landingpagebf');
+}
 
-        $user = Auth::user();
-        $user->update($request->only('name', 'phone'));
-
-        return back()->with('success', 'Profil berhasil diperbarui.');
-    }
 }

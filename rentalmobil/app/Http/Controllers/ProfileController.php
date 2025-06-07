@@ -35,12 +35,4 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
     }
     
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        
-        return redirect('/');
-    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
+use App\Models\Penyewa;
 
 use Illuminate\Http\Request;
 
@@ -28,17 +28,20 @@ class AdminController extends Controller
     {
         return view('pages.hubungiadmin');
     }
+
      public function daftarPengguna()
     {
-    $pengguna = User::all();
+    $pengguna = Penyewa::all(); // ambil data dari tabel penyewa
     return view('pages.penggunaadmin', compact('pengguna'));
     }
+
     public function hapusPengguna($id)
     {
-    $user = User::findOrFail($id);
+    $user = Penyewa::findOrFail($id); // hapus data dari tabel penyewa
     $user->delete();
 
     return redirect()->route('penggunaadmin')->with('success', 'Pengguna berhasil dihapus.');
-    }
+}
+
 }
 

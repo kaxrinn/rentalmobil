@@ -27,9 +27,6 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::get('/riwayat', [PemesananController::class, 'riwayat'])->name('riwayat');
 
 
-// Logout
-Route::post('/logout', [ProfileController::class, 'logout'])->name('logout');
-
 Route::prefix('admin')->group(function () {
     Route::get('/pemesanan', [AdminPemesananController::class, 'index'])->name('admin.pemesanan');
     Route::put('/pemesanan/{id}/status', [AdminPemesananController::class, 'updateStatus'])->name('admin.pemesanan.status');
@@ -58,25 +55,9 @@ Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasa
 
 Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hubungiadmin');
 
-// REGISTRASI
-Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('registerpage');
-Route::post('/registerpage', [AuthController::class, 'registerpage'])->name('registerpage.post');
-
-// LOGIN
-Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/loginpage', [AuthController::class, 'login'])->name('loginpage.post');
-
-//LOGOUT
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 // RESET PASSWORD
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-// EDIT PROFIL
-Route::middleware(['auth'])->group(function () {
-Route::get('/edit-profile', [EditProfileController::class, 'show'])->name('edit-profile');
-Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');
 
 // Form untuk user kirim pesan
 Route::get('/contact', [PesanController::class, 'form'])->name('contact.form');
@@ -90,8 +71,6 @@ Route::get('/hubungiadmin', [PesanController::class, 'index'])->name('hubungiadm
 // Admin hapus pesan
 Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name('admin.hapuspesan');
 
-});
-
 // Halaman admin untuk melihat daftar pengguna
 Route::get('/admin/pengguna', [AdminController::class, 'daftarPengguna'])->name('penggunaadmin');
 Route::delete('/admin/pengguna/{id}', [AdminController::class, 'hapusPengguna'])->name('pengguna.hapus');
@@ -99,6 +78,36 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 });
 
-Route::middleware(['auth', 'role:pelanggan'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+// ==========================
+// AUTH (Login & Register Page)
+// ==========================
+Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('registerpage');
+Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('loginpage');
+
+Route::post('/register', [AuthController::class, 'registerPenyewa'])->name('registerpage.post');
+Route::post('/login', [AuthController::class, 'login'])->name('loginpage.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// ==========================
+// PENYEWA (guard: penyewa)
+// ==========================
+Route::middleware('auth:penyewa')->group(function () {
+    Route::get('/landingpage', function () {
+        return view('pages.landingpage');
+    })->name('landingpage');
+
+    Route::get('/edit-profile', [EditProfileController::class, 'edit'])->name('edit-profile.edit');
+    Route::post('/edit-profile', [EditProfileController::class, 'update'])->name('edit-profile.update');
+
+});
+
+// ==========================
+// PERENTAL (guard: perental)
+// ==========================
+Route::middleware('auth:perental')->group(function () {
+    Route::get('/admin', function () {
+        return view('pages.admin');
+    })->name('admin');
+
+
 });
