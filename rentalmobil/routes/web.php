@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\LandingpagebfController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
@@ -9,15 +8,14 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\LupaKataSandiController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\AdminPemesananController;
-// Halaman Utama
-Route::get('/landingpage', [LandingpageController::class, 'index'])->name('landingpage');
 
+//landing bf
 Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('landingpagebf');
 
 // Kontak
@@ -52,12 +50,9 @@ Route::get('/storage/{path}', function ($path) {
 })->where('path', '.*');
 
 Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasanadmin');
-
 Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hubungiadmin');
 
-// RESET PASSWORD
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
 
 // Form untuk user kirim pesan
 Route::get('/contact', [PesanController::class, 'form'])->name('contact.form');
@@ -73,20 +68,27 @@ Route::delete('/admin/hubungi/{id}', [PesanController::class, 'destroy'])->name(
 
 // Halaman admin untuk melihat daftar pengguna
 Route::get('/admin/pengguna', [AdminController::class, 'daftarPengguna'])->name('penggunaadmin');
-Route::delete('/admin/pengguna/{id}', [AdminController::class, 'hapusPengguna'])->name('pengguna.hapus');
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-});
+Route::delete('/admin/pengguna/{id_perental}', [AdminController::class, 'hapusPengguna'])->name('pengguna.hapus');
+//Route::middleware(['auth', 'role:admin'])->group(function () {
+    //Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+//});
 
 // ==========================
 // AUTH (Login & Register Page)
 // ==========================
 Route::get('/registerpage', [AuthController::class, 'showRegister'])->name('registerpage');
 Route::get('/loginpage', [AuthController::class, 'showLogin'])->name('loginpage');
-
+Route::get('/login', function () {
+    return redirect()->route('loginpage');
+})->name('login');
 Route::post('/register', [AuthController::class, 'registerPenyewa'])->name('registerpage.post');
-Route::post('/login', [AuthController::class, 'login'])->name('loginpage.post');
+Route::post('/loginpage', [AuthController::class, 'login'])->name('loginpage.post');
+// RESET Kata sandi
+Route::get('/lupa-kata_sandi', [LupaKataSandiController::class, 'showResetForm'])->name('reset.form');
+Route::post('/lupa-kata_sandi', [LupaKataSandiController::class, 'resetPasswordManual'])->name('reset.manual');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // ==========================
 // PENYEWA (guard: penyewa)
@@ -108,6 +110,11 @@ Route::middleware('auth:perental')->group(function () {
     Route::get('/admin', function () {
         return view('pages.admin');
     })->name('admin');
-
-
 });
+
+
+
+
+
+
+

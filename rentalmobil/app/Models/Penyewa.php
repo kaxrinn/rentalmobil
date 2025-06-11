@@ -9,24 +9,22 @@ class Penyewa extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'penyewa'; // Pastikan nama tabel di database adalah 'penyewa'
+    protected $table = 'penyewa';
+    protected $primaryKey = 'id_penyewa';
 
     protected $fillable = [
-        'name',
+        'nama_penyewa',
         'email',
-        'phone',
-        'ktp',
-        'alamat',
-        'password',
-        
+        'kata_sandi',
+        'nomor_telepon',
+        // tambahkan kolom lain kalau perlu
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['kata_sandi'];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // Laravel expects "password" field by default
+    public function getAuthPassword()
+    {
+        return $this->kata_sandi;
+    }
 }

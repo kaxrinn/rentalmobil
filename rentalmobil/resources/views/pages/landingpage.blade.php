@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda')
-
 @section('content')
   @include('pages.sections.hero')
   @include('pages.sections.about')

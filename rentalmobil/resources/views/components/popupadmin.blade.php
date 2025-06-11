@@ -1,9 +1,9 @@
 <div class="hidden fixed top-[10%] right-0 w-[18.75rem] p-5 bg-[#112769] text-white rounded-l-lg shadow-lg z-[1000]" id="popup">
   <label class="font-bold">Selamat datang,</label>
   <div class="text-sm">
-        @if(Auth::check())
-          <p><strong>Nama:</strong> {{ Auth::user()->name }}</p>
-          <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+        @if(Auth::guard('perental')->check())
+          <p><strong>Nama:</strong> {{ Auth::guard('perental')->user()->nama_perental }}</p>
+          <p><strong>Email:</strong> {{ Auth::guard('perental')->user()->email }}</p>
         @endif
         </div>
   <div class="flex justify-between mt-4">

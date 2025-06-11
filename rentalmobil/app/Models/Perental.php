@@ -3,27 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class Perental extends Authenticatable
 {
-    use Notifiable;
-
-    protected $table = 'perental'; // Sesuai nama tabel
+    protected $table = 'perental';
+    protected $primaryKey = 'id_perental';
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'password',
+        'nama_perental', 'email', 'kata_sandi',
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['kata_sandi'];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function getAuthPassword()
+    {
+        return $this->kata_sandi;
+    }
 }

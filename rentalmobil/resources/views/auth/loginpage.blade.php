@@ -25,7 +25,7 @@
             @csrf
 
             <input type="email" name="email" placeholder="Email" class="{{ $inputClass }}" required>
-            <input type="password" name="password" placeholder="Kata Sandi" class="{{ $inputClass }}" required>
+            <input type="password" name="kata_sandi" placeholder="Kata Sandi" class="{{ $inputClass }}" required>
 
             <button type="submit"
                 class="w-full max-w-[250px] flex justify-center bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition duration-300 text-sm">
@@ -35,7 +35,7 @@
 
         <p class="text-center text-sm text-gray-700 mt-4">
             Lupa Kata Sandi?
-            <a href="{{ route('password.request') }}" class="text-blue-900 font-semibold hover:underline">Klik Disini</a>
+            <a href="{{ route('reset.form') }}" class="text-blue-900 font-semibold hover:underline">Klik Disini</a>
         </p>
         <p class="text-center text-sm text-gray-700 mt-2">
             Belum Punya Akun?

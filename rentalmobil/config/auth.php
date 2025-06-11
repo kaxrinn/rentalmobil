@@ -2,11 +2,13 @@
 
 return [
 
+    // Default guard dan password broker
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'penyewa'), // default bisa disesuaikan
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'penyewas'),
+        'guard' => 'penyewa',
+        'passwords' => 'penyewas',
     ],
 
+    // Guard login
     'guards' => [
         'penyewa' => [
             'driver' => 'session',
@@ -17,8 +19,15 @@ return [
             'driver' => 'session',
             'provider' => 'perentals',
         ],
+
+        // Ini opsional, hanya jika kamu ingin tetap bisa pakai default `web`
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
+    // Provider pengguna
     'providers' => [
         'penyewas' => [
             'driver' => 'eloquent',
@@ -29,24 +38,31 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Perental::class,
         ],
+
+        // Opsional: default user bawaan Laravel
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
     ],
 
+    // Reset password
     'passwords' => [
         'penyewas' => [
             'provider' => 'penyewas',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_reset_tokens', // pastikan tabel ini ada
             'expire' => 60,
             'throttle' => 60,
         ],
 
         'perentals' => [
             'provider' => 'perentals',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_reset_tokens', // sama
             'expire' => 60,
             'throttle' => 60,
         ],
     ],
 
-    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+    'password_timeout' => 10800,
 
 ];

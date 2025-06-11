@@ -20,17 +20,17 @@ class AuthController extends Controller
     public function registerPenyewa(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
+            'nama_penyewa'     => 'required|string|max:255',
             'email'    => 'required|email|unique:penyewa',
-            'password' => 'required|min:6',
-            'phone'    => 'required',
+            'kata_sandi' => 'required|min:6',
+            'nomor_telepon'    => 'required',
         ]);
 
         Penyewa::create([
-            'name'     => $request->name,
+            'nama_penyewa'     => $request->nama_penyewa,
             'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'phone'    => $request->phone,
+            'kata_sandi' => Hash::make($request->kata_sandi),
+            'nomor_telepon'    => $request->nomor_telepon,
         ]);
 
         return redirect()->route('loginpage')->with('success', 'Registrasi berhasil, silakan login.');
@@ -42,27 +42,48 @@ class AuthController extends Controller
         return view('auth.loginpage');
     }
 
-   public function login(Request $request)
+public function login(Request $request)
 {
-    $credentials = $request->only('email', 'password');
+    $request->validate([
+        'email' => 'required|email',
+        'kata_sandi' => 'required',
+    ]);
 
-    // Coba login penyewa dulu
-    if (Auth::guard('penyewa')->attempt($credentials)) {
+    $email = $request->input('email');
+    $password = $request->input('kata_sandi');
+
+    // Cari user penyewa dan perental
+    $penyewa = Penyewa::where('email', $email)->first();
+    $perental = Perental::where('email', $email)->first();
+
+    // Coba login sebagai penyewa
+    if ($penyewa && Hash::check($password, $penyewa->kata_sandi)) {
+        Auth::guard('penyewa')->login($penyewa);
         $request->session()->regenerate();
+
+        // Ubah sesuai kebutuhan: debug atau redirect
+        // return dd('Login berhasil sebagai PENYEWA');
         return redirect()->route('landingpage');
     }
 
-    // Jika gagal, coba login perental
-    if (Auth::guard('perental')->attempt($credentials)) {
+    // Coba login sebagai perental
+    if ($perental && Hash::check($password, $perental->kata_sandi)) {
+        Auth::guard('perental')->login($perental);
         $request->session()->regenerate();
+
+        // return dd('Login berhasil sebagai PERENTAL');
         return redirect()->route('admin');
     }
 
-    return back()->withErrors(['email' => 'Email atau password salah.']);
+    // Gagal login
+    return back()->withErrors([
+        'email' => 'Email atau kata sandi salah.'
+    ]);
 }
 
 
-      public function logout(Request $request)
+
+    public function logout(Request $request)
 {
     if (Auth::guard('penyewa')->check()) {
         Auth::guard('penyewa')->logout();

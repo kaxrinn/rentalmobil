@@ -1,7 +1,5 @@
 @extends('layouts.appbf')
 
-@sectionbf('title', 'Beranda')
-
 @section('content')
   @include('pages.sectionsbf.hero')
   @include('pages.sectionsbf.about')

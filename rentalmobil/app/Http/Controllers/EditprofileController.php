@@ -42,29 +42,29 @@ class EditProfileController extends Controller
 
         // Validasi data
         $request->validate([
-        'name'     => 'required|string|max:255',
-        'email'    => "required|email|unique:$table,email," . $user->id,
-        'phone'    => 'nullable|string|max:15',
-        'password' => 'nullable|string|min:6|confirmed',
+        'nama_penyewa'     => 'required|string|max:255',
+        'email'    => "required|email|:$table,email," . $user->id_penyewa,
+        'nomor_telepon'    => 'nullable|string|max:15',
+        'kata_sandi' => 'nullable|string|min:6|confirmed',
         'alamat'   => 'nullable|string|max:500',
-        'ktp'      => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'foto_ktp'      => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Update field
-        $user->name = $request->name;
+        $user->nama_penyewa = $request->nama_penyewa;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->nomor_telepon = $request->nomor_telepon;
         $user->alamat = $request->alamat;
 
         // Upload foto KTP jika diisi
-        if ($request->hasFile('ktp')) {
-        $filename = time() . '.' . $request->ktp->extension();
-        $request->ktp->move(public_path('uploads/ktp'), $filename);
-        $user->ktp = 'uploads/ktp/' . $filename;
+        if ($request->hasFile('foto_ktp')) {
+        $filename = time() . '.' . $request->foto_ktp->extension();
+        $request->foto_ktp->move(public_path('uploads/foto_ktp'), $filename);
+        $user->foto_ktp = 'uploads/foto_ktp/' . $filename;
     }
 
-        if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
+        if ($request->filled('kata_sandi')) {
+        $user->kata_sandi = Hash::make($request->kata_sandi);
     }
 
         $user->save();

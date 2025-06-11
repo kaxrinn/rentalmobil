@@ -11,9 +11,9 @@ class PerentalSeeder extends Seeder
     public function run()
     {
         DB::table('perental')->insert([
-            'name'     => 'Admin Rental',
+            'nama_perental'     => 'Admin Rental',
             'email'    => 'admin@rental.com',
-            'password' => Hash::make('admin123'), // wajib pakai hash
+            'kata_sandi' => Hash::make('admin123'), // wajib pakai hash
         ]);
     }
 }

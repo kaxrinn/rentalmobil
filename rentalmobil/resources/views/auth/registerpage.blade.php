@@ -31,10 +31,10 @@
 
         <form action="{{ route('registerpage.post') }}" method="POST" class="space-y-4 flex flex-col items-center">
             @csrf
-            <input type="text" name="name" placeholder="Nama Pengguna" class="{{ $inputClass }}" required>
+            <input type="text" name="nama_penyewa" placeholder="Nama Pengguna" class="{{ $inputClass }}" required>
             <input type="email" name="email" placeholder="Email" class="{{ $inputClass }}" required>
-            <input type="tel" name="phone" placeholder="Nomor Handphone" class="{{ $inputClass }}" required>
-            <input type="password" name="password" placeholder="Kata Sandi" class="{{ $inputClass }}" required>
+            <input type="tel" name="nomor_telepon" placeholder="Nomor Handphone" class="{{ $inputClass }}" required>
+            <input type="password" name="kata_sandi" placeholder="Kata Sandi" class="{{ $inputClass }}" required>
 
             <button type="submit"
                 class="w-[250px] mx-auto flex justify-center bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition duration-300 text-sm">

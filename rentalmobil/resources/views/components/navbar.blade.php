@@ -38,10 +38,10 @@
     <div class="px-5 py-4 bg-gradient-to-r from-[#115EAD] to-[#219FE3] text-white rounded-t-lg">
       <div class="font-bold text-lg">Selamat Datang,</div>
         <div class="text-sm">
-        @if(Auth::check())
-          <p><strong>Nama:</strong> {{ Auth::user()->name }}</p>
-          <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-          <p><strong>Nomor Handphone:</strong> {{ Auth::user()->phone }}</p>
+        @if(Auth::guard('penyewa')->check())
+          <p><strong>Nama:</strong> {{ Auth::guard('penyewa')->user()->nama_penyewa }}</p>
+          <p><strong>Email:</strong> {{ Auth::guard('penyewa')->user()->email }}</p>
+          <p><strong>Nomor HP:</strong> {{ Auth::guard('penyewa')->user()->nomor_telepon }}</p>
         @endif
         </div>
     </div>

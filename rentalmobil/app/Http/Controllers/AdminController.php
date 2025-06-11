@@ -1,47 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Penyewa;
 
+use App\Models\Penyewa;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    // Halaman dashboard admin
     public function index()
     {
         return view('pages.admin');
     }
 
-    public function pemesananadmin()
+    // Halaman daftar pemesanan admin
+    public function pemesananAdmin()
     {
         return view('pages.pemesananadmin');
     }
-    public function mobiladmin()
+
+    // Halaman manajemen mobil
+    public function mobilAdmin()
     {
         return view('pages.mobiladmin');
     }
-    public function ulasanadmin()
+
+    // Halaman ulasan
+    public function ulasanAdmin()
     {
         return view('pages.ulasanadmin');
     }
-    public function hubungiadmin()
+
+    // Halaman pesan yang dikirim ke admin
+    public function hubungiAdmin()
     {
         return view('pages.hubungiadmin');
     }
 
-     public function daftarPengguna()
+    // Daftar semua penyewa
+    public function daftarPengguna()
     {
-    $pengguna = Penyewa::all(); // ambil data dari tabel penyewa
-    return view('pages.penggunaadmin', compact('pengguna'));
+        $pengguna = Penyewa::all();
+        return view('pages.penggunaadmin', compact('pengguna'));
     }
 
+    // Hapus pengguna (penyewa) berdasarkan ID
     public function hapusPengguna($id)
     {
-    $user = Penyewa::findOrFail($id); // hapus data dari tabel penyewa
-    $user->delete();
+        $user = Penyewa::findOrFail($id);
+        $user->delete();
 
-    return redirect()->route('penggunaadmin')->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->route('penggunaadmin')->with('success', 'Pengguna berhasil dihapus.');
+    }
 }
-
-}
-
