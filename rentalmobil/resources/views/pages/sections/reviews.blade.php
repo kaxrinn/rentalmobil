@@ -1,4 +1,4 @@
-<section class="pt-[60px] pb-[20px] px-[20px] bg-white text-center shadow-md mb-2 " id="Ulasan">
+<section class="pt-[60px] pb-[20px] px-[20px] bg-white text-center shadow-md mb-2 " id="Ulasan" class="scroll-mt-24 py-10"> 
   <h2 class="text-[28px] text-[#1e2b5c] mb-[30px] font-bold">ULASAN APLIKASI</h2>
 
   <div class="relative max-w-[1200px] mx-auto overflow-hidden">

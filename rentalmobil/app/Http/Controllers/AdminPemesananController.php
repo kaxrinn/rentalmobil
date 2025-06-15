@@ -9,34 +9,41 @@ class AdminPemesananController extends Controller
 {
     public function index()
     {
-        $pemesanans = Pemesanan::with('mobil')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10); // 10 item per halaman
-
+        $pemesanans = Pemesanan::with(['penyewa', 'mobil', 'pembayaran'])
+                              ->orderBy('created_at', 'desc')
+                              ->paginate(10);
+        
         return view('pages.pemesananadmin', compact('pemesanans'));
     }
 
     public function updateStatus(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'status' => 'required|in:Menunggu,Konfirmasi,Batal,Selesai'
         ]);
 
         $pemesanan = Pemesanan::findOrFail($id);
-        $pemesanan->update($validated);
+        
+        // Update status di pembayaran jika ada relasi
+        if($pemesanan->pembayaran) {
+            $pemesanan->pembayaran->update(['status' => $request->status]);
+        }
+        
+        // Update status di pemesanan
+        $pemesanan->update(['status' => $request->status]);
 
-        return back()->with('success', 'Status berhasil diperbarui');
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)
-{
-    try {
-        $pemesanan = Pemesanan::findOrFail($id);
-        $pemesanan->delete();
-        
-        return response()->json(['success' => true]);
-    } catch (\Exception $e) {
-        return response()->json(['success' => false], 404);
+    {
+        try {
+            $pemesanan = Pemesanan::findOrFail($id);
+            $pemesanan->delete();
+            
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
-}
 }

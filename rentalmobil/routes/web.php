@@ -13,6 +13,7 @@ use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\AdminPemesananController;
 
 //landing bf
@@ -22,15 +23,20 @@ Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('l
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Riwayat
-Route::get('/riwayat', [PemesananController::class, 'riwayat'])->name('riwayat');
+// Riwayat
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat')->middleware('auth:penyewa');
 
 
+// Route tanpa prefix untuk akses langsung
+Route::get('/pemesananadmin', [AdminPemesananController::class, 'index'])->name('pemesananadmin');
+
+// Route dengan prefix untuk struktur admin
 Route::prefix('admin')->group(function () {
     Route::get('/pemesanan', [AdminPemesananController::class, 'index'])->name('admin.pemesanan');
     Route::put('/pemesanan/{id}/status', [AdminPemesananController::class, 'updateStatus'])->name('admin.pemesanan.status');
     Route::delete('/pemesanan/{id}', [AdminPemesananController::class, 'destroy'])->name('admin.pemesanan.destroy');
 });
-Route::get('/pemesananadmin', [AdminController::class, 'pemesananAdmin'])->name('pemesananadmin');
+
 Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
 
 Route::prefix('mobiladmin')->group(function () {
@@ -52,7 +58,18 @@ Route::get('/storage/{path}', function ($path) {
 Route::get('/ulasanadmin', [AdminController::class, 'ulasanadmin'])->name('ulasanadmin');
 Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hubungiadmin');
 
+// Route untuk resi PDF
+Route::get('/pemesanan/{id}/resi', [PemesananController::class, 'generateResi'])
+     ->name('pemesanan.resi');
 
+// Route untuk ulasan
+Route::post('/ulasan', [UlasanController::class, 'store'])
+     ->name('ulasan.store');
+
+
+Route::post('/pembayaran/proses', [PembayaranController::class, 'processPayment'])
+    ->name('pembayaran.proses')
+    ->middleware('auth'); // Add auth middleware if you want to protect the route
 
 // Form untuk user kirim pesan
 Route::get('/contact', [PesanController::class, 'form'])->name('contact.form');

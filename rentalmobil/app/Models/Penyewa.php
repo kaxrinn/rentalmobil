@@ -19,6 +19,11 @@ class Penyewa extends Authenticatable
         'nomor_telepon',
         // tambahkan kolom lain kalau perlu
     ];
+    
+    public function pemesanans()
+{
+    return $this->hasMany(Pemesanan::class, 'id_penyewa');
+}
 
     protected $hidden = ['kata_sandi'];
 

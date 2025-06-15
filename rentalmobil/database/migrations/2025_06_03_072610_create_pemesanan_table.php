@@ -8,44 +8,44 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     public function up()
-    {
+{
+    if (!Schema::hasTable('pemesanan')) {
         Schema::create('pemesanan', function (Blueprint $table) {
-            $table->string('id_penyewaan', 10)->primary(); // CR001, CR002
+            $table->string('id_pemesanan', 10)->primary();
             $table->string('kode_mobil', 20);
-            $table->string('nama_penyewa');
-            $table->string('email');
-            $table->string('nomor_telepon');
-            $table->text('alamat');
-            $table->string('alamat_pengambilan');
+            $table->unsignedBigInteger('id_penyewa');
             $table->date('tanggal_pengambilan');
             $table->date('tanggal_pengembalian');
-            $table->integer('total_hari');
-            $table->decimal('total_harga', 12, 2);
-            $table->string('nomor_rekening');
-            $table->string('ktp_path');
-            $table->string('bukti_pembayaran_path');
-            $table->enum('status', ['Menunggu', 'Konfirmasi', 'Selesai', 'Batal'])->default('Menunggu');
             $table->timestamps();
 
-            $table->foreign('kode_mobil')->references('kode_mobil')->on('mobil');
+            $table->foreign('kode_mobil')->references('kode_mobil')->on('mobil')->onDelete('cascade');
+            $table->foreign('id_penyewa')->references('id_penyewa')->on('penyewa')->onDelete('cascade');
         });
 
-        // Trigger untuk auto-generate id_penyewaan (misalnya: CR001)
-        DB::unprepared('
-            CREATE TRIGGER before_insert_pemesanan
-            BEFORE INSERT ON pemesanan
-            FOR EACH ROW
-            BEGIN
-                DECLARE last_id INT;
-                DECLARE new_id VARCHAR(10);
+       DB::unprepared("
+    -- Perbaiki trigger untuk handle timestamp
+DROP TRIGGER IF EXISTS before_insert_pemesanan;
 
-                SELECT IFNULL(MAX(CAST(SUBSTRING(id_penyewaan, 3) AS UNSIGNED)), 0) INTO last_id FROM pemesanan;
-
-                SET new_id = CONCAT("CR", LPAD(last_id + 1, 3, "0"));
-                SET NEW.id_penyewaan = new_id;
-            END
-        ');
-    }
+DELIMITER //
+CREATE TRIGGER before_insert_pemesanan
+BEFORE INSERT ON pemesanan
+FOR EACH ROW
+BEGIN
+    DECLARE last_id INT DEFAULT 0;
+    
+    -- Handle case sensitive table name
+    SELECT IFNULL(MAX(CAST(SUBSTRING(id_pemesanan, 3) AS UNSIGNED)), 0) INTO last_id 
+    FROM pemesanan;
+    
+    SET NEW.id_pemesanan = CONCAT('PM', LPAD(last_id + 1, 3, '0'));
+    
+    -- Force set timestamps
+    SET NEW.created_at = CURRENT_TIMESTAMP;
+    SET NEW.updated_at = CURRENT_TIMESTAMP;
+END//
+DELIMITER ;
+");
+    }}
 
     public function down()
     {

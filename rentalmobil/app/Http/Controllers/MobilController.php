@@ -5,65 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mobil;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\File;
 
 class MobilController extends Controller
 {
+    // Tampilkan halaman list mobil
     public function index()
     {
         $mobils = Mobil::orderBy('created_at', 'desc')->get();
         return view('pages.mobiladmin', compact('mobils'));
     }
 
+    // Simpan data mobil baru
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'merek' => 'required|max:50',
-            'jenis' => 'required|max:50',
-            'warna' => 'required|max:30',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'harga_harian' => 'required|numeric|min:0',
-            'jumlah_kursi' => 'required|integer|min:1',
-            'mesin' => 'required|max:30',
-            'jumlah' => 'required|integer|min:1',
-            'transmisi' => 'required|max:20'
-        ]);
+        $validated = $this->validateMobil($request);
 
         try {
+            $mobil = new Mobil($validated);
+
             if ($request->hasFile('foto')) {
-                $file = $request->file('foto');
-                $imagesPath = public_path('images');
-                
-                if (!File::exists($imagesPath)) {
-                    File::makeDirectory($imagesPath, 0755, true);
-                }
-                
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move($imagesPath, $filename);
-                $validated['foto'] = $filename;
+                $mobil->updateFoto($request->file('foto'));
             }
 
-            $mobil = Mobil::create($validated);
+            $mobil->save();
+
             return redirect()->route('mobiladmin')->with('success', 'Data mobil berhasil ditambahkan! Kode: ' . $mobil->kode_mobil);
-            
+
         } catch (\Exception $e) {
             Log::error('Error storing mobil: ' . $e->getMessage());
             return redirect()->back()
-                   ->withInput()
-                   ->with('error', 'Gagal menambah data: ' . $e->getMessage());
+                ->withInput()
+                ->with('error', 'Gagal menambah data: ' . $e->getMessage());
         }
     }
 
+    // Ambil data mobil untuk edit (AJAX)
     public function edit($kode_mobil)
     {
         try {
             $mobil = Mobil::where('kode_mobil', $kode_mobil)->firstOrFail();
+
             return response()->json([
                 'success' => true,
                 'data' => $mobil,
                 'foto_url' => $mobil->foto_url,
             ]);
-            
+
         } catch (\Exception $e) {
             Log::error('Error editing mobil: ' . $e->getMessage());
             return response()->json([
@@ -73,88 +60,68 @@ class MobilController extends Controller
         }
     }
 
+    // Update data mobil
     public function update(Request $request, $kode_mobil)
     {
         $mobil = Mobil::where('kode_mobil', $kode_mobil)->firstOrFail();
 
-        $validated = $request->validate([
-            'merek' => 'required|max:50',
-            'jenis' => 'required|max:50',
-            'warna' => 'required|max:30',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'harga_harian' => 'required|numeric|min:0',
-            'jumlah_kursi' => 'required|integer|min:1',
-            'mesin' => 'required|max:30',
-            'jumlah' => 'required|integer|min:1',
-            'transmisi' => 'required|max:20'
-        ]);
+        $validated = $this->validateMobil($request, $isUpdate = true);
 
         try {
             if ($request->hasFile('foto')) {
-                if ($mobil->foto && file_exists(public_path('images/' . $mobil->foto))) {
-                    unlink(public_path('images/' . $mobil->foto));
-                }
-                
-                $file = $request->file('foto');
-                $imagesPath = public_path('images');
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move($imagesPath, $filename);
-                $validated['foto'] = $filename;
-            } else {
-                unset($validated['foto']);
+                $mobil->updateFoto($request->file('foto'));
             }
 
-            $mobil->update($validated);
+            $mobil->fill($validated);
+            $mobil->save();
+
             return redirect()->route('mobiladmin')->with('success', 'Data mobil berhasil diperbarui!');
 
         } catch (\Exception $e) {
             Log::error('Error updating mobil: ' . $e->getMessage());
             return redirect()->back()
-                   ->withInput()
-                   ->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
         }
     }
 
+    // Hapus data mobil
     public function destroy($kode_mobil)
     {
         try {
             $mobil = Mobil::where('kode_mobil', $kode_mobil)->firstOrFail();
-            
-            if ($mobil->foto && file_exists(public_path('images/' . $mobil->foto))) {
-                unlink(public_path('images/' . $mobil->foto));
-            }
-            
-            $mobil->delete();
+
+            $mobil->delete(); // otomatis hapus foto via model event
+
             return redirect()->route('mobiladmin')->with('success', 'Data mobil berhasil dihapus!');
 
         } catch (\Exception $e) {
             Log::error('Error deleting mobil: ' . $e->getMessage());
             return redirect()->back()
-                   ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+                ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 
+    // API: List mobil dengan jumlah > 0
     public function apiIndex()
     {
         try {
             $mobils = Mobil::where('jumlah', '>', 0)
-                         ->orderBy('created_at', 'desc')
-                         ->get()
-                         ->map(function ($mobil) {
-                             return [
-                                 'kode_mobil' => $mobil->kode_mobil,
-                                 'merek' => $mobil->merek,
-                                 'jenis' => $mobil->jenis,
-                                 'warna' => $mobil->warna,
-                                 'transmisi' => $mobil->transmisi,
-                                 'foto_url' => $mobil->foto_url,
-                                 'harga_harian' => $mobil->harga_harian,
-                                 'jumlah_kursi' => $mobil->jumlah_kursi,
-                                 'mesin' => $mobil->mesin,
-                                 'jumlah' => $mobil->jumlah,
-                                 'created_at' => $mobil->created_at->format('Y-m-d H:i:s'),
-                             ];
-                         });
+                ->latest()
+                ->get()
+                ->map(fn($mobil) => [
+                    'kode_mobil' => $mobil->kode_mobil,
+                    'merek' => $mobil->merek,
+                    'jenis' => $mobil->jenis,
+                    'warna' => $mobil->warna,
+                    'transmisi' => $mobil->transmisi,
+                    'foto_url' => $mobil->foto_url,
+                    'harga_harian' => $mobil->harga_harian,
+                    'jumlah_kursi' => $mobil->jumlah_kursi,
+                    'mesin' => $mobil->mesin,
+                    'jumlah' => $mobil->jumlah,
+                    'created_at' => $mobil->created_at->format('Y-m-d H:i:s'),
+                ]);
 
             return response()->json([
                 'success' => true,
@@ -169,6 +136,7 @@ class MobilController extends Controller
         }
     }
 
+    // API: Detail mobil berdasarkan kode
     public function apiShow($kode_mobil)
     {
         try {
@@ -197,5 +165,28 @@ class MobilController extends Controller
                 'error' => $e->getMessage()
             ], 404);
         }
+    }
+
+    // Fungsi validasi yang dipakai di store dan update
+    private function validateMobil(Request $request, bool $isUpdate = false): array
+    {
+        $rules = [
+            'merek' => 'required|max:50',
+            'jenis' => 'required|max:50',
+            'warna' => 'required|max:30',
+            'harga_harian' => 'required|numeric|min:0',
+            'jumlah_kursi' => 'required|integer|min:1',
+            'mesin' => 'required|max:30',
+            'jumlah' => 'required|integer|min:1',
+            'transmisi' => 'required|max:20',
+        ];
+
+        if ($isUpdate) {
+            $rules['foto'] = 'nullable|image|mimes:jpeg,png,jpg|max:2048';
+        } else {
+            $rules['foto'] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+        }
+
+        return $request->validate($rules);
     }
 }

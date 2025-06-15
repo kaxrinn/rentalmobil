@@ -1,5 +1,5 @@
 <!-- Form Kontak -->
-<section id="Kontak" class="bg-[#f7f9ff] py-20 px-4 sm:px-6">
+<section id="Kontak" class="bg-[#f7f9ff] py-20 px-4 sm:px-6" class="scroll-mt-24 py-10"> >
   <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-10">
 
     <!-- Form Kontak -->

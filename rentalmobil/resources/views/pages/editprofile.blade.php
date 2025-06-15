@@ -64,4 +64,30 @@
         </form>
     </div>
 </div>
+
+@if (session('success'))
+    <div id="toast-success"
+        class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[9999] flex items-center px-5 py-3 text-sm font-medium text-green-800 bg-green-100 border border-green-300 rounded-lg shadow-lg"
+        role="alert">
+        <svg class="w-5 h-5 me-2 text-green-700" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414L8.414 15l-4.121-4.121a1 1 0 111.414-1.414L8.414 12.172l7.879-7.879a1 1 0 011.414 0z"
+                clip-rule="evenodd" />
+        </svg>
+        <span>{{ session('success') }}</span>
+    </div>
+
+    <script>
+        // Sembunyikan toast setelah 3 detik
+        setTimeout(() => {
+            const toast = document.getElementById('toast-success');
+            if (toast) {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => toast.remove(), 500); // Hapus elemen setelah fade out
+            }
+        }, 3000);
+    </script>
+@endif
+
 @endsection

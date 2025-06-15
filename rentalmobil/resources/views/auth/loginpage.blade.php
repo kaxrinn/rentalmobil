@@ -15,6 +15,14 @@
             $inputClass = 'w-full max-w-[300px] h-[40px] px-2 py-1 text-sm placeholder:text-sm border-2 border-blue-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700';
         @endphp
 
+        {{-- ✅ Flash Message Berhasil --}}
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-3 max-w-[300px] w-full text-center text-sm">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        {{-- ⚠️ Pesan Error --}}
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-2 rounded mb-3 max-w-[300px] w-full text-center text-sm">
                 {{ $errors->first() }}

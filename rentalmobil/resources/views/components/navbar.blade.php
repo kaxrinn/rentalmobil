@@ -47,15 +47,13 @@
     </div>
     
     <!-- Menu Items dengan tombol sesuai gambar -->
-    <div class="py-2 px-2 bg-white rounded-b-lg">
-      <a href="{{ route('edit-profile.edit') }}" class="block w-full text-sm font-medium text-white bg-blue-950 hover:bg-blue-800 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
-      <a href="#" 
-        class="block w-full text-sm font-medium text-white bg-red-800 hover:bg-red-900 px-4 py-2 rounded text-center" 
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Keluar
-      </a>
-    </div>
-  </div>
+<div class="py-2 px-2 bg-white rounded-b-lg">
+  <a href="{{ route('edit-profile.edit') }}" class="block w-full text-sm font-medium text-white bg-blue-950 px-4 py-2 rounded mb-2 text-center">Edit Profil</a>
+  <a href="#" 
+    class="block w-full text-sm font-medium text-white bg-red-800 px-4 py-2 rounded text-center" 
+    onclick="confirmLogout(event)">
+    Keluar
+  </a>
 </div>
 
     <!-- Burger Icon for Mobile -->
@@ -99,4 +97,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// Fungsi untuk konfirmasi logout
+function confirmLogout(event) {
+  event.preventDefault();
+  
+  Swal.fire({
+    title: 'Apakah Anda yakin ingin keluar?',
+    text: "Anda akan keluar dari akun Anda",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Ya, Keluar',
+    cancelButtonText: 'Batal',
+    buttonsStyling: false,
+    customClass: {
+      confirmButton: 'bg-red-800 text-white px-4 py-2 rounded mx-1',
+      cancelButton: 'bg-gray-500 text-white px-4 py-2 rounded mx-1'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      document.getElementById('logout-form').submit();
+    }
+  });
+}
 </script>
