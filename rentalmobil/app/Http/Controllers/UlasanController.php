@@ -2,33 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Ulasan;
+use Illuminate\Http\Request;
 
 class UlasanController extends Controller
 {
-    public function store(Request $request)
+    // **Menampilkan halaman riwayat (form ulasan berada di halaman ini)**
+    public function form()
     {
-        $validated = $request->validate([
-            'id_pemesanan' => 'required|exists:pemesanan,id_pemesanan',
-            'kode_mobil' => 'required|exists:mobil,kode_mobil',
-            'nama' => 'required|string|max:255',
+        return view('pages.riwayat');
+    }
+
+    // **Menyimpan data ulasan dari form**
+    public function submit(Request $request)
+    {
+        // **Validasi input dari form**
+        $request->validate([
+            'nama_penyewa' => 'required|string|max:255',
+            'ulasan' => 'required|string',
             'rating' => 'required|integer|min:1|max:5',
-            'pesan' => 'required|string'
         ]);
 
-        $ulasan = Ulasan::create([
-            'id_pemesanan' => $validated['id_pemesanan'],
-            'kode_mobil' => $validated['kode_mobil'],
-            'id_penyewa' => auth()->guard('penyewa')->id(),
-            'nama' => $validated['nama'],
-            'rating' => $validated['rating'],
-            'pesan' => $validated['pesan']
+        // **Menyimpan ke tabel ulasan**
+        Ulasan::create([
+            'nama_penyewa' => $request->nama_penyewa,
+            'komentar' => $request->ulasan,
+            'rating' => $request->rating,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Ulasan berhasil dikirim'
-        ]);
+        // **Redirect kembali ke halaman sebelumnya dengan pesan sukses**
+        return redirect()->back()->with('success', 'Ulasan berhasil dikirim.');
+    }
+
+    // **Menampilkan data ulasan di halaman admin**
+    public function index()
+    {
+        $ulasan = Ulasan::latest()->get(); // Ambil semua ulasan, urutkan terbaru
+        return view('pages.ulasanadmin', compact('ulasan'));
+    }
+
+    // **Menghapus ulasan berdasarkan ID**
+    public function destroy($id)
+    {
+        Ulasan::where('id_ulasan', $id)->delete(); // Hapus ulasan
+        return redirect()->route('ulasanadmin')->with('success', 'Ulasan berhasil dihapus.');
+    }
+
+    // **Mengambil data ulasan dalam bentuk JSON (biasanya untuk AJAX / API)**
+    public function getUlasan()
+    {
+        $ulasan = Ulasan::latest()->get();
+        return response()->json($ulasan);
     }
 }

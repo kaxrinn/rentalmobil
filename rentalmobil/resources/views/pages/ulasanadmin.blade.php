@@ -4,30 +4,45 @@
 
 @section('content')
 <div class="pt-10">
+  <!-- Container untuk tabel ulasan -->
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
     <h3 class="text-xl font-semibold mb-4">List Ulasan</h3>
+
+    <!-- Tabel Ulasan -->
     <table class="w-full min-w-[800px] border border-gray-300 text-center">
       <thead class="bg-gray-100">
         <tr>
-          <th class="p-3 border">NO</th>
-          <th class="p-3 border">NAMA PENYEWA</th>
-          <th class="p-3 border">ULASAN</th>
-          <th class="p-3 border">RATING</th>
-          <th class="p-3 border">AKSI</th>
+          <th class="p-3 border">NO</th> <!-- Nomor urutan -->
+          <th class="p-3 border">NAMA PENYEWA</th> <!-- Nama penyewa -->
+          <th class="p-3 border">ULASAN</th> <!-- Isi ulasan -->
+          <th class="p-3 border">RATING</th> <!-- Nilai rating -->
+          <th class="p-3 border">AKSI</th> <!-- Tombol aksi (hapus) -->
         </tr>
       </thead>
       <tbody>
+        @forelse ($ulasan as $index => $item)
         <tr>
-          <td class="p-3 border">1</td>
-          <td class="p-3 border">Kim Mingyu</td>
-          <td class="p-3 border">Bagus banget</td>
-          <td class="p-3 border">4</td>
+          <td class="p-3 border">{{ $index + 1 }}</td> <!-- Nomor baris -->
+          <td class="p-3 border">{{ $item->nama_penyewa }}</td> <!-- Nama penyewa -->
+          <td class="p-3 border">{{ $item->komentar }}</td> <!-- Komentar ulasan -->
+          <td class="p-3 border">{{ $item->rating }}</td> <!-- Rating ulasan -->
           <td class="p-3 border">
-            <div class="flex gap-2 justify-center">
-              <button class="bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">Hapus</button>
-            </div>
+            <!-- Form hapus ulasan -->
+            <form action="{{ route('ulasan.destroy', $item->id_ulasan) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus ulasan ini?');">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">
+                Hapus
+              </button>
+            </form>
           </td>
         </tr>
+        @empty
+        <!-- Jika belum ada ulasan -->
+        <tr>
+          <td colspan="5" class="p-4 text-gray-500">Belum ada ulasan.</td>
+        </tr>
+        @endforelse
       </tbody>
     </table>
   </div>

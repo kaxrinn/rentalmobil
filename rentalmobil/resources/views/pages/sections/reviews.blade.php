@@ -1,55 +1,189 @@
-<section class="pt-[60px] pb-[20px] px-[20px] bg-white text-center shadow-md mb-2 " id="Ulasan" class="scroll-mt-24 py-10"> 
-  <h2 class="text-[28px] text-[#1e2b5c] mb-[30px] font-bold">ULASAN APLIKASI</h2>
+<!-- Bagian Ulasan Aplikasi (carousel) -->
+<section id="Ulasan" class="py-16 bg-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-[#1e2b5c] mb-12 text-center text-slate-700 tracking-wide">ULASAN APLIKASI</h2>
 
-  <div class="relative max-w-[1200px] mx-auto overflow-hidden">
-    <div id="reviews-carousel" class="relative" data-carousel="static">
-      <div class="relative h-[250px] overflow-hidden rounded-lg">
-        @php
-          $reviews = [
-            ['tgl' => '15', 'bulan' => 'Juni', 'tahun' => '2025', 'nama' => 'Kim Mingyu', 'review' => 'Mobilnya bersih dan nyaman. Sangat cocok untuk perjalanan jauh.'],
-            ['tgl' => '10', 'bulan' => 'Mei', 'tahun' => '2025', 'nama' => 'Jeon Wonwoo', 'review' => 'Proses pemesanan sangat mudah, dan customer service-nya cepat tanggap.'],
-            ['tgl' => '05', 'bulan' => 'Mei', 'tahun' => '2025', 'nama' => 'Choi Seungcheol', 'review' => 'Pengalaman sewa sangat memuaskan. Mobil tepat waktu diantar.'],
-            ['tgl' => '28', 'bulan' => 'April', 'tahun' => '2025', 'nama' => 'Lee Jihoon', 'review' => 'Harga terjangkau dan kondisi mobil prima.'],
-            ['tgl' => '20', 'bulan' => 'April', 'tahun' => '2025', 'nama' => 'Xu Minghao', 'review' => 'Aplikasi user-friendly, sangat mudah digunakan oleh pemula.'],
-            ['tgl' => '12', 'bulan' => 'April', 'tahun' => '2025', 'nama' => 'Yoon Jeonghan', 'review' => 'Admin responsif dan ramah. Akan sewa lagi bulan depan.'],
-          ];
-        @endphp
-
-        @for($i = 0; $i < ceil(count($reviews) / 3); $i++)
-        <div class="hidden duration-700 ease-in-out" data-carousel-item{{ $i === 0 ? '="active"' : '' }}>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-            @for($j = 0; $j < 3; $j++)
-              @php $index = $i * 3 + $j; @endphp
-              @if($index < count($reviews))
-              <div class="bg-[#f9faff] rounded-lg p-4 text-center shadow">
-                <div class="flex justify-center mb-2">
-                  <span class="text-[32px] font-bold mr-2">{{ $reviews[$index]['tgl'] }}</span>
-                  <div><div>{{ $reviews[$index]['bulan'] }}</div><div>{{ $reviews[$index]['tahun'] }}</div></div>
-                </div>
-                <div class="text-[#007BFF] mb-2 text-xl">★★★★★</div>
-                <p class="text-sm text-gray-700">{{ $reviews[$index]['review'] }}</p>
-                <span class="block mt-3 font-semibold">-{{ $reviews[$index]['nama'] }}-</span>
-              </div>
-              @endif
-            @endfor
-          </div>
-        @endfor
-      </div>
-
-      <!-- Tombol navigasi -->
-      <button type="button" class="absolute top-1/2 left-0 z-30 -translate-y-1/2 bg-[#1e2b5c] text-white p-3 rounded-full shadow-md hover:bg-[#152049]" data-carousel-prev>
-        <span>&lt;</span>
-      </button>
-      <button type="button" class="absolute top-1/2 right-0 z-30 -translate-y-1/2 bg-[#1e2b5c] text-white p-3 rounded-full shadow-md hover:bg-[#152049]" data-carousel-next>
-        <span>&gt;</span>
+    <!-- Container tombol navigasi -->
+    <div class="relative">
+      <!-- Tombol kiri -->
+      <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 text-slate-600 p-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-30">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
       </button>
 
-      <!-- Slider indicator -->
-      <div class="flex justify-center mt-6 space-x-2">
-        @for($i = 0; $i < ceil(count($reviews)/3); $i++)
-        <button type="button" class="w-3 h-3 rounded-full {{ $i === 0 ? 'bg-[#1e2b5c]' : 'bg-gray-300' }}" aria-current="{{ $i === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $i + 1 }}" data-carousel-slide-to="{{ $i }}"></button>
-        @endfor
+      <!-- Tombol kanan -->
+      <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 text-slate-600 p-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-30">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+
+      <!-- Track ulasan -->
+      <div class="overflow-hidden mx-12">
+        <div id="ulasan-container" class="flex transition-transform duration-500 ease-in-out gap-6">
+          <!-- Ulasan dimuat lewat JavaScript -->
+        </div>
       </div>
     </div>
+
+    <!-- Dot indikator -->
+    <div id="dots-container" class="flex justify-center mt-8 gap-2">
+      <!-- Dot dibuat dari JS -->
+    </div>
+
+    <!-- Pesan jika kosong -->
+    <p id="ulasan-empty" class="text-center text-slate-500 mt-8 text-lg hidden">Belum ada ulasan.</p>
   </div>
 </section>
+
+<style>
+  /* Ukuran dan layout kartu ulasan */
+  #ulasan-container .review-card {
+    min-width: 320px;
+    max-width: 320px;
+    flex-shrink: 0;
+  }
+
+  /* Gaya dot */
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    background-color: #64748b;
+    transform: scale(1.2);
+  }
+</style>
+
+<script>
+// Setelah halaman dimuat
+document.addEventListener('DOMContentLoaded', function () {
+  let currentSlide = 0;
+  let slidesToShow = 3;
+  let totalReviews = 0;
+
+  // Atur berapa slide ditampilkan berdasarkan lebar layar
+  function updateSlidesToShow() {
+    if (window.innerWidth < 768) {
+      slidesToShow = 1;
+    } else if (window.innerWidth < 1024) {
+      slidesToShow = 2;
+    } else {
+      slidesToShow = 3;
+    }
+  }
+
+  // Buat dot berdasarkan jumlah ulasan
+  function createDots() {
+    const dotsContainer = document.getElementById('dots-container');
+    const totalSlides = Math.max(0, totalReviews - slidesToShow + 1);
+
+    dotsContainer.innerHTML = '';
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.className = `dot ${i === currentSlide ? 'active' : ''}`;
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  // Ubah posisi slider
+  function updateSliderPosition() {
+    const track = document.getElementById('ulasan-container');
+    const translateX = -currentSlide * (320 + 24);
+    track.style.transform = `translateX(${translateX}px)`;
+
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
+  }
+
+  // Aktifkan/nonaktifkan tombol prev/next
+  function updateNavigation() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const maxSlide = Math.max(0, totalReviews - slidesToShow);
+
+    prevBtn.disabled = currentSlide <= 0;
+    nextBtn.disabled = currentSlide >= maxSlide;
+  }
+
+  // Pindah ke slide tertentu
+  function goToSlide(slideIndex) {
+    const maxSlide = Math.max(0, totalReviews - slidesToShow);
+    currentSlide = Math.max(0, Math.min(slideIndex, maxSlide));
+    updateSliderPosition();
+    updateNavigation();
+  }
+
+  // Tombol next
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    goToSlide(currentSlide + 1);
+  });
+
+  // Tombol prev
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    goToSlide(currentSlide - 1);
+  });
+
+  // Responsif ketika ukuran layar berubah
+  window.addEventListener('resize', () => {
+    updateSlidesToShow();
+    currentSlide = 0;
+    updateSliderPosition();
+    updateNavigation();
+    createDots();
+  });
+
+  // Ambil data ulasan dari API
+  fetch('/api/ulasan')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('ulasan-container');
+      const empty = document.getElementById('ulasan-empty');
+      container.innerHTML = '';
+      totalReviews = data.length;
+
+      if (data.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      updateSlidesToShow();
+
+      // Tambahkan setiap ulasan ke dalam slider
+      data.forEach(review => {
+        const date = new Date(review.created_at);
+        const card = document.createElement('div');
+        card.className = 'review-card bg-[#f4f6ff] rounded-xl shadow-sm p-4';
+        card.innerHTML = `
+          <div class="flex items-center gap-4 mb-4">
+            <div class="text-[40px] font-bold text-slate-700">${date.getDate()}</div>
+            <div>
+              <div class="text-lg font-semibold text-slate-600">${date.toLocaleString('id-ID', { month: 'long' })} ${date.getFullYear()}</div>
+              <div class="text-[#84c2ff] text-lg">
+                ${'★'.repeat(review.rating)}
+              </div>
+            </div>
+          </div>
+          <p class="text-slate-600 leading-relaxed mb-4">${review.komentar}</p>
+          <p class="font-bold text-slate-700">-${review.nama_penyewa}-</p>
+        `;
+        container.appendChild(card);
+      });
+
+      createDots();
+      updateNavigation();
+    })
+    .catch(error => {
+      console.error('Gagal memuat ulasan:', error);
+    });
+});
+</script>

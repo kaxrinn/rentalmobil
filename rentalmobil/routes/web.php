@@ -15,6 +15,7 @@ use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\AdminPemesananController;
+use App\Http\Controllers\UlasanController;
 
 //landing bf
 Route::get('/landingpagebf', [LandingpagebfController::class, 'index'])->name('landingpagebf');
@@ -61,10 +62,6 @@ Route::get('/hubungiadmin', [AdminController::class, 'hubungiadmin'])->name('hub
 // Route untuk resi PDF
 Route::get('/pemesanan/{id}/resi', [PemesananController::class, 'generateResi'])
      ->name('pemesanan.resi');
-
-// Route untuk ulasan
-Route::post('/ulasan', [UlasanController::class, 'store'])
-     ->name('ulasan.store');
 
 
 Route::post('/pembayaran/proses', [PembayaranController::class, 'processPayment'])
@@ -129,6 +126,11 @@ Route::middleware('auth:perental')->group(function () {
     })->name('admin');
 });
 
+// Route untuk ulasan
+Route::post('/ulasan/submit', [UlasanController::class, 'submit'])->name('ulasan.submit');
+Route::get('ulasanadmin', [UlasanController::class, 'index'])->name('ulasanadmin');
+Route::delete('/ulasanadmin/{id}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
+Route::get('/reviews', [UlasanController::class, 'userReviews'])->name('userreviews');
 
 
 
