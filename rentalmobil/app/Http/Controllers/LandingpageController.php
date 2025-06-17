@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Mobil; // Pastikan model di-import
 
 class LandingpageController extends Controller
 {
@@ -10,6 +11,10 @@ class LandingpageController extends Controller
     {
         return view('pages.landingpage');
     }
+
+    
+
+
 
 
 }

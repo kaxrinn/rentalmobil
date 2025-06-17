@@ -57,6 +57,9 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
+        <div id="no-results" class="hidden text-center text-gray-600 py-12 w-full">
+            Tidak ada mobil yang cocok dengan pencarian Anda.
+        </div>
     </section>
 
     <!-- Detail Modal -->
@@ -138,8 +141,8 @@
                                     <i class="fas fa-calendar-alt text-primary text-sm"></i>
                                 </div>
                                 <input type="date" id="pickup_date" name="pickup_date" required 
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
-                                       min="{{ date('Y-m-d') }}" />
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
+                                        min="{{ date('Y-m-d') }}" />
                             </div>
                         </div>
                         <div>
@@ -149,8 +152,8 @@
                                     <i class="fas fa-calendar-alt text-primary text-sm"></i>
                                 </div>
                                 <input type="date" id="return_date" name="return_date" required 
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
-                                       min="{{ date('Y-m-d') }}" />
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
+                                        min="{{ date('Y-m-d') }}" />
                             </div>
                         </div>
                     </div>
@@ -227,7 +230,7 @@
                             <div class="mt-2">
                                 <label for="payment_proof" class="block mb-1 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
                                 <input type="file" id="payment_proof" name="payment_proof" accept=".jpeg,.jpg,.png,.pdf" required 
-                                       class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
+                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
                                 <p class="mt-1 text-xs text-gray-500">(JPEG, PNG, atau PDF max 2MB)</p>
                             </div>
                         </div>
@@ -259,9 +262,11 @@
         const detailModal = document.getElementById('detail-modal');
         const pemesananModal = document.getElementById('pemesanan-modal');
         const pembayaranModal = document.getElementById('pembayaran-modal');
+        const noResultsMessage = document.getElementById('no-results');
         
         // State variables
         let mobilsData = [];
+        let filteredMobilsData = []; // New array to store filtered cars
         let currentSlide = 0;
         let slidesCount = 0;
         const itemsPerSlide = 3;
@@ -300,22 +305,69 @@
             .then(data => {
                 mobilsData = data.data || [];
                 
-                if (!mobilsData.length) {
-                    carouselItems.innerHTML = '<p class="text-center text-gray-600 py-12 w-full">Tidak ada mobil tersedia saat ini.</p>';
-                    return;
+                // Get search query from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const searchQuery = urlParams.get('search'); // Assuming the search parameter is 'search'
+
+                if (searchQuery) {
+                    filterAndRenderCars(searchQuery);
+                } else {
+                    filteredMobilsData = [...mobilsData]; // If no search, show all cars
+                    renderCarousel();
                 }
-                
-                renderCarousel();
             })
             .catch(error => {
                 console.error('Error fetching car data:', error);
                 carouselItems.innerHTML = '<p class="text-center text-red-600 py-12 w-full">Gagal memuat data mobil.</p>';
             });
 
+        // Function to filter cars based on search query and render the carousel
+        function filterAndRenderCars(query) {
+            const lowerCaseQuery = query.toLowerCase();
+            filteredMobilsData = mobilsData.filter(mobil => 
+                mobil.merek.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.jenis.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.transmisi.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.warna.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.mesin.toLowerCase().includes(lowerCaseQuery)
+            );
+
+            if (!filteredMobilsData.length) {
+                carouselItems.innerHTML = ''; // Clear existing items
+                carouselContainer.classList.add('hidden'); // Hide carousel
+                noResultsMessage.classList.remove('hidden'); // Show no results message
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden'); // Hide no results message
+                carouselContainer.classList.remove('hidden'); // Show carousel
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                currentSlide = 0; // Reset to first slide after filtering
+                renderCarousel();
+            }
+        }
+
         // Render carousel with 3 products per slide
         function renderCarousel() {
             carouselItems.innerHTML = '';
-            slidesCount = Math.ceil(mobilsData.length / itemsPerSlide);
+            slidesCount = Math.ceil(filteredMobilsData.length / itemsPerSlide);
+            
+            if (slidesCount === 0) { // Handle case where filtered data is empty
+                carouselItems.innerHTML = '<p class="text-center text-gray-600 py-12 w-full">Tidak ada mobil tersedia saat ini.</p>';
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                return;
+            }
+
+            // Show/hide navigation buttons based on slide count
+            if (slidesCount <= 1) {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            }
             
             for (let i = 0; i < slidesCount; i++) {
                 const slide = document.createElement('div');
@@ -323,7 +375,7 @@
                 
                 const startIdx = i * itemsPerSlide;
                 const endIdx = startIdx + itemsPerSlide;
-                const slideProducts = mobilsData.slice(startIdx, endIdx);
+                const slideProducts = filteredMobilsData.slice(startIdx, endIdx);
                 
                 slideProducts.forEach(mobil => {
                     const productCard = document.createElement('div');
@@ -351,7 +403,7 @@
                 // Add empty cards if less than 3 products in last slide
                 while (slide.children.length < itemsPerSlide) {
                     const emptyCard = document.createElement('div');
-                    emptyCard.className = 'invisible';
+                    emptyCard.className = 'invisible'; // Use invisible to maintain layout
                     slide.appendChild(emptyCard);
                 }
                 
@@ -368,7 +420,7 @@
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const kodeMobil = this.getAttribute('data-id');
-                    const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+                    const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil); // Use original data for detail
                     showDetailModal(mobil);
                 });
             });
@@ -377,7 +429,7 @@
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const kodeMobil = this.getAttribute('data-id');
-                    const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+                    const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil); // Use original data for booking
                     showPemesananModal(mobil);
                 });
             });
@@ -468,6 +520,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
+                    title: 'Invalid Date',
                     text: 'Tanggal pengembalian tidak boleh sebelum tanggal pengambilan!'
                 });
                 return;

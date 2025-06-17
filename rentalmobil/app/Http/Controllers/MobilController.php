@@ -189,4 +189,14 @@ class MobilController extends Controller
 
         return $request->validate($rules);
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+
+        $mobils = Mobil::where('merek', 'like', "%$keyword%")
+            ->orWhere('jenis', 'like', "%$keyword%")
+            ->get(); // get() langsung semua data
+
+        return view('pages.pencarian', compact('mobils', 'keyword'));
+    }
 }

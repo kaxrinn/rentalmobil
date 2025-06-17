@@ -16,12 +16,17 @@
     </div>
 
     <!-- Search Bar -->
-    <div class="hidden md:flex items-center w-64 rounded-md border border-gray-400 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500">
-      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <form action="{{ url('/search') }}" method="GET" class="hidden md:flex items-center w-64 rounded-md border border-gray-400 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500">
+      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"></path>
       </svg>
-      <input type="text" id="search-navbar" class="ml-2 block w-full border-none bg-transparent p-0 text-sm text-gray-700 focus:outline-none" placeholder="Pencarian">
-    </div>
+      <input
+        type="text"
+        id="search-navbar"
+        name="search"
+        class="ml-2 block w-full border-none bg-transparent p-0 text-sm text-gray-700 focus:outline-none"
+        placeholder="Pencarian">
+    </form>
 
 <!-- Flowbite Dropdown untuk Profil -->
 <div class="relative z-[1001]">

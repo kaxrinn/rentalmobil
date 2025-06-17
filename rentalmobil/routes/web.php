@@ -132,6 +132,9 @@ Route::get('ulasanadmin', [UlasanController::class, 'index'])->name('ulasanadmin
 Route::delete('/ulasanadmin/{id}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 Route::get('/reviews', [UlasanController::class, 'userReviews'])->name('userreviews');
 
+//pencarian
+Route::get('/search', [MobilController::class, 'search'])->name('search');
+
 
 
 
