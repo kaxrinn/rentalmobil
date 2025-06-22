@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mobil;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 
 class MobilController extends Controller
 {
@@ -24,7 +25,7 @@ class MobilController extends Controller
             $mobil = new Mobil($validated);
 
             if ($request->hasFile('foto')) {
-                $mobil->updateFoto($request->file('foto'));
+                $this->updateFoto($mobil, $request->file('foto'));
             }
 
             $mobil->save();
@@ -69,7 +70,7 @@ class MobilController extends Controller
 
         try {
             if ($request->hasFile('foto')) {
-                $mobil->updateFoto($request->file('foto'));
+                $this->updateFoto($mobil, $request->file('foto'));
             }
 
             $mobil->fill($validated);
@@ -189,6 +190,7 @@ class MobilController extends Controller
 
         return $request->validate($rules);
     }
+
     public function search(Request $request)
     {
         $keyword = $request->search;
@@ -198,5 +200,35 @@ class MobilController extends Controller
             ->get(); // get() langsung semua data
 
         return view('pages.pencarian', compact('mobils', 'keyword'));
+    }
+    
+    // Fungsi baru untuk update foto
+    private function updateFoto(Mobil $mobil, $file): void
+    {
+        // Hapus foto lama jika ada
+        $this->deleteFotoFile($mobil->foto);
+
+        // Simpan foto baru
+        $imagesPath = public_path('images');
+        if (!File::exists($imagesPath)) {
+            File::makeDirectory($imagesPath, 0755, true);
+        }
+
+        $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move($imagesPath, $filename);
+
+        // Update atribut foto di model
+        $mobil->foto = $filename;
+    }
+
+    // Fungsi baru untuk hapus file foto
+    private function deleteFotoFile($filename): void
+    {
+        if ($filename) {
+            $path = public_path('images/' . $filename);
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
     }
 }

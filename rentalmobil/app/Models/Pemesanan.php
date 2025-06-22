@@ -24,27 +24,39 @@ class Pemesanan extends Model
         'tanggal_pengembalian',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($model) {
+            // Backup jika trigger tidak bekerja
+            if (empty($model->id_pemesanan)) {
+                $lastId = (int) DB::table('pemesanan')
+                    ->selectRaw('MAX(CAST(SUBSTRING(id_pemesanan, 3) AS UNSIGNED)) as last_id')
+                    ->value('last_id') ?? 0;
+                    
+                $model->id_pemesanan = 'PM'.str_pad($lastId + 1, 3, '0', STR_PAD_LEFT);
+            }
+            
+            // Force timestamps
+            $model->created_at = $model->created_at ?? now();
+            $model->updated_at = $model->updated_at ?? now();
+        });
 
-protected static function boot()
-{
-    parent::boot();
-
-    static::creating(function ($model) {
-        // Backup jika trigger tidak bekerja
-        if (empty($model->id_pemesanan)) {
-            $lastId = (int) DB::table('pemesanan')
-                ->selectRaw('MAX(CAST(SUBSTRING(id_pemesanan, 3) AS UNSIGNED)) as last_id')
-                ->value('last_id') ?? 0;
-                
-            $model->id_pemesanan = 'PM'.str_pad($lastId + 1, 3, '0', STR_PAD_LEFT);
-        }
-        
-        // Force timestamps
-        $model->created_at = $model->created_at ?? now();
-        $model->updated_at = $model->updated_at ?? now();
-    });
-}
+        // Tambahkan event ketika status berubah
+        static::updated(function ($pemesanan) {
+            $originalStatus = $pemesanan->getOriginal('pembayaran.status');
+            $currentStatus = $pemesanan->pembayaran->status;
+            
+            if (($originalStatus === 'Menunggu' || $originalStatus === 'Konfirmasi') && 
+                ($currentStatus === 'Batal' || $currentStatus === 'Selesai')) {
+                $mobil = Mobil::where('kode_mobil', $pemesanan->kode_mobil)->first();
+                if ($mobil) {
+                    $mobil->increment('jumlah');
+                }
+            }
+        });
+    }
 
     public function mobil()
     {

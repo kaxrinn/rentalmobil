@@ -15,19 +15,24 @@ use Carbon\Carbon;
 
 class PembayaranController extends Controller
 {
-   public function processPayment(Request $request)
+    public function processPayment(Request $request)
 {
     DB::beginTransaction();
     try {
         $user = Auth::user();
         $mobil = Mobil::where('kode_mobil', $request->kode_mobil)->firstOrFail();
 
+        // Validasi stok
+        if ($mobil->jumlah <= 0) {
+            throw new \Exception('Stok mobil habis');
+        }
+
         // Hitung durasi dan total
         $days = Carbon::parse($request->pickup_date)
             ->diffInDays(Carbon::parse($request->return_date)) + 1;
         $totalPrice = $days * $mobil->harga_harian;
 
-        // Method 1: Gunakan create dengan force fill
+        // Buat pemesanan
         $pemesanan = Pemesanan::forceCreate([
             'kode_mobil' => $request->kode_mobil,
             'id_penyewa' => $user->id_penyewa,
@@ -36,19 +41,6 @@ class PembayaranController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
-
-        // Method 2: Jika Method 1 gagal, gunakan DB langsung
-        /*
-        $pemesananId = DB::table('pemesanan')->insertGetId([
-            'kode_mobil' => $request->kode_mobil,
-            'id_penyewa' => $user->id_penyewa,
-            'tanggal_pengambilan' => $request->pickup_date,
-            'tanggal_pengembalian' => $request->return_date,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        $pemesanan = Pemesanan::find($pemesananId);
-        */
 
         if (empty($pemesanan->id_pemesanan)) {
             throw new \Exception('Trigger gagal generate ID pemesanan');
@@ -69,6 +61,9 @@ class PembayaranController extends Controller
             'status' => 'Menunggu',
         ]);
 
+        // KURANGI STOK MOBIL
+        $mobil->decrement('jumlah');
+
         DB::commit();
 
         return response()->json([
@@ -85,4 +80,5 @@ class PembayaranController extends Controller
             'message' => 'Terjadi kesalahan: '.$e->getMessage()
         ], 500);
     }
-}}
+}
+}
