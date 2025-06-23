@@ -61,8 +61,11 @@ public function login(Request $request)
         Auth::guard('penyewa')->login($penyewa);
         $request->session()->regenerate();
 
-        // Ubah sesuai kebutuhan: debug atau redirect
-        // return dd('Login berhasil sebagai PENYEWA');
+        // Jika login berhasil dan belum isi profile maka di arahkan ke halaman profile
+    if (!$penyewa->alamat || !$penyewa->foto_ktp) {
+    return redirect()->route('edit-profile.edit');
+        }
+// jika sudah mengisi profile akan di arahkan ke halaman landingpage);
         return redirect()->route('landingpage');
     }
 

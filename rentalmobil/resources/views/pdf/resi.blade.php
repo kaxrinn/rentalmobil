@@ -27,8 +27,10 @@
     <div class="detail">
         <span class="detail-label">Nama Penyewa:</span>
         {{ $pemesanan->penyewa->nama_penyewa }}
-    </div>
-    
+<div class="detail">
+    <span class="detail-label">Foto KTP:</span><br>
+    <img src="{{ public_path($pemesanan->penyewa->foto_ktp) }}" alt="Foto KTP"  width="250" height="150" style="object-fit: cover;">
+</div>
     <div class="detail">
         <span class="detail-label">Tanggal Pengambilan:</span>
         {{ $pemesanan->formatted_tanggal_pengambilan }}
@@ -59,7 +61,7 @@
             <td>Rp{{ number_format($pemesanan->pembayaran->total_harga ?? 0, 0, ',', '.') }}</td>
         </tr>
     </table>
-    
+
     <div class="footer">
         <div>Status: {{ $pemesanan->pembayaran->status ?? 'Menunggu' }}</div>
         <div>Tanggal Cetak: {{ now()->format('d M Y H:i:s') }}</div>

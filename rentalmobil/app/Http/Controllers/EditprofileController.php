@@ -70,7 +70,7 @@ class EditProfileController extends Controller
         $user->save();
 
         
-        return redirect()->back()->with('success', 'Pembaruan profil telah berhasil.');
+        return redirect()->route('landingpage')->with('success', 'Profil berhasil diperbarui!');
 
     }
 }
