@@ -33,7 +33,7 @@
           <th class="p-3 border">ID PENYEWAAN</th>
           <th class="p-3 border">NAMA PENYEWA</th>
           <th class="p-3 border">EMAIL</th>
-          <th class="p-3 border">BUKTI</th>
+          <th class="p-3 border">FOTO KTP</th>
           <th class="p-3 border">TANGGAL PENGAMBILAN</th>
           <th class="p-3 border">TANGGAL PENGEMBALIAN</th>
           <th class="p-3 border">MOBIL</th>
@@ -66,9 +66,9 @@
             </td>
             <td class="p-3 border">Rp {{ number_format($pemesanan->pembayaran->total_harga ?? 0, 0, ',', '.') }}</td>
             <td class="p-3 border">
-                @if($pemesanan->pembayaran->bukti_pembayaran_path)
-                <a href="{{ $pemesanan->pembayaran->bukti_pembayaran_path }}" target="_blank" class="inline-block">
-                    <img src="{{ $pemesanan->pembayaran->bukti_pembayaran_path }}" class="max-w-[100px] h-auto mx-auto">
+                @if($pemesanan->pembayaran && $pemesanan->pembayaran->bukti_pembayaran_url)
+                <a href="{{ $pemesanan->pembayaran->bukti_pembayaran_url }}" target="_blank" class="inline-block">
+                    <img src="{{ $pemesanan->pembayaran->bukti_pembayaran_url }}" class="max-w-[100px] h-auto mx-auto">
                 </a>
                 @else
                 <span class="text-red-500">Tidak ada bukti</span>
