@@ -262,7 +262,7 @@ document.getElementById('editForm').addEventListener('submit', function(e) {
     const status = document.getElementById('edit-status').value;
     const url = `/admin/pemesanan/${id}/status`;
     const row = document.querySelector(`tr[data-id="${id}"]`);
-    const statusBadge = row.querySelector('td:nth-child(10) span');
+    const statusBadge = row.querySelector('td:nth-child(11) span');
 
     fetch(url, {
         method: 'PUT',

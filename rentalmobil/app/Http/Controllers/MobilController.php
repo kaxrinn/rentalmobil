@@ -63,28 +63,31 @@ class MobilController extends Controller
 
     // Update data mobil
     public function update(Request $request, $kode_mobil)
-    {
-        $mobil = Mobil::where('kode_mobil', $kode_mobil)->firstOrFail();
+{
+    $mobil = Mobil::where('kode_mobil', $kode_mobil)->firstOrFail();
 
-        $validated = $this->validateMobil($request, $isUpdate = true);
+    $validated = $this->validateMobil($request, $isUpdate = true);
 
-        try {
-            if ($request->hasFile('foto')) {
-                $this->updateFoto($mobil, $request->file('foto'));
-            }
+    unset($validated['foto']); // agar foto tidak tertimpa saat fill
 
-            $mobil->fill($validated);
-            $mobil->save();
+    try {
+        $mobil->fill($validated); // ISI data terlebih dahulu
 
-            return redirect()->route('mobiladmin')->with('success', 'Data mobil berhasil diperbarui!');
-
-        } catch (\Exception $e) {
-            Log::error('Error updating mobil: ' . $e->getMessage());
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
+        if ($request->hasFile('foto')) {
+            $this->updateFoto($mobil, $request->file('foto'));
         }
+
+        $mobil->save();
+
+        return redirect()->route('mobiladmin')->with('success', 'Data mobil berhasil diperbarui!');
+    } catch (\Exception $e) {
+        Log::error('Error updating mobil: ' . $e->getMessage());
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
     }
+}
+
 
     // Hapus data mobil
     public function destroy($kode_mobil)
