@@ -12,6 +12,17 @@
         @php
             $inputClass = 'w-[300px] h-[38px] px-2 py-1 text-sm placeholder:text-sm border-2 border-blue-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700';
         @endphp
+        @if(session('warning'))
+            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+                {{ session('warning') }}
+            </div>
+        @endif
+
+        @if (empty($penyewa->alamat) || empty($penyewa->foto_ktp))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                Lengkapi alamat dan foto KTP Anda.
+            </div>
+        @endif
 
         <form action="{{ route('edit-profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4 flex flex-col items-center w-full">
             @csrf
