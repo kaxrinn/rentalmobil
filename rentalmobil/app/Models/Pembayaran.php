@@ -26,6 +26,34 @@ class Pembayaran extends Model
         'status',
     ];
 
+     protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function ($pembayaran) {
+            $originalStatus = $pembayaran->getOriginal('status');
+            $currentStatus = $pembayaran->status;
+
+            // Stok bertambah ketika status berubah menjadi Batal/Selesai
+            if (in_array($originalStatus, ['Menunggu', 'Konfirmasi']) && 
+                in_array($currentStatus, ['Batal', 'Selesai'])) {
+                $mobil = Mobil::where('kode_mobil', $pembayaran->kode_mobil)->first();
+                if ($mobil) {
+                    $mobil->increment('jumlah');
+                }
+            }
+
+            // Stok berkurang ketika status berubah menjadi Menunggu/Konfirmasi
+            if (in_array($originalStatus, ['Batal', 'Selesai']) && 
+                in_array($currentStatus, ['Menunggu', 'Konfirmasi'])) {
+                $mobil = Mobil::where('kode_mobil', $pembayaran->kode_mobil)->first();
+                if ($mobil && $mobil->jumlah > 0) {
+                    $mobil->decrement('jumlah');
+                }
+            }
+        });
+    }
+
     public function pemesanan()
     {
         return $this->belongsTo(Pemesanan::class, 'id_pemesanan', 'id_pemesanan');

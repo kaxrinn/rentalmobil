@@ -43,19 +43,7 @@ class Pemesanan extends Model
             $model->updated_at = $model->updated_at ?? now();
         });
 
-        // Tambahkan event ketika status berubah
-        static::updated(function ($pemesanan) {
-            $originalStatus = $pemesanan->getOriginal('pembayaran.status');
-            $currentStatus = $pemesanan->pembayaran->status;
-            
-            if (($originalStatus === 'Menunggu' || $originalStatus === 'Konfirmasi') && 
-                ($currentStatus === 'Batal' || $currentStatus === 'Selesai')) {
-                $mobil = Mobil::where('kode_mobil', $pemesanan->kode_mobil)->first();
-                if ($mobil) {
-                    $mobil->increment('jumlah');
-                }
-            }
-        });
+        
     }
 
     public function mobil()

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -607,12 +606,16 @@
                     
                     // Show success notification on top of everything
                     await Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: result.message || 'Pemesanan berhasil diproses!',
-                        confirmButtonText: 'OK',
-                        allowOutsideClick: false
-                    });
+                     icon: 'success',
+        title: 'Berhasil!',
+        text: result.message || 'Pemesanan berhasil diproses!',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false,
+        buttonsStyling: false,
+        customClass: {
+            confirmButton: 'bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2' // Class Flowbite
+        }
+    });
                     
                     // Redirect to history page
                     if (result.redirect) {
@@ -640,4 +643,3 @@
     });
     </script>
 </body>
-</html>

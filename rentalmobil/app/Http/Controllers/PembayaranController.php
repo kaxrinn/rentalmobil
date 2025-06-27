@@ -49,7 +49,7 @@ class PembayaranController extends Controller
         // Simpan pembayaran
         $paymentPath = $request->file('payment_proof')->store('payments', 'public');
         
-        Pembayaran::create([
+        $pembayaran = Pembayaran::create([
             'id_pemesanan' => $pemesanan->id_pemesanan,
             'id_penyewa' => $user->id_penyewa,
             'kode_mobil' => $request->kode_mobil,
@@ -62,14 +62,16 @@ class PembayaranController extends Controller
         ]);
 
         // KURANGI STOK MOBIL
-        $mobil->decrement('jumlah');
+        if ($pembayaran->status === 'Menunggu') {
+            $mobil->decrement('jumlah');
+        }
 
         DB::commit();
 
         return response()->json([
             'success' => true,
             'redirect' => route('riwayat'),
-            'message' => 'Pembayaran berhasil diproses!'
+            'message' => 'Pemesanan berhasil diproses!'
         ]);
 
     } catch (\Exception $e) {
