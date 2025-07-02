@@ -26,7 +26,7 @@
       </div>
 
       <!-- Login Button -->
-      <a href="{{ route('loginpage') }}" class="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600 text-sm transition duration-300">Login</a>
+      <a href="{{ route('loginpage') }}" class="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600 text-sm transition duration-300">Masuk</a>
     </div>
 
     <!-- Burger Icon for Mobile -->

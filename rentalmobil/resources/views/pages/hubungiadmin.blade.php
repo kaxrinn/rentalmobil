@@ -32,13 +32,20 @@
           <td class="p-3 border text-left">{{ $item->pesan }}</td>
           <td class="p-3 border">{{ $item->created_at->format('d-m-Y H:i') }}</td>
           <td class="p-3 border">
-            <form action="{{ route('admin.hapuspesan', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pesan ini?')">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">
-                Hapus
-              </button>
-            </form>
+            <div class="flex gap-2 justify-center">
+              <a href="https://mail.google.com/mail/?view=cm&to=example@gmail.com" target="_blank" rel="noopener noreferrer">
+                <button type="button" class="bg-green-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">
+                  Balas
+                </button>
+              </a>
+              <form action="{{ route('admin.hapuspesan', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pesan ini?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90">
+                  Hapus
+                </button>
+              </form>
+            </div>
           </td>
         </tr>
         @empty
