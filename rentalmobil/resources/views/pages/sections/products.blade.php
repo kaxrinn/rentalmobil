@@ -36,7 +36,7 @@
         <h1 class="text-3xl font-bold mb-8 text-primary text-center">PRODUK</h1>
 
         <div id="products-carousel" class="relative">
-            <div class="relative overflow-hidden rounded-lg bg-white shadow-lg p-4">
+            <div class="relative overflow-hidden rounded-lg bg-white p-10">
                 <div id="carousel-items" class="relative flex transition-transform duration-300">
                     <!-- Loading indicator -->
                     <div class="flex justify-center items-center w-full py-12">

@@ -11,7 +11,7 @@ class AdminPemesananController extends Controller
     {
         $pemesanans = Pemesanan::with(['penyewa', 'mobil', 'pembayaran'])
                               ->orderBy('created_at', 'desc')
-                              ->paginate(10);
+                              ->paginate(5);
         
         return view('pages.pemesananadmin', compact('pemesanans'));
     }

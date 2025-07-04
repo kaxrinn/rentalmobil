@@ -10,9 +10,9 @@
     <div class="hidden md:flex items-center space-x-4">
       <a href="{{ route('landingpage') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Beranda</a>
       <a href="{{ route('landingpage') }}#Produk" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Produk</a>
-      <a href="{{ route('riwayat') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Riwayat</a>
       <a href="{{ route('landingpage') }}#Ulasan" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Ulasan</a>
       <a href="{{ route('landingpage') }}#Kontak" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Kontak</a>
+      <a href="{{ route('riwayat') }}" class="text-gray-800 text-sm font-medium px-4 py-2 rounded-md hover:transform hover:skew-x-12 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 hover:text-white transition duration-300">Riwayat</a>
     </div>
 
     <!-- Search Bar -->
@@ -27,7 +27,15 @@
         class="ml-2 block w-full border-none bg-transparent p-0 text-sm text-gray-700 focus:outline-none"
         placeholder="Pencarian">
     </form>
-
+<!-- Flowbite Dropdown untuk Profil -->
+<div class="relative z-[1001] flex items-center space-x-2">
+  <!-- Tombol Burger di Mobile -->
+  <button data-collapse-toggle="mobile-menu" type="button" class="md:hidden text-gray-800 focus:outline-none">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+  
 <!-- Flowbite Dropdown untuk Profil -->
 <div class="relative z-[1001]">
   <button id="dropdownUserButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-end" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300" type="button">
@@ -61,12 +69,6 @@
   </a>
 </div>
 
-    <!-- Burger Icon for Mobile -->
-    <button data-collapse-toggle="mobile-menu" type="button" class="md:hidden text-gray-800 focus:outline-none">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
   </div>
 </nav>
 
@@ -75,9 +77,9 @@
   <div class="flex flex-col items-center justify-center h-full space-y-6">
     <a href="#Beranda" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Beranda</a>
     <a href="#Produk" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Produk</a>
-    <a href="{{ route('riwayat') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Riwayat</a>
     <a href="#Ulasan" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Ulasan</a>
     <a href="#Kontak" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Kontak</a>
+    <a href="{{ route('riwayat') }}" class="text-white text-xl font-medium hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-400 px-4 py-2 rounded-md">Riwayat</a>
   </div>
 </div>
 

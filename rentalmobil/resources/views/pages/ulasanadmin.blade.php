@@ -3,20 +3,20 @@
 @section('title','ulasanadmin')
 
 @section('content')
-<div class="pt-10">
+<div class="pt-4">
   <!-- Container untuk tabel ulasan -->
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
     <h3 class="text-xl font-semibold mb-4">List Ulasan</h3>
 
     <!-- Tabel Ulasan -->
-    <table class="w-full min-w-[800px] border border-gray-300 text-center">
+    <table class="w-full min-w-[100px] border border-gray-300 text-left text-xs">
       <thead class="bg-gray-100">
         <tr>
-          <th class="p-3 border">NO</th> <!-- Nomor urutan -->
-          <th class="p-3 border">NAMA PENYEWA</th> <!-- Nama penyewa -->
-          <th class="p-3 border">ULASAN</th> <!-- Isi ulasan -->
-          <th class="p-3 border">RATING</th> <!-- Nilai rating -->
-          <th class="p-3 border">AKSI</th> <!-- Tombol aksi (hapus) -->
+          <th class="p-2 border">NO</th> <!-- Nomor urutan -->
+          <th class="p-2 border">NAMA PENYEWA</th> <!-- Nama penyewa -->
+          <th class="p-2 border">ULASAN</th> <!-- Isi ulasan -->
+          <th class="p-2 border">RATING</th> <!-- Nilai rating -->
+          <th class="p-2 border">AKSI</th> <!-- Tombol aksi (hapus) -->
         </tr>
       </thead>
       <tbody>
@@ -45,6 +45,13 @@
         @endforelse
       </tbody>
     </table>
+    <!-- Pagination -->
+    <div class="mt-4">
+      {{ $ulasan->links() }}
+    </div>
   </div>
 </div>
+  </div>
+</div>
+
 @endsection

@@ -12,7 +12,7 @@ class MobilController extends Controller
     // Tampilkan halaman list mobil
     public function index()
     {
-        $mobils = Mobil::orderBy('created_at', 'desc')->get();
+        $mobils = Mobil::orderBy('created_at', 'desc')->paginate(5);;
         return view('pages.mobiladmin', compact('mobils'));
     }
 

@@ -37,7 +37,7 @@ class UlasanController extends Controller
     // **Menampilkan data ulasan di halaman admin**
     public function index()
     {
-        $ulasan = Ulasan::latest()->get(); // Ambil semua ulasan, urutkan terbaru
+        $ulasan = Ulasan::latest()->paginate(6); // Ambil semua ulasan, urutkan terbaru
         return view('pages.ulasanadmin', compact('ulasan'));
     }
 

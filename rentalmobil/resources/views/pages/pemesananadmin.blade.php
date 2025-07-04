@@ -16,7 +16,7 @@
 {{-- CSRF Token for AJAX --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<div class="pt-10">
+<div class="pt-4">
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
     <h3 class="text-xl font-semibold mb-4">List Pemesanan</h3>
 
@@ -26,46 +26,46 @@
     </div>
     @endif
 
-    <table class="w-full min-w-[800px] border border-gray-300 text-center">
+    <table class="w-full min-w-[100px] border border-gray-300 text-center text-xs">
       <thead class="bg-gray-100">
         <tr>
-          <th class="p-3 border">NO</th>
-          <th class="p-3 border">ID PENYEWAAN</th>
-          <th class="p-3 border">NAMA PENYEWA</th>
-          <th class="p-3 border">EMAIL</th>
-          <th class="p-3 border">FOTO KTP</th>
-          <th class="p-3 border">TANGGAL PENGAMBILAN</th>
-          <th class="p-3 border">TANGGAL PENGEMBALIAN</th>
-          <th class="p-3 border">MOBIL</th>
-          <th class="p-3 border">TOTAL</th>
-          <th class="p-3 border">BUKTI</th>
-          <th class="p-3 border">STATUS</th>
-          <th class="p-3 border">AKSI</th>
+          <th class="p-1 border">NO</th>
+          <th class="p-1 border">ID PENYEWAAN</th>
+          <th class="p-1 border">NAMA PENYEWA</th>
+          <th class="p-1 border">EMAIL</th>
+          <th class="p-1 border">FOTO KTP</th>
+          <th class="p-1 border">TANGGAL PENGAMBILAN</th>
+          <th class="p-1 border">TANGGAL PENGEMBALIAN</th>
+          <th class="p-1 border">MOBIL</th>
+          <th class="p-1 border">TOTAL</th>
+          <th class="p-1 border">BUKTI</th>
+          <th class="p-1 border">STATUS</th>
+          <th class="p-1 border">AKSI</th>
         </tr>
       </thead>
       <tbody>
         @forelse($pemesanans as $index => $pemesanan)
         <tr data-id="{{ $pemesanan->id_pemesanan }}" class="hover:bg-gray-50">
-            <td class="p-3 border">{{ $index + 1 }}</td>
-            <td class="p-3 border">PSN-{{ $pemesanan->id_pemesanan }}</td>
-            <td class="p-3 border">{{ $pemesanan->penyewa->nama_penyewa }}</td>
-            <td class="p-3 border">{{ $pemesanan->penyewa->email }}</td>
-            <td class="p-3 border">
+            <td class="p-1 border">{{ $index + 1 }}</td>
+            <td class="p-1 border">PSN-{{ $pemesanan->id_pemesanan }}</td>
+            <td class="p-1 border">{{ $pemesanan->penyewa->nama_penyewa }}</td>
+            <td class="p-1 border">{{ $pemesanan->penyewa->email }}</td>
+            <td class="p-1 border">
             <a href="{{ $pemesanan->penyewa->foto_ktp }}" target="_blank" class="inline-block">
             <img src="{{ $pemesanan->penyewa->foto_ktp}}" alt="Foto KTP" class="w-100 " 
             /></a>
             </td>
-            <td class="py-2 px-4 border">{{ date('d M Y', strtotime($pemesanan->tanggal_pengambilan)) }}</td>
-            <td class="py-2 px-4 border">{{ date('d M Y', strtotime($pemesanan->tanggal_pengembalian)) }}</td>
-            <td class="p-3 border">
+            <td class="p-1">{{ date('d M Y', strtotime($pemesanan->tanggal_pengambilan)) }}</td>
+            <td class="p-1">{{ date('d M Y', strtotime($pemesanan->tanggal_pengembalian)) }}</td>
+            <td class="p-1 border">
                 @if($pemesanan->mobil)
                     {{ $pemesanan->mobil->merek }} {{ $pemesanan->mobil->jenis }}
                 @else
                     <span class="text-red-500">Mobil dihapus</span>
                 @endif
             </td>
-            <td class="p-3 border">Rp {{ number_format($pemesanan->pembayaran->total_harga ?? 0, 0, ',', '.') }}</td>
-            <td class="p-3 border">
+            <td class="p-1 border">Rp {{ number_format($pemesanan->pembayaran->total_harga ?? 0, 0, ',', '.') }}</td>
+            <td class="p-1 border">
                 @if($pemesanan->pembayaran && $pemesanan->pembayaran->bukti_pembayaran_url)
                 <a href="{{ $pemesanan->pembayaran->bukti_pembayaran_url }}" target="_blank" class="inline-block">
                     <img src="{{ $pemesanan->pembayaran->bukti_pembayaran_url }}" class="max-w-[100px] h-auto mx-auto">
@@ -74,7 +74,7 @@
                 <span class="text-red-500">Tidak ada bukti</span>
                 @endif
             </td>
-            <td class="p-3 border">
+            <td class="p-1 border">
                 @php
                     $statusColors = [
                         'Menunggu' => 'bg-yellow-500',
@@ -88,7 +88,7 @@
                     {{ $status }}
                 </span>
             </td>
-            <td class="p-3 border">
+            <td class="p-1 border">
                 <div class="flex gap-2 justify-center">
                     <button onclick="openEditModal('{{ $pemesanan->id_pemesanan }}', '{{ $status }}')" 
                             class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">

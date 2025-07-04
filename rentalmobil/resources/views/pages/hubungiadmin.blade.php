@@ -3,7 +3,7 @@
 @section('title', 'hubungiadmin')
 
 @section('content')
-<div class="pt-10">
+<div class="pt-4">
   @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
       {{ session('success') }}
@@ -12,10 +12,10 @@
 
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-auto">
     <h3 class="text-xl font-semibold mb-4">List Pesan</h3>
-    <table class="w-full min-w-[800px] border border-gray-300 text-center">
+    <table class="w-full min-w-[100px] border border-gray-300 text-left text-xs">
       <thead class="bg-gray-100">
         <tr>
-          <th class="p-3 border">NO</th>
+          <th class="p-1 border text-center">NO</th>
           <th class="p-3 border">NAMA PENYEWA</th>
           <th class="p-3 border">EMAIL</th>
           <th class="p-3 border">PESAN</th>
@@ -26,7 +26,7 @@
       <tbody>
         @forelse ($pesan as $index => $item)
         <tr>
-          <td class="p-3 border">{{ $index + 1 }}</td>
+          <td class="p-1 border text-center">{{ $index + 1 }}</td>
           <td class="p-3 border">{{ $item->nama }}</td>
           <td class="p-3 border">{{ $item->email }}</td>
           <td class="p-3 border text-left">{{ $item->pesan }}</td>
@@ -55,6 +55,13 @@
         @endforelse
       </tbody>
     </table>
+
+    <!-- Pagination -->
+    <div class="mt-4">
+      {{ $pesan->links() }}
+    </div>
+  </div>
+</div>
   </div>
 </div>
 @endsection

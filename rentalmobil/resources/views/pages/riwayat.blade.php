@@ -46,8 +46,8 @@
             </ul>
         </div>
     @endif
-
-  <table class="min-w-max w-full table-auto text-sm">
+<div class="overflow-x-auto">
+  <table class="min-w-max w-full table-auto text-xs sm:text-sm">
     <thead>
       <tr class="bg-[#f1f4ff] text-black text-center">
         <th class="border border-gray-500 p-2">No</th>
@@ -65,9 +65,9 @@
       @forelse($pemesanans as $index => $pemesanan)
       <tr data-id="{{ $pemesanan->id_pemesanan }}">
         <td class="border p-2 text-center align-middle">{{ $index + 1 }}</td>
-        <td class="border p-2 text-center">PSN-{{ $pemesanan->id_pemesanan }}</td>
-        <td class="border p-2 text-center">{{ $pemesanan->penyewa->nama_penyewa }}</td>
-        <td class="border p-2 text-center">
+        <td class="border p-2 text-left">PSN-{{ $pemesanan->id_pemesanan }}</td>
+        <td class="border p-2 text-left">{{ $pemesanan->penyewa->nama_penyewa }}</td>
+        <td class="border p-2 text-left">
           Pengambilan: {{ $pemesanan->formatted_tanggal_pengambilan }}<br>
           Pengembalian: {{ $pemesanan->formatted_tanggal_pengembalian }}
         </td>

@@ -1,12 +1,12 @@
 @extends('layouts.appadmin')
 
 @section('content')
-<div class="mt-20 px-6">
+<div class="pt-4">
     <div class="bg-white rounded-xl shadow p-6">
-        <h1 class="text-2xl font-bold mb-6 text-gray-800">Daftar Penyewa</h1>
+        <h1 class="text-xl font-semibold mb-4">Daftar Penyewa</h1>
 
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200 text-sm text-left">
+            <table class="w-full min-w-[100px] border border-gray-300 text-left text-xs">
                 <thead class="bg-gray-100 text-gray-700">
                     <tr>
                         <th class="border px-4 py-2">No</th>
@@ -27,7 +27,8 @@
                             <td class="border px-4 py-2">{{ $penyewa->nomor_telepon }}</td>
                             <td class="border px-4 py-2">
                                 @if($penyewa->foto_ktp)
-                                    <img src="{{ asset($penyewa->foto_ktp) }}" alt="KTP {{ $penyewa->nama_penyewa }}" class="w-24 h-auto rounded shadow">
+                                <a href="{{ asset($penyewa->foto_ktp) }}" target="_blank" class="inline-block">
+                                    <img src="{{ asset($penyewa->foto_ktp) }}" alt="KTP {{ $penyewa->nama_penyewa }}" class="w-24 h-auto rounded "> </a>
                                 @else
                                     <span class="text-gray-400 italic">Belum ada</span>
                                 @endif
@@ -56,6 +57,13 @@
                     @endforelse
                 </tbody>
             </table>
+    <!-- Pagination -->
+    <div class="mt-4">
+      {{ $pengguna->links() }}
+    </div>
+  </div>
+</div>
+
         </div>
     </div>
 </div>

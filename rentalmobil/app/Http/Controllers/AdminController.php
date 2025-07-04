@@ -40,7 +40,7 @@ class AdminController extends Controller
     // Daftar semua penyewa
     public function daftarPengguna()
     {
-        $pengguna = Penyewa::all();
+        $pengguna = Penyewa::paginate(5);
         return view('pages.penggunaadmin', compact('pengguna'));
     }
 

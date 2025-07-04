@@ -37,7 +37,7 @@ class PesanController extends Controller
     // Menampilkan semua pesan ke admin (view: pages/hubungiadmin.blade.php)
     public function index()
     {
-        $pesan = Pesan::latest()->get(); // Urutkan dari yang terbaru
+        $pesan = Pesan::latest()->paginate(6); // Urutkan dari yang terbaru
         return view('pages.hubungiadmin', compact('pesan'));
     }
 

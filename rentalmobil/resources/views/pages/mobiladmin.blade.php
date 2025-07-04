@@ -26,43 +26,44 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="min-w-full border border-gray-300 text-sm text-center">
+        <table class="w-full min-w-[100px] border border-gray-300 text-center text-xs">
             <thead class="bg-gray-100">
                 <tr>
-                    <th class="px-4 py-2 border">NO</th>
-                    <th class="px-4 py-2 border">KODE MOBIL</th>
-                    <th class="px-4 py-2 border">MEREK</th>
-                    <th class="px-4 py-2 border">JENIS</th>
-                    <th class="px-4 py-2 border">WARNA</th>
-                    <th class="px-4 py-2 border">TRANSMISI</th>
-                    <th class="px-4 py-2 border">FOTO</th>
-                    <th class="px-4 py-2 border">HARGA HARIAN</th>
-                    <th class="px-4 py-2 border">JUMLAH KURSI</th>
-                    <th class="px-4 py-2 border">MESIN</th>
-                    <th class="px-4 py-2 border">JUMLAH</th>
-                    <th class="px-4 py-2 border">TANGGAL DITAMBAHKAN</th>
-                    <th class="px-4 py-2 border">AKSI</th>
+                    <th class="px-1 py-2 border">NO</th>
+                    <th class="px-1 py-2 border">KODE MOBIL</th>
+                    <th class="px-1 py-2 border">MEREK</th>
+                    <th class="px-1 py-2 border">JENIS</th>
+                    <th class="px-1 py-2 border">WARNA</th>
+                    <th class="px-1 py-2 border">TRANSMISI</th>
+                    <th class="px-1 py-2 border">FOTO</th>
+                    <th class="px-1 py-2 border">HARGA HARIAN</th>
+                    <th class="px-1 py-2 border">JUMLAH KURSI</th>
+                    <th class="px-1 py-2 border">MESIN</th>
+                    <th class="px-1 py-2 border">JUMLAH</th>
+                    <th class="px-1 py-2 border">TANGGAL DITAMBAHKAN</th>
+                    <th class="px-1 py-2 border">AKSI</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($mobils as $index => $mobil)
                 <tr>
-                    <td class="border px-4 py-2">{{ $index + 1 }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->kode_mobil }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->merek }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->jenis }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->warna }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->transmisi }}</td>
-                    <td class="border px-4 py-2">
+                    
+                    <td>{{ $loop->iteration + ($mobils->currentPage()-1)*$mobils->perPage() }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->kode_mobil }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->merek }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->jenis }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->warna }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->transmisi }}</td>
+                    <td class="border px-4 py-1">
                         <img src="{{ $mobil->foto_url }}" alt="Mobil" class="w-24 h-16 object-cover mx-auto rounded" 
                              onerror="this.src='https://via.placeholder.com/300x200/cccccc/666666?text=No+Image'" />
                     </td>
-                    <td class="border px-4 py-2">Rp. {{ number_format($mobil->harga_harian, 0, ',', '.') }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->jumlah_kursi }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->mesin }}</td>
-                    <td class="border px-4 py-2 {{ $mobil->jumlah <= 0 ? 'bg-red-100' : '' }}">{{ $mobil->jumlah }}</td>
-                    <td class="border px-4 py-2">{{ $mobil->created_at->format('d/m/Y') }}</td>
-                    <td class="border px-4 py-2">
+                    <td class="border px-4 py-1">Rp. {{ number_format($mobil->harga_harian, 0, ',', '.') }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->jumlah_kursi }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->mesin }}</td>
+                    <td class="border px-4 py-1 {{ $mobil->jumlah <= 0 ? 'bg-red-100' : '' }}">{{ $mobil->jumlah }}</td>
+                    <td class="border px-4 py-1">{{ $mobil->created_at->format('d/m/Y') }}</td>
+                    <td class="border px-4 py-1">
                         <div class="flex flex-col items-center gap-1">
                             <button class="edit-mobil-btn bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500 transition-colors w-full" data-kode-mobil="{{ $mobil->kode_mobil }}">
                                 Edit
@@ -80,6 +81,13 @@
                 @endforeach
             </tbody>
         </table>
+        
+<!-- Pagination -->
+    <div class="mt-4">
+      {{ $mobils->links() }}
+    </div>
+  </div>
+</div>
     </div>
 </div>
 
