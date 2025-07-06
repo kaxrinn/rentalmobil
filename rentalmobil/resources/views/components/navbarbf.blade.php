@@ -18,13 +18,17 @@
     <!-- Search Bar dan Login Button Container -->
     <div class="hidden md:flex items-center space-x-4">
       <!-- Search Bar -->
-      <div class="flex items-center w-64 rounded-md border border-gray-400 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500">
-        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"></path>
-        </svg>
-        <input type="text" id="search-navbar" class="ml-2 block w-full border-none bg-transparent p-0 text-sm text-gray-700 focus:outline-none" placeholder="Pencarian">
-      </div>
-
+    <form action="{{ url('/bfsearch') }}" method="GET" class="hidden md:flex items-center w-64 rounded-md border border-gray-400 px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500">
+      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"></path>
+      </svg>
+      <input
+        type="text"
+        id="bfsearch-navbar"
+        name="bfsearch"
+        class="ml-2 block w-full border-none bg-transparent p-0 text-sm text-gray-700 focus:outline-none"
+        placeholder="Pencarian">
+    </form>
       <!-- Login Button -->
       <a href="{{ route('loginpage') }}" class="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600 text-sm transition duration-300">Masuk</a>
     </div>

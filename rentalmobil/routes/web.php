@@ -135,6 +135,9 @@ Route::get('/reviews', [UlasanController::class, 'userReviews'])->name('userrevi
 //pencarian
 Route::get('/search', [MobilController::class, 'search'])->name('search');
 
+//pencarian
+Route::get('/bfsearch', [MobilController::class, 'bfsearch'])->name('bfsearch');
+
 
 
 

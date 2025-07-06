@@ -7,6 +7,7 @@
     <title>VROOM - Pemesanan</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bg-primary {
             background-color: #1e2b5c;
@@ -27,17 +28,15 @@
 </head>
 
 <body class="bg-gray-100">
-    <!-- Spacer for fixed navbar -->
     <div class="h-16"></div>
 
     <section class="max-w-7xl mx-auto p-6" id="Produk">
         <h1 class="text-3xl font-bold mb-8 text-primary text-center">PRODUK</h1>
 
         <div id="products-carousel" class="relative">
-            <div class="relative overflow-hidden rounded-lg bg-white  p-10">
+            <div class="relative overflow-hidden rounded-lg bg-white p-10">
                 <div id="carousel-items" class="relative flex transition-transform duration-300">
-                    <!-- Loading indicator -->
-                    <div class="flex justify-center items-center w-full py-12">
+                    <div id="loading-indicator" class="flex justify-center items-center w-full py-12">
                         <svg class="animate-spin h-10 w-10 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
@@ -46,19 +45,20 @@
                 </div>
             </div>
 
-            <!-- Controls -->
-            <button id="carousel-prev" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-primary text-white rounded-full p-3 hover:bg-primary-dark z-10">
+            <button id="carousel-prev" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-primary text-white rounded-full p-3 hover:bg-primary-dark z-10 hidden">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <button id="carousel-next" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary text-white rounded-full p-3 hover:bg-primary-dark z-10">
+            <button id="carousel-next" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary text-white rounded-full p-3 hover:bg-primary-dark z-10 hidden">
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
+        <div id="no-results" class="hidden text-center text-gray-600 py-12 w-full">
+            Tidak ada mobil yang cocok dengan pencarian Anda.
+        </div>
     </section>
 
-    <!-- Detail Modal -->
-    <div id="detail-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[60] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto my-12">
+    <div id="detail-modal" class="hidden fixed top-0 right-0 left-0 z-[60] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50 items-center justify-center">
+        <div class="relative p-4 w-full max-w-md h-auto mx-auto">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 border-b rounded-t">
                     <h3 id="detail-merk" class="text-lg font-semibold text-gray-900"></h3>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="flex items-center p-4 border-t border-gray-200 rounded-b">
-                    <button id="btn-sewa" type="button" class="text-white bg-primary hover:bg-primary-dark focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center">
+                    <button id="btn-sewa-detail-modal" type="button" class="text-white bg-primary hover:bg-primary-dark focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center">
                         <i class="fas fa-shopping-cart mr-1"></i> Sewa Sekarang
                     </button>
                     <button type="button" class="close-modal ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-xs font-medium px-4 py-2 hover:text-gray-900 focus:z-10">
@@ -107,9 +107,8 @@
         </div>
     </div>
 
-    <!-- Order Modal Step 1: Booking Form -->
-    <div id="pemesanan-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[70] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto my-12">
+    <div id="pemesanan-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[70] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50 items-center justify-center">
+        <div class="relative p-4 w-full max-w-md h-auto mx-auto">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900">Formulir Pemesanan</h3>
@@ -135,8 +134,8 @@
                                     <i class="fas fa-calendar-alt text-primary text-sm"></i>
                                 </div>
                                 <input type="date" id="pickup_date" name="pickup_date" required 
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
-                                       min="{{ date('Y-m-d') }}" />
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
+                                        min="{{ date('Y-m-d') }}" />
                             </div>
                         </div>
                         <div>
@@ -146,8 +145,8 @@
                                     <i class="fas fa-calendar-alt text-primary text-sm"></i>
                                 </div>
                                 <input type="date" id="return_date" name="return_date" required 
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
-                                       min="{{ date('Y-m-d') }}" />
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2" 
+                                        min="{{ date('Y-m-d') }}" />
                             </div>
                         </div>
                     </div>
@@ -178,9 +177,8 @@
         </div>
     </div>
 
-    <!-- Payment Modal Step 2: Payment Form -->
     <div id="pembayaran-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[9999] justify-center items-center w-full h-full bg-gray-900 bg-opacity-50">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto my-12">
+        <div class="relative p-4 w-full max-w-md h-auto mx-auto">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900">Pembayaran</h3>
@@ -224,7 +222,7 @@
                             <div class="mt-2">
                                 <label for="payment_proof" class="block mb-1 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
                                 <input type="file" id="payment_proof" name="payment_proof" accept=".jpeg,.jpg,.png,.pdf" required 
-                                       class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
+                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
                                 <p class="mt-1 text-xs text-gray-500">(JPEG, PNG, atau PDF max 2MB)</p>
                             </div>
                         </div>
@@ -243,7 +241,6 @@
         </div>
     </div>
 
-    <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
     <script>
@@ -256,9 +253,13 @@
         const detailModal = document.getElementById('detail-modal');
         const pemesananModal = document.getElementById('pemesanan-modal');
         const pembayaranModal = document.getElementById('pembayaran-modal');
-        
+        const noResultsMessage = document.getElementById('no-results');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const btnSewaDetailModal = document.getElementById('btn-sewa-detail-modal');
+
         // State variables
         let mobilsData = [];
+        let filteredMobilsData = [];
         let currentSlide = 0;
         let slidesCount = 0;
         const itemsPerSlide = 3;
@@ -268,7 +269,15 @@
         const pemesananModalInstance = new Modal(pemesananModal, { backdrop: 'static' });
         const pembayaranModalInstance = new Modal(pembayaranModal, { backdrop: 'static' });
 
-        // Close modal handlers
+        // --- Helper function to simulate login check ---
+        // IMPORTANT: In a real Laravel application, you would replace `return false;` with actual authentication logic.
+        // Example for Laravel Blade: `return {{ auth()->check() ? 'true' : 'false' }};`
+        function checkLoginStatus() {
+            // For demonstration, set to false (not logged in). Change to true to test logged-in flow.
+            return false; 
+        }
+
+        // --- Close modal handlers ---
         document.querySelectorAll('.close-modal').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -287,40 +296,92 @@
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 pembayaranModalInstance.hide();
-                pemesananModalInstance.show();
+                pemesananModalInstance.show(); // Go back to the booking form
             });
         });
 
-        // Fetch car data from API
+        // --- Fetch car data from API ---
         fetch('/api/mobils')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 mobilsData = data.data || [];
-                
-                if (!mobilsData.length) {
-                    carouselItems.innerHTML = '<p class="text-center text-gray-600 py-12 w-full">Tidak ada mobil tersedia saat ini.</p>';
-                    return;
+                loadingIndicator.classList.add('hidden'); // Hide loading indicator
+
+                // Get search query from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const searchQuery = urlParams.get('bfsearch');
+
+                if (searchQuery) {
+                    filterAndRenderCars(searchQuery);
+                } else {
+                    filteredMobilsData = [...mobilsData]; // If no search, show all cars
+                    renderCarousel();
                 }
-                
-                renderCarousel();
+                setupProductButtons(); // Call after rendering the carousel
             })
             .catch(error => {
                 console.error('Error fetching car data:', error);
-                carouselItems.innerHTML = '<p class="text-center text-red-600 py-12 w-full">Gagal memuat data mobil.</p>';
+                loadingIndicator.classList.add('hidden'); // Hide loading indicator even on error
+                carouselItems.innerHTML = '<p class="text-center text-red-600 py-12 w-full">Gagal memuat data mobil. Silakan coba lagi nanti.</p>';
+                noResultsMessage.classList.add('hidden'); // Ensure no-results is hidden on fetch error
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
             });
 
-        // Render carousel with 3 products per slide
+        // --- Function to filter cars based on search query and render the carousel ---
+        function filterAndRenderCars(query) {
+            const lowerCaseQuery = query.toLowerCase();
+            filteredMobilsData = mobilsData.filter(mobil => 
+                mobil.merek.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.jenis.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.transmisi.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.warna.toLowerCase().includes(lowerCaseQuery) ||
+                mobil.mesin.toLowerCase().includes(lowerCaseQuery)
+            );
+
+            if (!filteredMobilsData.length) {
+                carouselItems.innerHTML = ''; // Clear existing items
+                carouselContainer.classList.add('hidden'); // Hide carousel
+                noResultsMessage.classList.remove('hidden'); // Show no results message
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden'); // Hide no results message
+                carouselContainer.classList.remove('hidden'); // Show carousel
+                currentSlide = 0; // Reset to first slide after filtering
+                renderCarousel(); // Render with filtered data
+            }
+            setupProductButtons(); // Re-attach event listeners after re-rendering
+        }
+
+        // --- Render carousel with 3 products per slide ---
         function renderCarousel() {
             carouselItems.innerHTML = '';
-            slidesCount = Math.ceil(mobilsData.length / itemsPerSlide);
+            slidesCount = Math.ceil(filteredMobilsData.length / itemsPerSlide);
             
+            if (filteredMobilsData.length === 0) {
+                carouselContainer.classList.add('hidden');
+                noResultsMessage.classList.remove('hidden');
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                return;
+            } else {
+                carouselContainer.classList.remove('hidden');
+                noResultsMessage.classList.add('hidden');
+            }
+
             for (let i = 0; i < slidesCount; i++) {
                 const slide = document.createElement('div');
                 slide.className = `carousel-item w-full flex-none grid grid-cols-1 md:grid-cols-3 gap-6 px-2 ${i === 0 ? 'block' : 'hidden'}`;
                 
                 const startIdx = i * itemsPerSlide;
                 const endIdx = startIdx + itemsPerSlide;
-                const slideProducts = mobilsData.slice(startIdx, endIdx);
+                const slideProducts = filteredMobilsData.slice(startIdx, endIdx);
                 
                 slideProducts.forEach(mobil => {
                     const productCard = document.createElement('div');
@@ -345,41 +406,66 @@
                     slide.appendChild(productCard);
                 });
                 
-                // Add empty cards if less than 3 products in last slide
+                // Add empty cards if less than 3 products in last slide for consistent layout
                 while (slide.children.length < itemsPerSlide) {
                     const emptyCard = document.createElement('div');
-                    emptyCard.className = 'invisible';
+                    emptyCard.className = 'invisible'; // Use invisible to maintain layout
                     slide.appendChild(emptyCard);
                 }
                 
                 carouselItems.appendChild(slide);
             }
-            
-            // Set up event listeners for detail and rent buttons
-            setupProductButtons();
+            updateCarouselControls();
         }
 
-        // Set up event listeners for product buttons
+        // --- Set up event listeners for product buttons ---
         function setupProductButtons() {
             document.querySelectorAll('.btn-detail').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    // Detail button now directly shows the modal, no login required
                     const kodeMobil = this.getAttribute('data-id');
                     const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
-                    showDetailModal(mobil);
+                    if (mobil) {
+                        showDetailModal(mobil);
+                    }
                 });
             });
             
             document.querySelectorAll('.btn-sewa').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    // Redirect to login page when rent button is clicked
-                    window.location.href = '{{ route("loginpage") }}';
+                    if (!checkLoginStatus()) {
+                        window.location.href = '{{ route("loginpage") }}';
+                        return;
+                    }
+                    // If logged in, proceed with the original "Sewa" flow
+                    const kodeMobil = this.getAttribute('data-id');
+                    const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+                    if (mobil) {
+                        showPemesananModal(mobil); // Call the function to show pemesanan modal
+                    }
                 });
+            });
+
+            // Set up the rent button within the detail modal
+            btnSewaDetailModal.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!checkLoginStatus()) {
+                    window.location.href = '{{ route("loginpage") }}';
+                    return;
+                }
+                // If logged in, proceed to pemesanan modal from detail modal
+                const kodeMobil = this.getAttribute('data-mobil-id'); // Get the car ID that was set when detail modal was opened
+                const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+                if (mobil) {
+                    detailModalInstance.hide(); // Hide detail modal
+                    showPemesananModal(mobil); // Show pemesanan modal
+                }
             });
         }
 
-        // Show detail modal
+        // --- Show detail modal ---
         function showDetailModal(mobil) {
             document.getElementById('detail-merk').textContent = `${mobil.merek} ${mobil.jenis}`;
             document.getElementById('detail-image').src = mobil.foto_url;
@@ -389,35 +475,107 @@
             document.getElementById('detail-mesin').textContent = mobil.mesin;
             document.getElementById('detail-harga').textContent = `Rp${Number(mobil.harga_harian).toLocaleString('id-ID')}/hari`;
             
-            // Set up rent button in detail modal to redirect to login
-            document.getElementById('btn-sewa').onclick = (e) => {
-                e.preventDefault();
-                window.location.href = '{{ route("loginpage") }}';
-            };
+            // Set the data-mobil-id on the "Sewa Sekarang" button in the detail modal
+            // so we know which car to rent when it's clicked.
+            btnSewaDetailModal.setAttribute('data-mobil-id', mobil.kode_mobil); 
             
             detailModalInstance.show();
         }
 
-        // Show order modal
+        // --- Show Pemesanan modal (only after successful login) ---
         function showPemesananModal(mobil) {
             document.getElementById('pemesanan-kode-mobil').value = mobil.kode_mobil;
             document.getElementById('harga-harian').value = mobil.harga_harian;
-            document.getElementById('pemesanan-mobil-detail').textContent = 
-                `${mobil.merek} ${mobil.jenis} - Rp${Number(mobil.harga_harian).toLocaleString('id-ID')}/hari`;
+            document.getElementById('pemesanan-mobil-detail').textContent = `${mobil.merek} ${mobil.jenis} - Rp${Number(mobil.harga_harian).toLocaleString('id-ID')}/hari`;
             
-            // Reset form
-            const form = document.getElementById('pemesanan-form');
-            form.reset();
-            
-            // Set minimum dates
+            // Set default dates if needed, or ensure they are clear/valid
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('pickup_date').min = today;
-            document.getElementById('return_date').min = today;
-            
+            document.getElementById('pickup_date').value = today;
+            document.getElementById('return_date').value = today; // Default return date to pickup date
+
             pemesananModalInstance.show();
         }
 
-        // Carousel navigation
+        // --- Handle Proceed to Payment button in Pemesanan Modal ---
+        document.getElementById('btn-proceed-payment').addEventListener('click', function(e) {
+            e.preventDefault();
+            const pickupDate = document.getElementById('pickup_date').value;
+            const returnDate = document.getElementById('return_date').value;
+            const kodeMobil = document.getElementById('pemesanan-kode-mobil').value;
+            const hargaHarian = parseFloat(document.getElementById('harga-harian').value);
+            const alamatPengambilan = document.getElementById('alamat_pengambilan').value;
+
+            if (!pickupDate || !returnDate) {
+                Swal.fire('Error', 'Tanggal pengambilan dan pengembalian harus diisi.', 'error');
+                return;
+            }
+
+            const days = calculateDays(pickupDate, returnDate);
+            if (days <= 0 || isNaN(days)) {
+                Swal.fire('Error', 'Tanggal pengembalian harus setelah atau sama dengan tanggal pengambilan.', 'error');
+                return;
+            }
+
+            const totalHarga = days * hargaHarian;
+            const mobil = mobilsData.find(m => m.kode_mobil === kodeMobil);
+
+            if (mobil) {
+                document.getElementById('payment-kode-mobil').value = kodeMobil;
+                document.getElementById('payment-pickup-date').value = pickupDate;
+                document.getElementById('payment-return-date').value = returnDate;
+                document.getElementById('payment-harga-harian').value = hargaHarian;
+                document.getElementById('payment-alamat-pengambilan').value = alamatPengambilan;
+                document.getElementById('total-harga-hidden').value = totalHarga;
+
+                document.getElementById('payment-mobil-detail').textContent = `${mobil.merek} ${mobil.jenis}`;
+                document.getElementById('payment-period').textContent = `Periode: ${formatDate(pickupDate)} - ${formatDate(returnDate)} (${days} hari)`;
+                document.getElementById('payment-total').textContent = `Total: Rp${totalHarga.toLocaleString('id-ID')}`;
+                document.getElementById('total-pembayaran').textContent = `Rp${totalHarga.toLocaleString('id-ID')}`;
+                document.getElementById('payment-alamat-display').textContent = alamatPengambilan;
+
+                pemesananModalInstance.hide();
+                pembayaranModalInstance.show();
+            } else {
+                Swal.fire('Error', 'Data mobil tidak ditemukan.', 'error');
+            }
+        });
+
+        // --- Handle Pembayaran Form Submission ---
+        document.getElementById('pembayaran-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Simulate form submission (replace with actual API call)
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // You would typically send this data to your backend API
+            console.log('Payment form submitted:', data);
+
+            Swal.fire({
+                title: 'Konfirmasi Pembayaran',
+                text: 'Apakah Anda yakin ingin melanjutkan pembayaran ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1e2b5c',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Berhasil!',
+                        'Pemesanan Anda telah diterima. Menunggu konfirmasi pembayaran.',
+                        'success'
+                    ).then(() => {
+                        pembayaranModalInstance.hide();
+                        // Optionally, redirect to a confirmation page or dashboard
+                        // window.location.href = '/some-confirmation-page';
+                    });
+                }
+            });
+        });
+
+        // --- Carousel navigation ---
         prevBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if (currentSlide > 0) {
@@ -434,140 +592,40 @@
             }
         });
 
-        // Update carousel position
+        // --- Update carousel position and control visibility ---
         function updateCarousel() {
             const items = document.querySelectorAll('.carousel-item');
             items.forEach((item, index) => {
                 item.classList.toggle('hidden', index !== currentSlide);
                 item.classList.toggle('block', index === currentSlide);
             });
+            updateCarouselControls();
         }
 
-        // Proceed to payment button
-        document.getElementById('btn-proceed-payment').addEventListener('click', function(e) {
-            e.preventDefault();
-            const pickupDate = document.getElementById('pickup_date').value;
-            const returnDate = document.getElementById('return_date').value;
-            const alamatPengambilan = document.getElementById('alamat_pengambilan').value;
-            
-            if (!pickupDate || !returnDate) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Harap isi tanggal pengambilan dan pengembalian!'
-                });
-                return;
+        // --- Function to update carousel controls visibility ---
+        function updateCarouselControls() {
+            if (slidesCount <= 1) { // If only one slide or less, hide controls
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.toggle('hidden', currentSlide === 0);
+                nextBtn.classList.toggle('hidden', currentSlide === slidesCount - 1);
             }
-            
-            if (new Date(returnDate) < new Date(pickupDate)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Tanggal pengembalian tidak boleh sebelum tanggal pengambilan!'
-                });
-                return;
-            }
-            
-            // Transfer data to payment modal
-            document.getElementById('payment-kode-mobil').value = 
-                document.getElementById('pemesanan-kode-mobil').value;
-            document.getElementById('payment-harga-harian').value = 
-                document.getElementById('harga-harian').value;
-            document.getElementById('payment-pickup-date').value = pickupDate;
-            document.getElementById('payment-return-date').value = returnDate;
-            document.getElementById('payment-alamat-pengambilan').value = alamatPengambilan;
-            document.getElementById('payment-alamat-display').textContent = alamatPengambilan;
-            
-            // Display details in payment modal
-            document.getElementById('payment-mobil-detail').textContent = 
-                document.getElementById('pemesanan-mobil-detail').textContent;
-            
-            const days = calculateDays(pickupDate, returnDate);
-            document.getElementById('payment-period').textContent = 
-                `Periode: ${formatDate(pickupDate)} - ${formatDate(returnDate)} (${days} hari)`;
-            
-            const totalPrice = days * parseFloat(document.getElementById('harga-harian').value);
-            document.getElementById('payment-total').textContent = 
-                `Total: Rp${totalPrice.toLocaleString('id-ID')}`;
-            document.getElementById('total-pembayaran').textContent = 
-                `Rp${totalPrice.toLocaleString('id-ID')}`;
-            document.getElementById('total-harga-hidden').value = totalPrice;
-            
-            // Switch modals
-            pemesananModalInstance.hide();
-            pembayaranModalInstance.show();
-        });
+        }
 
-        // Helper function to calculate days
+        // --- Helper function to calculate days ---
         function calculateDays(start, end) {
             const startDate = new Date(start);
             const endDate = new Date(end);
             const diffTime = Math.abs(endDate - startDate);
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end day
         }
 
-        // Helper function to format date
+        // --- Helper function to format date ---
         function formatDate(dateString) {
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
-
-        // Handle payment form submission
-        const pembayaranForm = document.getElementById('pembayaran-form');
-        pembayaranForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            
-            try {
-                // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
-                
-                const response = await fetch('/pembayaran/proses', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                const result = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(result.message || 'Terjadi kesalahan saat memproses pemesanan');
-                }
-                
-                if (result.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: result.message || 'Pemesanan berhasil diproses!'
-                    }).then(() => {
-                        if (result.redirect) {
-                            window.location.href = result.redirect;
-                        }
-                    });
-                } else {
-                    throw new Error(result.message || 'Gagal memproses pemesanan');
-                }
-                
-            } catch (error) {
-                console.error('Error submitting pembayaran:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.'
-                });
-            } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            }
-        });
     });
     </script>
 </body>

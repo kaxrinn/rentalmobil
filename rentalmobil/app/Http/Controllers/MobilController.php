@@ -204,6 +204,17 @@ class MobilController extends Controller
 
         return view('pages.pencarian', compact('mobils', 'keyword'));
     }
+
+    public function bfsearch(Request $request)
+    {
+        $keyword = $request->bfsearch;
+
+        $mobils = Mobil::where('merek', 'like', "%$keyword%")
+            ->orWhere('jenis', 'like', "%$keyword%")
+            ->get(); // get() langsung semua data
+
+        return view('pages.pencarianbf', compact('mobils', 'keyword'));
+    }
     
     // Fungsi baru untuk update foto
     private function updateFoto(Mobil $mobil, $file): void
