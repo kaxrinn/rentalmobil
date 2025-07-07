@@ -606,16 +606,16 @@
                     
                     // Show success notification on top of everything
                     await Swal.fire({
-                     icon: 'success',
-        title: 'Berhasil!',
-        text: result.message || 'Pemesanan berhasil diproses!',
-        confirmButtonText: 'OK',
-        allowOutsideClick: false,
-        buttonsStyling: false,
-        customClass: {
-            confirmButton: 'bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2' // Class Flowbite
-        }
-    });
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: result.message || 'Pemesanan berhasil diproses!',
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: false,
+                        buttonsStyling: false,
+                        customClass: {
+                            confirmButton: 'bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2' // Class Flowbite
+                        }
+                    });
                     
                     // Redirect to history page
                     if (result.redirect) {
@@ -630,10 +630,16 @@
             } catch (error) {
                 console.error('Error submitting pembayaran:', error);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.'
-                });
+                icon: 'error',
+                title: 'Gagal',
+                text: error.message || 'Gagal mengirim pemesanan. Silakan coba lagi.',
+                confirmButtonText: 'OK',
+                showConfirmButton: true,
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none'
+                }
+            });
             } finally {
                 // Reset button state
                 submitBtn.disabled = false;

@@ -225,30 +225,40 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                     if (data.success) {
                         row.remove();
                         Swal.fire({
+                            icon: 'success',
                             title: 'Terhapus!',
                             text: 'Data pemesanan telah dihapus.',
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'OK'
+                            confirmButtonText: 'OK',
+                            buttonsStyling: false,
+                            customClass: {
+                                confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+                            }
                         });
+
                     } else {
                         Swal.fire({
-                            title: 'Gagal!',
-                            text: 'Gagal menghapus data.',
-                            icon: 'error',
-                            confirmButtonColor: '#d33',
-                            confirmButtonText: 'OK'
-                        });
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Gagal menghapus data.',
+                        confirmButtonText: 'OK',
+                        buttonsStyling: false,
+                        customClass: {
+                            confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+                        }
+                    });
                     }
                 })
                 .catch(() => {
                     Swal.fire({
-                        title: 'Gagal!',
-                        text: 'Terjadi kesalahan jaringan.',
-                        icon: 'error',
-                        confirmButtonColor: '#d33',
-                        confirmButtonText: 'OK'
-                    });
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: 'Terjadi kesalahan jaringan.',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+                    }
+                });
                 });
             }
         });
@@ -290,21 +300,26 @@ document.getElementById('editForm').addEventListener('submit', function(e) {
             closeEditModal();
             
             Swal.fire({
-                title: 'Sukses!',
-                text: 'Status berhasil diperbarui',
-                icon: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            });
+            title: 'Sukses!',
+            text: 'Status berhasil diperbarui',
+            icon: 'success',
+            showConfirmButton: true,
+            customClass: {
+                confirmButton: 'bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+            }
+        });
         }
     })
     .catch(() => {
         Swal.fire({
-            title: 'Gagal!',
-            text: 'Terjadi kesalahan saat memperbarui',
-            icon: 'error',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK'
+        title: 'Gagal!',
+        text: 'Terjadi kesalahan saat memperbarui',
+        icon: 'error',
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
+        }
         });
     });
 });
