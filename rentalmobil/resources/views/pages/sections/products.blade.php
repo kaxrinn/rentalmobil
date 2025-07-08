@@ -62,7 +62,7 @@
     </section>
 
     <!-- Detail Modal -->
-    <div id="detail-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[60] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
+    <div id="detail-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[9999] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto my-12">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 border-b rounded-t">
@@ -113,7 +113,7 @@
     </div>
 
     <!-- Order Modal Step 1: Booking Form -->
-    <div id="pemesanan-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[70] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
+    <div id="pemesanan-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-[9999] w-full md:inset-0 h-full bg-gray-900 bg-opacity-50">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto mx-auto my-12">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 border-b rounded-t">
