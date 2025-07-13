@@ -9,7 +9,7 @@
   </div>
   <div class="flex justify-between mt-4">
     <a class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline"
-       onclick="togglePopup()">Tutup</a>
+       onclick="togglePopup()">Tutup </a>
     <a class="bg-white text-[#1e204a] py-2 px-4 rounded w-[45%] text-center cursor-pointer hover:underline"
        onclick="showConfirmLogout()">Keluar</a>
   </div>
