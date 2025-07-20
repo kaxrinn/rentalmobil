@@ -52,6 +52,7 @@ We welcome your feedback and suggestions!
 | 🎥 App Tutorial Video | [Watch Tutorial](https://youtu.be/isffQQlN994?si=Uex0GVpjsA250xUm)                                      |
 | 🎥 Presentation Video | [Watch Presentation](https://youtu.be/BHlAcS4xSG8?si=ak9b2N0Rh5NVEcQN)                                  |
 | 📘 Manual Book        | [Download Manual Book](./MANUAL%20BOOK.pdf)                                                             |
+| 📄 Drive Berkas Aplikasi dan Semua Luaran | [See Drive](https://drive.google.com/drive/folders/1NDkcFuK_Fs1BL3F2Q2GOESEEiXunrd_-?usp=drive_link)                                  |
 
 ---
 
@@ -69,7 +70,7 @@ We welcome your feedback and suggestions!
 * PHP >= 8.1
 * Composer
 * MySQL or MariaDB
-* Node.js & NPM
+* NPM
 * Git
 
 ---
@@ -87,6 +88,8 @@ cd rentalmobil
 
 ```bash
 composer install
+composer dump-autoload 
+composer update 
 ```
 
 ### 3. Copy the .env File
@@ -113,21 +116,23 @@ DB_DATABASE=dbrservasimobil
 DB_USERNAME=root
 DB_PASSWORD=        # fill in your password if needed
 ```
+### 6. Make The Key Sign
+php artisan key:generate
 
-### 6. Run Migrations and Seeders
+### 7. Run Migrations and Seeders
 
 ```bash
 php artisan migrate --seed
 ```
 
-### 7. Install Frontend Dependencies
+### 8. Install Frontend Dependencies
 
 ```bash
 npm install
 npm run build
 ```
 
-### 8. Run the Development Server
+### 9. Run the Development Server
 
 ```bash
 php artisan serve
